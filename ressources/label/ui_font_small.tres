@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://c140fckgvg1tu"]
+
+[ext_resource type="FontFile" uid="uid://uuo512rxy8j" path="res://assets/fonts/Rintvera-Regular.ttf" id="1_xsxx2"]
+
+[resource]
+font = ExtResource("1_xsxx2")
+font_size = 32

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://cesle4lx8dps3"]
+
+[ext_resource type="Script" uid="uid://dkelfofxdstt6" path="res://scenes/testing/test_world.gd" id="1_dxppu"]
+[ext_resource type="Script" uid="uid://d2kv1wl4iurd3" path="res://scenes/camera/basic_cam.gd" id="2_gy3sr"]
+
+[node name="TestWorld" type="Node2D"]
+script = ExtResource("1_dxppu")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("2_gy3sr")
+
+[node name="UI" type="CanvasLayer" parent="."]

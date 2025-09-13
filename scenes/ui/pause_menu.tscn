@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://botyfwwae687k"]
+
+[ext_resource type="Script" uid="uid://cvlnvq3i4esck" path="res://scenes/ui/pause_menu.gd" id="1_0lmf7"]
+[ext_resource type="LabelSettings" uid="uid://1ljsk78eilts" path="res://ressources/label/ui_font_v1.tres" id="1_6tw0m"]
+
+[node name="PauseMenu" type="PanelContainer"]
+process_mode = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0lmf7")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_vertical = 1
+text = "PAUSED"
+label_settings = ExtResource("1_6tw0m")
+horizontal_alignment = 1
+vertical_alignment = 1

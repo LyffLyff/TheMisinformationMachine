@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://1ljsk78eilts"]
+
+[ext_resource type="FontFile" uid="uid://uuo512rxy8j" path="res://assets/fonts/Rintvera-Regular.ttf" id="1_hmsyd"]
+
+[resource]
+font = ExtResource("1_hmsyd")
+font_size = 64
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.431373)

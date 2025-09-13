@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=3 uid="uid://cesle4lx8dps3"]
+
+[ext_resource type="Script" uid="uid://dkelfofxdstt6" path="res://scenes/main/world_map.gd" id="1_dxppu"]
+[ext_resource type="Script" uid="uid://d2kv1wl4iurd3" path="res://scenes/camera/basic_cam.gd" id="2_gy3sr"]
+[ext_resource type="Script" uid="uid://cqoipa2i081wm" path="res://scenes/ui/clock.gd" id="3_bbk45"]
+[ext_resource type="LabelSettings" uid="uid://1ljsk78eilts" path="res://ressources/label/ui_font_v1.tres" id="3_d4o0u"]
+[ext_resource type="Script" uid="uid://d5y5gcy2s8it" path="res://scenes/testing/title.gd" id="4_u7bwr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_famxf"]
+content_margin_left = 40.0
+content_margin_top = 40.0
+content_margin_right = 40.0
+content_margin_bottom = 40.0
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+
+[node name="TestWorld" type="Node2D"]
+script = ExtResource("1_dxppu")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("2_gy3sr")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_famxf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Top" type="HBoxContainer" parent="UI/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LostSpecimens" type="Label" parent="UI/MarginContainer/PanelContainer/VBoxContainer/Top"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "LOST SPECIMENS:
+"
+label_settings = ExtResource("3_d4o0u")
+script = ExtResource("4_u7bwr")
+
+[node name="Clock" type="Label" parent="UI/MarginContainer/PanelContainer/VBoxContainer/Top"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "okpok"
+label_settings = ExtResource("3_d4o0u")
+horizontal_alignment = 2
+script = ExtResource("3_bbk45")
+
+[node name="ColorRect" type="ColorRect" parent="UI/MarginContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+size_flags_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Control" type="Control" parent="UI/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 10.0
+mouse_filter = 2
