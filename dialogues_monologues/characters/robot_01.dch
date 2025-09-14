@@ -1,0 +1,233 @@
+{
+"@path": "res://addons/dialogic/Resources/character.gd",
+"@subpath": NodePath(""),
+&"_translation_id": "",
+&"color": Color(1, 1, 1, 1),
+&"custom_info": {
+"prefix": "",
+"sound_mood_default": "",
+"sound_moods": {
+"n1": {
+"mode": 0,
+"name": "n1",
+"pitch_base": 1.0,
+"pitch_variance": 0.3,
+"skip_characters": 0.0,
+"sound_path": "res://assets/sounds/dialogue/SFX_Mechanical_Switch_Electronics_Fuse_Switch_On_And_Off_SND3072.wav",
+"volume_base": 2.5,
+"volume_variance": 0.3
+}
+},
+"style": "premade_dialogue",
+"suffix": ""
+},
+&"default_portrait": "Main",
+&"description": "",
+&"display_name": "",
+&"mirror": false,
+&"nicknames": ["Rob"],
+&"offset": Vector2(0, 0),
+&"portraits": {
+"Angry": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Angry.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1.0,
+"scene": ""
+},
+"Angry_Animation": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Angry_Animation.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Annoyed": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Annoyed.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Annoyed_Animation": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Annoyed_Animation.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Confused": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Confused.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Confused_Animation": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Confused_Animation.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Default": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Default.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Default_Animation": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Default_Animation.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Happy": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Happy.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Happy_Animation": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Happy_Animation.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Heart": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Heart.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Heart_Animation": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Heart_Animation.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Main": {
+"export_overrides": {
+"image": ""
+},
+"ignore_char_scale": false,
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "res://assets/portraits/robot/angry_robot.tscn",
+"sound_mood": "n1"
+},
+"Pissed": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Pissed.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Pissed_Animation": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Pissed_Animation.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"PoweredDown": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_PoweredDown.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Sad": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Sad.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Sad_Animation": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Sad_Animation.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Surprised": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Surprised.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Surprised_Animation": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Surprised_Animation.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Wide_": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Wide_.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Wide__Animation": {
+"export_overrides": {
+"image": "\"res://assets/portraits/robot/Robot_1_Wide__Animation.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+}
+},
+&"scale": 1.0
+}

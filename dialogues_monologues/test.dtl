@@ -1,0 +1,8 @@
+robot_01: [mood=n1]Hey, there!
+[wait time="1.0" hide_text="false"]
+robot_01: [mood=n1]They didn't seem to put much  effort into the communication aspect of ya, ehh?
+robot_01: [mood=n1]Well, let me tell you something!\
+You got a task!
+robot_01: [mood=n1]You were created.
+[wait time="0.2" hide_text="false"]
+char_01: [mood=n1]You were created.

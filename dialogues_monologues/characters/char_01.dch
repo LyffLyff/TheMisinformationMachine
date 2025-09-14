@@ -1,0 +1,43 @@
+{
+"@path": "res://addons/dialogic/Resources/character.gd",
+"@subpath": NodePath(""),
+&"_translation_id": "",
+&"color": Color(1, 1, 1, 1),
+&"custom_info": {
+"prefix": "",
+"sound_mood_default": "",
+"sound_moods": {
+"n1": {
+"mode": 0,
+"name": "n1",
+"pitch_base": 1.0,
+"pitch_variance": 0.3,
+"skip_characters": 0.0,
+"sound_path": "res://assets/sounds/dialogue/SFX_Mechanical_Switch_Electronics_Fuse_Switch_On_And_Off_SND3072.wav",
+"volume_base": 2.5,
+"volume_variance": 0.3
+}
+},
+"style": "",
+"suffix": ""
+},
+&"default_portrait": "GreyFemale",
+&"description": "",
+&"display_name": "",
+&"mirror": false,
+&"nicknames": ["The Guide"],
+&"offset": Vector2(0, 0),
+&"portraits": {
+"GreyFemale": {
+"export_overrides": {
+"image": "\"res://assets/portraits/green_female_grey.png\""
+},
+"ignore_char_scale": false,
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "res://addons/dialogic/Modules/HighlightPortrait/simple_highlight_portrait.tscn"
+}
+},
+&"scale": 1.0
+}

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b07ckdrf7jj4c"]
+
+[ext_resource type="Script" uid="uid://bc3qybbdcimb8" path="res://scenes/main/game_session_start.gd" id="1_ngpwl"]
+
+[node name="GameSessionStart" type="Node2D"]
+script = ExtResource("1_ngpwl")
