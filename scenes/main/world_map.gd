@@ -26,7 +26,7 @@ func _ready():
 	
 	# Load the Areas of all countries on earth (sept. 2025)
 	for country_file in get_all_files_from_folder(COUNTRY_DATA_FOLDER):
-		if country_file != "australia.json":
+		if country_file != "russia.json":
 			continue
 		var geojson_data = load_geojson(COUNTRY_DATA_FOLDER + country_file)
 		if geojson_data:
