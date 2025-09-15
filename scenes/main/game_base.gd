@@ -23,7 +23,7 @@ var country_data : Dictionary[String, Dictionary] =  {
 func on_specimen_timer_timeout() -> void:
 	# Lost Specimen
 	lost_specimen += lost_specimen_per_second
-	lost_specimen_counter_label.text = str(int(lost_specimen))
+	Global.tween_label_counter(lost_specimen_counter_label, lost_specimen)
 	
 	# Per Second
 	per_second_label.text = str(lost_specimen_per_second)

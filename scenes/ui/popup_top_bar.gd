@@ -1,5 +1,7 @@
 extends BoxContainer
 
+@onready var bar_title: Label = %BarTitle
+
 signal close_menu
 
 func _on_return_pressed() -> void:

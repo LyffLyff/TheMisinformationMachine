@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://brnpe61hgy7ud"]
+[gd_scene load_steps=21 format=3 uid="uid://brnpe61hgy7ud"]
 
 [ext_resource type="Script" uid="uid://dkelfofxdstt6" path="res://scenes/main/world_map.gd" id="1_u0v3u"]
 [ext_resource type="Shader" uid="uid://brpy426nv2xqf" path="res://ressources/shaders/fog.gdshader" id="2_0sgek"]
@@ -15,6 +15,7 @@
 [ext_resource type="LabelSettings" uid="uid://bk2vqu4v7foy2" path="res://ressources/label/header_small.tres" id="9_pta4i"]
 [ext_resource type="PackedScene" uid="uid://bhaw00rwnrbhn" path="res://scenes/ui/popup_top_bar.tscn" id="10_66y8f"]
 [ext_resource type="Script" uid="uid://dmlv4iuxus264" path="res://scenes/main/machine_tasks.gd" id="10_kn8nd"]
+[ext_resource type="PackedScene" uid="uid://dwy3m3mupj6op" path="res://scenes/ui/character_menu_box.tscn" id="13_8f6qd"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0sgek"]
 noise_type = 3
@@ -147,153 +148,61 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 10.0
 
-[node name="CountryDetails" type="PanelContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center"]
+[node name="LeftColumnMenuContainer" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center"]
 unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CountryDetails" type="PanelContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer"]
+unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
+size_flags_vertical = 3
 script = ExtResource("9_i6oof")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer"]
 layout_mode = 2
 
-[node name="PopupTopBar" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer" instance=ExtResource("10_66y8f")]
-layout_mode = 2
-
-[node name="Title" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer"]
+[node name="CountryTopBar" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer" instance=ExtResource("10_66y8f")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Jokers" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Jokers"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Jokers/HBoxContainer"]
-layout_mode = 2
-text = "Jokers:"
-
-[node name="JokersAmount" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Jokers/HBoxContainer"]
+[node name="Jokers" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer" instance=ExtResource("13_8f6qd")]
 unique_name_in_owner = true
 layout_mode = 2
+title = "Jokers:"
+button_text = "Farm Jokers"
 
-[node name="JokerProgress" type="ProgressBar" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Jokers"]
+[node name="Scammers" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer" instance=ExtResource("13_8f6qd")]
 unique_name_in_owner = true
 layout_mode = 2
-value = 10.0
+title = "Scammers:"
+button_text = "Inform"
 
-[node name="FarmJoker" type="Button" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Jokers"]
+[node name="Politicians" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer" instance=ExtResource("13_8f6qd")]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Farm Joker"
+title = "Politicians:"
+button_text = "Bribe"
 
-[node name="HSeparator" type="HSeparator" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Jokers"]
+[node name="Insiders" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer" instance=ExtResource("13_8f6qd")]
+unique_name_in_owner = true
 layout_mode = 2
+title = "Insiders:"
+button_text = "Network"
 
-[node name="Scammers2" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer"]
+[node name="ConspiracyTheorists" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer" instance=ExtResource("13_8f6qd")]
+unique_name_in_owner = true
 layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Scammers2"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Scammers2/HBoxContainer"]
-layout_mode = 2
-text = "Scammers:"
-
-[node name="ScammersAmount" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Scammers2/HBoxContainer"]
-layout_mode = 2
-
-[node name="JokerProgress" type="ProgressBar" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Scammers2"]
-layout_mode = 2
-value = 10.0
-
-[node name="FarmJoker" type="Button" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Scammers2"]
-layout_mode = 2
-text = "Farm Joker"
-
-[node name="HSeparator" type="HSeparator" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Scammers2"]
-layout_mode = 2
-
-[node name="Politicians2" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Politicians2"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Politicians2/HBoxContainer"]
-layout_mode = 2
-text = "Politicians:"
-
-[node name="Jokers" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Politicians2/HBoxContainer"]
-layout_mode = 2
-
-[node name="JokerProgress" type="ProgressBar" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Politicians2"]
-layout_mode = 2
-value = 10.0
-
-[node name="FarmJoker" type="Button" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Politicians2"]
-layout_mode = 2
-text = "Farm Joker"
-
-[node name="HSeparator" type="HSeparator" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Politicians2"]
-layout_mode = 2
-
-[node name="Insiders" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Insiders"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Insiders/HBoxContainer"]
-layout_mode = 2
-text = "Insiders:"
-
-[node name="Jokers" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Insiders/HBoxContainer"]
-layout_mode = 2
-
-[node name="JokerProgress" type="ProgressBar" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Insiders"]
-layout_mode = 2
-value = 10.0
-
-[node name="FarmJoker" type="Button" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Insiders"]
-layout_mode = 2
-text = "Farm Joker"
-
-[node name="HSeparator" type="HSeparator" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Insiders"]
-layout_mode = 2
-
-[node name="ConspiracyTheorists" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/ConspiracyTheorists"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/ConspiracyTheorists/HBoxContainer"]
-layout_mode = 2
-text = "Conspiracy Theorists:"
-
-[node name="Jokers" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/ConspiracyTheorists/HBoxContainer"]
-layout_mode = 2
-
-[node name="JokerProgress" type="ProgressBar" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/ConspiracyTheorists"]
-layout_mode = 2
-value = 10.0
-
-[node name="FarmJoker" type="Button" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/ConspiracyTheorists"]
-layout_mode = 2
-text = "Farm Joker"
-
-[node name="HSeparator" type="HSeparator" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/ConspiracyTheorists"]
-layout_mode = 2
+title = "Conspiracy Theorists:"
+button_text = "Generate Theory"
 
 [node name="EmptyCenter" type="Control" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center"]
 layout_mode = 2
@@ -313,36 +222,42 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Cores" type="HBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Cores" type="HBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/VBoxContainer/Cores"]
+[node name="Label" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/ScrollContainer/VBoxContainer/Cores"]
 layout_mode = 2
 text = "Cores : "
 
-[node name="CoresAmount" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/VBoxContainer/Cores"]
+[node name="CoresAmount" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/ScrollContainer/VBoxContainer/Cores"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "X"
 
-[node name="HSeparator" type="HSeparator" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="BusyCores" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/VBoxContainer"]
+[node name="BusyCores" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/VBoxContainer"]
+[node name="Label2" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Idle:"
 
-[node name="IdleCores" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/VBoxContainer"]
+[node name="IdleCores" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks/MarginContainer/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -366,9 +281,5 @@ visible = false
 [connection signal="country_entered" from="." to="UI/UIRoot" method="_on_world_map_country_entered"]
 [connection signal="country_exited" from="." to="UI/UIRoot" method="_on_world_map_country_exited"]
 [connection signal="pause" from="." to="UI" method="_on_world_map_pause"]
-[connection signal="visibility_changed" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails" to="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails" method="_on_visibility_changed"]
-[connection signal="pressed" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Jokers/FarmJoker" to="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks" method="_on_farm_joker_pressed"]
-[connection signal="pressed" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Scammers2/FarmJoker" to="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks" method="_on_farm_joker_pressed"]
-[connection signal="pressed" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Politicians2/FarmJoker" to="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks" method="_on_farm_joker_pressed"]
-[connection signal="pressed" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/Insiders/FarmJoker" to="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks" method="_on_farm_joker_pressed"]
-[connection signal="pressed" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/CountryDetails/MarginContainer/VBoxContainer/ConspiracyTheorists/FarmJoker" to="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks" method="_on_farm_joker_pressed"]
+[connection signal="visibility_changed" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails" to="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails" method="_on_visibility_changed"]
+[connection signal="button_pressed" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer/Jokers" to="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks" method="_on_jokers_button_pressed"]

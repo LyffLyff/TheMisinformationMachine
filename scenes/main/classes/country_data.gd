@@ -24,6 +24,10 @@ func set_lost_specimen_per_country(country_name : String, lost_specimen_per_seco
 	)
 
 
+func get_country_data_dict(country : String) -> Dictionary:
+	return COUNTRY_DETAILS.get(country, {})
+
+
 var COUNTRY_DETAILS: Dictionary = {
 	"denmark": {
 		"population": 5831404,

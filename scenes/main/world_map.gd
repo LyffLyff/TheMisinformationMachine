@@ -1,5 +1,7 @@
 extends PausingHandler
 
+const GENERAL_COUNTRY_INFO = preload("res://scenes/ui/general_country_info.tscn")
+
 const COUNTRY_DATA_FOLDER := "res://geodata/countries/"
 const COUNTRY_FOCUS_CLR := Color.CRIMSON
 const COUNTRY_HIGHLIGHT_CLR := Color.DARK_GREEN
@@ -12,6 +14,7 @@ const COUNTRY_CLR := Color.FOREST_GREEN
 signal country_entered
 signal country_exited
 signal country_selected
+signal country_single_clicked
 
 # Bounding box for coordinate conversion
 var min_lat = 90.0
@@ -35,6 +38,7 @@ func _ready():
 	# Signals
 	self.connect("country_selected", camera_2d.zoom_into_position)
 	self.connect("country_data_updated", country_details.reload_data)
+	self.connect("country_single_clicked", ui.load_general_country_info)
 	machine_tasks.connect("character_created", self.new_character_created)
 	
 	var start_time := Time.get_unix_time_from_system()
@@ -173,8 +177,7 @@ func create_single_polygon(polygon_coords, country_title : String) -> Node2D:
 		points = fix_russia(points, 280)
 	else:
 		# for now just to fasten the debug times -> loads the map faster
-		pass
-		#points = fix_russia(points, 10)
+		points = fix_russia(points, 10)
 	points = clean_geojson_polygon(points)
 	polygon2d.polygon = points
 	polygon2d.antialiased = true
@@ -254,7 +257,7 @@ func highlight_polygon(country_name: String) -> void:
 
 
 #### INPUT ####
-func _on_input_event(viewport, event, shape_idx, polygon_name):
+func _on_input_event(viewport, event, shape_idx, polygon_name : String):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if event.double_click:
@@ -268,6 +271,7 @@ func _on_input_event(viewport, event, shape_idx, polygon_name):
 				ui.show_country_menu(polygon_name, country_data.get(polygon_name, null))
 			else:
 				print("Polygon clicked at:", event.position, polygon_name)
+				emit_signal("country_single_clicked", polygon_name)
 
 func _on_mouse_entered(country_name : String):
 	for n in get_tree().get_nodes_in_group(country_name):

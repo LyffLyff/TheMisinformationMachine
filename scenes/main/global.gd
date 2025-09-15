@@ -7,3 +7,11 @@ const class_costs : Dictionary = {
 
 # VARIABLES THAT MUST BE UPDATED REGULARLY
 var CURRENT_COUNTRY : String 	# holds the country name which currently is in focus
+
+func tween_label_counter(label : Label, new_value, duration : float = 0.5) -> void:
+	create_tween().tween_method(
+		func(value): label.text = str(int(new_value)),
+		int(label.text),                      
+		new_value,                        
+		duration                     
+	)

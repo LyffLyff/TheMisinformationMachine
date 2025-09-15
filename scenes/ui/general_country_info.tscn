@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://bm15fd27cx10o"]
+
+[ext_resource type="Script" uid="uid://dmbnpi07xga3g" path="res://scenes/ui/general_country_info.gd" id="1_tor4b"]
+[ext_resource type="PackedScene" uid="uid://bhaw00rwnrbhn" path="res://scenes/ui/popup_top_bar.tscn" id="2_c2wrg"]
+
+[node name="GeneralCountryInfo" type="PanelContainer"]
+custom_minimum_size = Vector2(200, 400)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -400.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_tor4b")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TopBar" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_c2wrg")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CountryData" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+
+[connection signal="close_menu" from="MarginContainer/VBoxContainer/TopBar" to="." method="_on_top_bar_close_menu"]

@@ -1,13 +1,12 @@
 extends PanelContainer
 
-@onready var title_label: Label = %Title
-@onready var jokers: Label = %JokersAmount
-@onready var joker_progress: ProgressBar = %JokerProgress
-#@onready var scammers: Label = %Scammers
-#@onready var politicians: Label = %Politicians
-#@onready var conspirators: Label = %Conspirators
-#@onready var insiders: Label = %Insiders
-@onready var popup_top_bar: BoxContainer = $MarginContainer/VBoxContainer/PopupTopBar
+@onready var title_label: Label = %CountryTopBar.bar_title
+@onready var jokers: VBoxContainer = %Jokers
+@onready var scammers: VBoxContainer = %Scammers
+@onready var politicians: VBoxContainer = %Politicians
+@onready var insiders: VBoxContainer = %Insiders
+@onready var conspiracy_theorists: VBoxContainer = %ConspiracyTheorists
+@onready var popup_top_bar: BoxContainer = %CountryTopBar
 
 
 func _ready() -> void:
@@ -16,13 +15,13 @@ func _ready() -> void:
 
 # called when the country is selected -> animation, loading data from the conspirators
 func show_details(title : String, country_data) -> void:
-	title_label.text = title.capitalize()
-	if country_data != null:
-		# Country Details can be null -> no characters addded to that region
-		jokers.text = str(country_data["JOKER"].size())
-	else:
-		jokers.text = "/"
+	title_label.text = title.to_upper()
+	# Country Details can be null -> no characters addded to that region
+	jokers.update_count(
+		country_data["JOKER"].size() if country_data else 0
+	)
 	self.show()
+
 
 func reload_data(updated_country : String, country_data : Dictionary) -> void:
 	if updated_country == Global.CURRENT_COUNTRY:

@@ -7,7 +7,7 @@ const IDLE_CORE = preload("res://scenes/main/MachineTask/idle_core.tscn")
 @onready var idle_core_container: VBoxContainer = %IdleCores
 @onready var cores_amount: Label = %CoresAmount
 
-const STARTING_CORES : int = 2
+const STARTING_CORES : int = 20
 
 enum  TASK_TYPES {
 	CHARACTER_CREATION,
@@ -71,7 +71,7 @@ func _machine_task_completed(type : TASK_TYPES, country : String, extra_values :
 			printerr("INVALID TAKS TYPE")
 
 
-func _on_farm_joker_pressed() -> void:
+func _on_jokers_button_pressed() -> void:
 	const CLASS_TITLE : String = "JOKER"
 	start_new_task(
 		"Joker Creation",

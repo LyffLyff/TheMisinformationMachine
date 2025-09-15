@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwy3m3mupj6op"]
+
+[ext_resource type="Script" uid="uid://dy8biahnse4hf" path="res://scenes/ui/character_menu_box.gd" id="1_enh5y"]
+
+[node name="CharacterMenuBox" type="VBoxContainer"]
+script = ExtResource("1_enh5y")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HeaderLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="CharacterCountLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 2
+
+[node name="AddButton" type="Button" parent="."]
+layout_mode = 2
