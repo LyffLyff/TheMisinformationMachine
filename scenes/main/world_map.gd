@@ -1,9 +1,17 @@
 extends PausingHandler
 
 const COUNTRY_DATA_FOLDER := "res://geodata/countries/"
+const COUNTRY_FOCUS_CLR := Color.CRIMSON
+const COUNTRY_HIGHLIGHT_CLR := Color.DARK_GREEN
+const COUNTRY_CLR := Color.FOREST_GREEN
+
+@onready var camera_2d: Camera2D = $Camera2D
+@onready var machine_tasks: PanelContainer = %MachineTasks
+@onready var country_details: PanelContainer = %CountryDetails
 
 signal country_entered
 signal country_exited
+signal country_selected
 
 # Bounding box for coordinate conversion
 var min_lat = 90.0
@@ -19,18 +27,30 @@ var country_container : Node2D
 
 
 func _ready():
+	# BaseGameClass Ready
+	specimen_timer = Timer.new()
+	self.add_child(specimen_timer)
+	specimen_timer.connect("timeout", self.on_specimen_timer_timeout)
+	
+	# Signals
+	self.connect("country_selected", camera_2d.zoom_into_position)
+	self.connect("country_data_updated", country_details.reload_data)
+	machine_tasks.connect("character_created", self.new_character_created)
+	
+	var start_time := Time.get_unix_time_from_system()
 	# Country Container
 	country_container = Node2D.new()
 	self.add_child(country_container)
-	country_container.process_mode =Node.PROCESS_MODE_PAUSABLE
+	country_container.process_mode = Node.PROCESS_MODE_PAUSABLE
 	
 	# Load the Areas of all countries on earth (sept. 2025)
 	for country_file in get_all_files_from_folder(COUNTRY_DATA_FOLDER):
-		if country_file != "russia.json":
-			continue
 		var geojson_data = load_geojson(COUNTRY_DATA_FOLDER + country_file)
 		if geojson_data:
 			create_polygons_from_geojson(geojson_data, country_file.get_file().get_basename())
+	
+	var load_time := Time.get_unix_time_from_system() - start_time
+	print("World Loaded In: %s seconds" % load_time)
 
 
 func get_all_files_from_folder(folder_path: String = COUNTRY_DATA_FOLDER) -> Array[String]:
@@ -152,14 +172,16 @@ func create_single_polygon(polygon_coords, country_title : String) -> Node2D:
 	if country_title == "russia":
 		points = fix_russia(points, 280)
 	else:
+		# for now just to fasten the debug times -> loads the map faster
 		pass
-		#points = fix_russia(points, 2)
+		#points = fix_russia(points, 10)
 	points = clean_geojson_polygon(points)
 	polygon2d.polygon = points
+	polygon2d.antialiased = true
 	collision_shape.polygon = points
 	
 	# Optional: Set some visual properties
-	polygon2d.color = Color.BROWN  # Light blue with transparency
+	polygon2d.color = COUNTRY_CLR  # Light blue with transparency
 	polygon2d.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	
 	# Add to container
@@ -190,7 +212,7 @@ func create_polygon_holes(parent_polygon, polygon_coords):
 		hole_line.add_point(lat_lon_to_screen(hole_ring[0][0], hole_ring[0][1]))  # Close
 		
 		hole_line.width = 1.5
-		hole_line.default_color = Color.RED
+		hole_line.default_color = Color.FOREST_GREEN
 		add_child(hole_line)
 
 
@@ -212,7 +234,7 @@ func lat_lon_to_screen(longitude: float, latitude: float) -> Vector2:
 	# Flip the Y coordinate by subtracting from screen_height
 	var y = screen_height - ((latitude - min_lat) / (max_lat - min_lat) * screen_height)
 	
-	return -Vector2(x, y)
+	return -Vector2(x, y) + Vector2(DisplayServer.window_get_size())
 
 func fix_russia(points: PackedVector2Array, step: int) -> PackedVector2Array:
 	# removes every nth point -> only cause russia cant be rendered in full size
@@ -221,17 +243,38 @@ func fix_russia(points: PackedVector2Array, step: int) -> PackedVector2Array:
 		new_points.append(points[i])
 	return new_points
 
-#### INPUT
+
+func highlight_polygon(country_name: String) -> void:
+	# Get the group of nodes for the country
+	var nodes = get_tree().get_nodes_in_group(country_name)
+	
+	for node in nodes:
+		node.get_child(1).color = Color.CRIMSON
+
+
+
+#### INPUT ####
 func _on_input_event(viewport, event, shape_idx, polygon_name):
-	if event is InputEventMouseButton and event.pressed:
-		print("Polygon clicked at:", event.position, polygon_name)
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			if event.double_click:
+				print("Double clicked at:", event.position, polygon_name)
+				#ZOOM INTO THAT POSITION
+				emit_signal("country_selected")
+				
+				# HIGHLIGHT POLYGON OF COUNTRY
+				highlight_polygon(polygon_name)
+				
+				ui.show_country_menu(polygon_name, country_data.get(polygon_name, null))
+			else:
+				print("Polygon clicked at:", event.position, polygon_name)
 
 func _on_mouse_entered(country_name : String):
 	for n in get_tree().get_nodes_in_group(country_name):
-		n.get_child(1).color = Color.HONEYDEW
+		n.get_child(1).color = COUNTRY_FOCUS_CLR
 	emit_signal("country_entered", country_name)
 
 func _on_mouse_exited(country_name : String):
 	for n in get_tree().get_nodes_in_group(country_name):
-		n.get_child(1).color = Color.BROWN
+		n.get_child(1).color = COUNTRY_CLR
 	emit_signal("country_exited")

@@ -56,3 +56,23 @@ func zoom_out():
 		clamp(new_zoom.x, min_zoom, max_zoom),
 		clamp(new_zoom.y, min_zoom, max_zoom)
 	)
+
+
+func zoom_into_position(dst_pos : Vector2= get_global_mouse_position()) -> void:
+	var target_zoom = Vector2(3, 3)
+	var duration = 0.5
+	
+	var tween := create_tween()
+	
+	tween.tween_property(
+		self,
+		"zoom",
+		Vector2(3,3),
+		0.5
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(
+		self,
+		"global_position",
+		dst_pos,
+		0.5
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)

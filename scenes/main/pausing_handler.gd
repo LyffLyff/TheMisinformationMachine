@@ -1,9 +1,9 @@
-extends Node2D
+extends BaseGame
 class_name PausingHandler
 
 const PAUSE_MENU = preload("res://scenes/ui/pause_menu.tscn")
 
-@onready var ui: Control = $"UI/MarginContainer"
+@onready var ui: Control = $"UI/UIRoot"
 
 signal pause
 

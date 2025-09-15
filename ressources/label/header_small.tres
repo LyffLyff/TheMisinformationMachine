@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bk2vqu4v7foy2"]
+
+[ext_resource type="FontFile" uid="uid://uuo512rxy8j" path="res://assets/fonts/Rintvera-Regular.ttf" id="1_d18ew"]
+
+[resource]
+font = ExtResource("1_d18ew")
+font_size = 42
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.501961)

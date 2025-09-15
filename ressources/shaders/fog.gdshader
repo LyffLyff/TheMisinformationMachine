@@ -10,16 +10,16 @@ void fragment() {
     // Pre-calculate time-based offsets
     float time_offset_1 = TIME * distortion_speed * 0.1;
     float time_offset_2 = TIME * distortion_speed * 0.2;
-    
+
     // Sample noise with distortion
     vec4 noise = texture(noise_texture, UV + time_offset_1);
-    
+
     // Create distorted UV and sample final noise
     vec2 distorted_uv = UV + noise.rg * 0.1 - 0.05 + time_offset_2;
     float final_noise = texture(noise_texture, distorted_uv).r;
-    
+
     float smoke_alpha = final_noise * density * smoke_color.a;
-    
+
     // Output color
     COLOR = vec4(smoke_color.rgb, smoke_alpha);
 }

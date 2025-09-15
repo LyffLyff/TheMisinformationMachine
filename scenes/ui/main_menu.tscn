@@ -1,10 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bvyvobfrdrd7i"]
+[gd_scene load_steps=7 format=3 uid="uid://bvyvobfrdrd7i"]
 
 [ext_resource type="Shader" uid="uid://brpy426nv2xqf" path="res://ressources/shaders/fog.gdshader" id="1_fe2o3"]
 [ext_resource type="Texture2D" uid="uid://b5l2vlk0tbikc" path="res://project_files/logo.png" id="1_sl1te"]
 [ext_resource type="LabelSettings" uid="uid://c140fckgvg1tu" path="res://ressources/label/ui_font_small.tres" id="3_1g8jr"]
-[ext_resource type="Texture2D" uid="uid://dbyu3yl3xs46j" path="res://project_files/theme.PNG" id="4_x2yvf"]
-[ext_resource type="Texture2D" uid="uid://drlhq2ud44cx2" path="res://project_files/wildcard_01.PNG" id="5_uhagc"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fe2o3"]
 
@@ -53,7 +51,7 @@ stretch_mode = 5
 
 [node name="Options" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 6
 size_flags_stretch_ratio = 2.0
 alignment = 1
 
@@ -63,7 +61,7 @@ layout_mode = 2
 [node name="StartGame" type="Label" parent="MarginContainer/VBoxContainer/Options/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
-text = "Start Game"
+text = "NEW RUN"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -95,17 +93,41 @@ Sebstian Hinterberger
 LyffLyff"
 label_settings = ExtResource("3_1g8jr")
 
-[node name="Theme" type="TextureRect" parent="MarginContainer/VBoxContainer/GameInfo"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/GameInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-texture = ExtResource("4_x2yvf")
-expand_mode = 1
-stretch_mode = 5
 
-[node name="Wildcard" type="TextureRect" parent="MarginContainer/VBoxContainer/GameInfo"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/GameInfo/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Godot Wild Jam 75 Theme:"
+
+[node name="Theme" type="RichTextLabel" parent="MarginContainer/VBoxContainer/GameInfo/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("5_uhagc")
-expand_mode = 1
-stretch_mode = 5
+size_flags_vertical = 6
+size_flags_stretch_ratio = 3.0
+theme_override_font_sizes/normal_font_size = 72
+bbcode_enabled = true
+text = "[center]EXPANSION"
+fit_content = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/GameInfo"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/GameInfo/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "WildCards:"
+
+[node name="Theme" type="RichTextLabel" parent="MarginContainer/VBoxContainer/GameInfo/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+size_flags_stretch_ratio = 3.0
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[center]- SINGLE LOACTION -
+"
+fit_content = true

@@ -17,6 +17,8 @@ config/icon="res://assets/icon.svg"
 
 [autoload]
 
+Global="*res://scenes/main/global.gd"
+CountryData="*res://scenes/main/classes/country_data.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 
 [dialogic]
@@ -87,14 +89,14 @@ enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
 
 [gui]
 
-theme/custom_font="uid://uuo512rxy8j"
+theme/custom="uid://7iq241q8m666"
+theme/custom_font="uid://drsnpvrmlv6nf"
 
 [input]
 
 pause={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194305,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
-, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":4,"pressure":0.0,"pressed":false,"script":null)
 ]
 }
 dialogic_default_action={
@@ -110,3 +112,4 @@ dialogic_default_action={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.10153, 0.303463, 0.522911, 1)

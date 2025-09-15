@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dt55uua3cjqnn"]
+
+[ext_resource type="Script" uid="uid://bkd7q4xrwbgdv" path="res://scenes/ui/popup_menu.gd" id="1_lraff"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mkaj8"]
+bg_color = Color(0.00594617, 0.00594617, 0.00594617, 0.447059)
+
+[node name="ClassSelector" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mkaj8")
+script = ExtResource("1_lraff")
+
+[node name="ContentContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16

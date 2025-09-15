@@ -1,34 +1,17 @@
-[gd_scene load_steps=20 format=3 uid="uid://brnpe61hgy7ud"]
+[gd_scene load_steps=14 format=3 uid="uid://brnpe61hgy7ud"]
 
 [ext_resource type="Script" uid="uid://dkelfofxdstt6" path="res://scenes/main/world_map.gd" id="1_u0v3u"]
-[ext_resource type="Shader" uid="uid://brpy426nv2xqf" path="res://ressources/shaders/fog.gdshader" id="2_0sgek"]
 [ext_resource type="Script" uid="uid://d2kv1wl4iurd3" path="res://scenes/camera/basic_cam.gd" id="2_twtjt"]
 [ext_resource type="LabelSettings" uid="uid://1ljsk78eilts" path="res://ressources/label/ui_font_v1.tres" id="3_0084n"]
 [ext_resource type="Script" uid="uid://djjxvhghx5g3" path="res://scenes/main/ui.gd" id="3_twtjt"]
-[ext_resource type="Texture2D" uid="uid://buwukiuf4ykgv" path="res://assets/icon.svg" id="3_wx4kf"]
 [ext_resource type="Script" uid="uid://d5y5gcy2s8it" path="res://scenes/testing/title.gd" id="4_06qpl"]
 [ext_resource type="Script" uid="uid://btyumjugwdmpd" path="res://scenes/main/ui_root.gd" id="4_0084n"]
 [ext_resource type="Script" uid="uid://cqoipa2i081wm" path="res://scenes/ui/clock.gd" id="5_2035q"]
 [ext_resource type="PackedScene" uid="uid://botyfwwae687k" path="res://scenes/ui/pause_menu.tscn" id="8_06qpl"]
 [ext_resource type="LabelSettings" uid="uid://c140fckgvg1tu" path="res://ressources/label/ui_font_small.tres" id="8_2035q"]
 [ext_resource type="Script" uid="uid://ovlohigfp6nd" path="res://scenes/main/country_details.gd" id="9_i6oof"]
-[ext_resource type="LabelSettings" uid="uid://bk2vqu4v7foy2" path="res://ressources/label/header_small.tres" id="9_pta4i"]
 [ext_resource type="PackedScene" uid="uid://bhaw00rwnrbhn" path="res://scenes/ui/popup_top_bar.tscn" id="10_66y8f"]
 [ext_resource type="Script" uid="uid://dmlv4iuxus264" path="res://scenes/main/machine_tasks.gd" id="10_kn8nd"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_0sgek"]
-noise_type = 3
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wx4kf"]
-seamless = true
-noise = SubResource("FastNoiseLite_0sgek")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pta4i"]
-shader = ExtResource("2_0sgek")
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_wx4kf")
-shader_parameter/smoke_color = Color(0.84387, 0.84387, 0.84387, 0.12549)
-shader_parameter/distortion_speed = 0.05
-shader_parameter/density = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_famxf"]
 content_margin_left = 40.0
@@ -46,15 +29,8 @@ border_color = Color(0, 0, 0, 1)
 process_mode = 3
 script = ExtResource("1_u0v3u")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_pta4i")
-scale = Vector2(100, 100)
-texture = ExtResource("3_wx4kf")
-metadata/_edit_lock_ = true
-
 [node name="Camera2D" type="Camera2D" parent="."]
 process_mode = 1
-position = Vector2(954, 543)
 script = ExtResource("2_twtjt")
 
 [node name="UI" type="CanvasLayer" parent="."]
@@ -92,8 +68,7 @@ size_flags_stretch_ratio = 0.5
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LostSpecimenLabel" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer"]
-unique_name_in_owner = true
+[node name="LostSpecimens" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "LOST SPECIMENS: 0"
@@ -101,39 +76,21 @@ label_settings = ExtResource("3_0084n")
 vertical_alignment = 1
 script = ExtResource("4_06qpl")
 
-[node name="PerSecondConatiner" type="HBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="PerSecond" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer/PerSecondConatiner"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Per Second:"
-label_settings = ExtResource("9_pta4i")
-vertical_alignment = 1
-
-[node name="PerSecondLabel" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer/PerSecondConatiner"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "0"
-label_settings = ExtResource("9_pta4i")
-vertical_alignment = 1
-
 [node name="EarthPopulation" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Earth Population: 8.23 * 10'9 Specimens"
-label_settings = ExtResource("9_pta4i")
+label_settings = ExtResource("8_2035q")
 vertical_alignment = 1
 
 [node name="Clock" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "TIME"
+text = "okpok"
 label_settings = ExtResource("3_0084n")
 horizontal_alignment = 2
+vertical_alignment = 1
 script = ExtResource("5_2035q")
 
 [node name="ColorRect" type="ColorRect" parent="UI/UIRoot/PanelContainer/VBoxContainer"]

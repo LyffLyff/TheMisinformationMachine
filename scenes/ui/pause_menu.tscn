@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://botyfwwae687k"]
+[gd_scene load_steps=4 format=3 uid="uid://botyfwwae687k"]
 
 [ext_resource type="Script" uid="uid://cvlnvq3i4esck" path="res://scenes/ui/pause_menu.gd" id="1_0lmf7"]
 [ext_resource type="LabelSettings" uid="uid://1ljsk78eilts" path="res://ressources/label/ui_font_v1.tres" id="1_6tw0m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0lmf7"]
+bg_color = Color(0.0968115, 0.0968115, 0.0968115, 0.784314)
 
 [node name="PauseMenu" type="PanelContainer"]
 process_mode = 2
@@ -10,12 +13,28 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0lmf7")
 script = ExtResource("1_0lmf7")
 
-[node name="Label" type="Label" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 text = "PAUSED"
 label_settings = ExtResource("1_6tw0m")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 42
+text = "QUIT TO MENU"
+flat = true
+
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
