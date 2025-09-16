@@ -8,8 +8,8 @@ uniform float density : hint_range(0.0, 1.0) = 1.0;
 
 void fragment() {
     // Pre-calculate time-based offsets
-    float time_offset_1 = TIME * distortion_speed * 0.1;
-    float time_offset_2 = TIME * distortion_speed * 0.2;
+    float time_offset_1 = distortion_speed * 0.5 * sin(TIME);
+    float time_offset_2 = distortion_speed * 0.7 * cos(TIME);
 
     // Sample noise with distortion
     vec4 noise = texture(noise_texture, UV + time_offset_1);

@@ -1,7 +1,13 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://7iq241q8m666"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://7iq241q8m666"]
 
-[ext_resource type="FontFile" uid="uid://cawt7cgs7te4g" path="res://assets/fonts/SpaceGrotesk-Medium.ttf" id="1_kaelw"]
+[ext_resource type="FontFile" uid="uid://cboudv34kyac0" path="res://assets/fonts/Roboto-Bold.ttf" id="1_mfj2l"]
 [ext_resource type="FontFile" uid="uid://b01mrm5rtsv5" path="res://assets/fonts/SpaceGrotesk-Bold.ttf" id="2_mfj2l"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_mfj2l"]
+color = Color(1, 1, 1, 1)
+grow_begin = 2.0
+grow_end = 2.0
+thickness = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rlf55"]
 bg_color = Color(0.12549, 0.12549, 0.12549, 1)
@@ -12,8 +18,9 @@ border_width_bottom = 4
 border_color = Color(1, 1, 1, 1)
 
 [resource]
+HSeparator/styles/separator = SubResource("StyleBoxLine_mfj2l")
 Label/font_sizes/font_size = 16
-Label/fonts/font = ExtResource("1_kaelw")
+Label/fonts/font = ExtResource("1_mfj2l")
 MarginContainer/constants/margin_bottom = 10
 MarginContainer/constants/margin_left = 10
 MarginContainer/constants/margin_right = 10

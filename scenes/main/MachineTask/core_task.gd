@@ -7,12 +7,16 @@ extends PanelContainer
 signal task_finished
 
 var task_price : int = 1 # update with specific changes to a class/value/money
+var task_time : float
 
-func _init_task(title : String, task_time : int) -> void:
+func _init_task(title : String, time : float) -> void:
 	task_label.text = title
 	
 	# every percent change it updates the progress bar
-	timer.wait_time = time_per_percent(task_time)
+	Global.connect("time_modifier_changed", self._update_task_speed)
+	task_time = time
+	timer.wait_time = time_per_percent(task_time / Global.time_modifier)
+	print("TASK WAIT: ", time_per_percent(task_time / Global.time_modifier))
 	timer.connect("timeout", _update_progess)
 	timer.start()
 	
@@ -31,3 +35,7 @@ func _update_progess() -> void:
 func _close_core():
 	# When the Task finishes
 	self.queue_free()
+
+
+func _update_task_speed() -> void:
+	timer.wait_time = time_per_percent(task_time / Global.time_modifier)

@@ -2,6 +2,7 @@ extends RefCounted
 class_name Skill
 
 var name : String = "SkillName"
+var identifier : String = ""
 
 var description : String = "Description"
 
@@ -9,23 +10,25 @@ var money_cost : int = 10000
 
 var skill_point_cost : int = 1
 
-var time_cost : int = 10
+var time_cost : float = 10.0
 
 # function that will be called to do the actual effect mentioned in the description
-var on_skill_function : Callable
+var on_skill_function : String
 
 var repeatable_unlock : bool = false
 
 
 func _init(
+	unique_id : String,
 	i_name : String,  
 	i_decription : String, 
 	m_cost : int, 
 	s_cost : int, 
-	t_cost : int, 
-	call_func : Callable,
+	t_cost : float, 
+	call_func : String,
 	repeatable : bool = false
 ) -> void:
+	identifier = unique_id
 	name = i_name
 	description = i_decription
 	money_cost = m_cost

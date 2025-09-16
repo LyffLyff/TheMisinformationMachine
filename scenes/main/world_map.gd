@@ -4,8 +4,8 @@ const GENERAL_COUNTRY_INFO = preload("res://scenes/ui/general_country_info.tscn"
 
 const COUNTRY_DATA_FOLDER := "res://geodata/countries/"
 const COUNTRY_FOCUS_CLR := Color.CRIMSON
-const COUNTRY_HIGHLIGHT_CLR := Color.DARK_GREEN
-const COUNTRY_CLR := Color.FOREST_GREEN
+const COUNTRY_HIGHLIGHT_CLR := Color.DARK_SLATE_GRAY
+const COUNTRY_CLR := Color("#4C7031")
 
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var machine_tasks: PanelContainer = %MachineTasks
@@ -19,15 +19,18 @@ signal country_single_clicked
 # Bounding box for coordinate conversion
 var min_lat = 90.0
 var max_lat = -90.0
-var min_long = 180.0
-var max_long = -180.0
+var min_long = 200.0
+var max_long = -200.0
 
 # Screen dimensions for mapping
 var screen_width = 1920
 var screen_height = 1080
 
 var country_container : Node2D
-
+var hover_polygon: Polygon2D = null
+var hover_polygon_name :  String = ""
+var selected_country_outline : Array[Line2D] = []
+var selected_country : String
 
 func _ready():
 	# BaseGameClass Ready
@@ -55,7 +58,6 @@ func _ready():
 	
 	var load_time := Time.get_unix_time_from_system() - start_time
 	print("World Loaded In: %s seconds" % load_time)
-
 
 func get_all_files_from_folder(folder_path: String = COUNTRY_DATA_FOLDER) -> Array[String]:
 	var files: Array[String] = []
@@ -174,14 +176,12 @@ func create_single_polygon(polygon_coords, country_title : String) -> Node2D:
 	
 	# Set the polygon points
 	if country_title == "russia":
-		points = fix_russia(points, 280)
-	else:
-		# for now just to fasten the debug times -> loads the map faster
-		points = fix_russia(points, 10)
+		points = fix_russia(points, 3)
+	#else:
+	#	# for now just to fasten the debug times -> loads the map faster
+	#	points = fix_russia(points, 10)
 	points = clean_geojson_polygon(points)
 	polygon2d.polygon = points
-	cache_leftmost(polygon2d)
-	cache_rightmost(polygon2d)
 	polygon2d.antialiased = true
 	collision_shape.polygon = points
 	
@@ -217,7 +217,7 @@ func create_polygon_holes(parent_polygon, polygon_coords):
 		hole_line.add_point(lat_lon_to_screen(hole_ring[0][0], hole_ring[0][1]))  # Close
 		
 		hole_line.width = 1.5
-		hole_line.default_color = Color.FOREST_GREEN
+		hole_line.default_color = COUNTRY_CLR
 		add_child(hole_line)
 
 
@@ -235,10 +235,9 @@ func lat_lon_to_screen(longitude: float, latitude: float) -> Vector2:
 	# Convert longitude to X (this is usually correct)
 	var x = (longitude - min_long) / (max_long - min_long) * screen_width
 	
-	# Convert latitude to Y - THIS IS THE KEY FIX
-	# Flip the Y coordinate by subtracting from screen_height
 	var y = screen_height - ((latitude - min_lat) / (max_lat - min_lat) * screen_height)
 	
+	# -> the minus cause it was flipped + an offset to center it on screen
 	return -Vector2(x, y) + Vector2(DisplayServer.window_get_size())
 
 func fix_russia(points: PackedVector2Array, step: int) -> PackedVector2Array:
@@ -250,79 +249,77 @@ func fix_russia(points: PackedVector2Array, step: int) -> PackedVector2Array:
 
 
 func highlight_polygon(country_name: String) -> void:
-	# Get the group of nodes for the country
-	var nodes = get_tree().get_nodes_in_group(country_name)
+	_unselect_country()
 	
-	for node in nodes:
-		node.get_child(1).color = Color.CRIMSON
-
-
-func _process(delta: float) -> void:
-	var cam_x: float = camera_2d.global_position.x
-
-	for country in country_container.get_children():
-		for islands in country.get_children():
-			var poly: Polygon2D = islands.get_child(0).get_child(1)
-
-			var left: float = get_cached_leftmost_x(poly)
-			var right: float = get_cached_rightmost_x(poly)
-
-			# If polygon is too far left, push it right
-			if right < cam_x - screen_width / 2.0:
-				poly.position.x += screen_width
-
-			# If polygon is too far right, push it left
-			elif left > cam_x + screen_width / 2.0:
-				poly.position.x -= screen_width
-
-
-
-func cache_leftmost(poly: Polygon2D):
-	var left_x = INF
-	for p in poly.polygon:
-		left_x = min(left_x, p.x)
-	poly.set_meta("leftmost_local_x", left_x)
-
-func get_cached_leftmost_x(poly: Polygon2D) -> float:
-	var local_x: float = poly.get_meta("leftmost_local_x")
-	return poly.to_global(Vector2(local_x, 0)).x
-
-
-func cache_rightmost(poly: Polygon2D):
-	var right_x = -INF
-	for p in poly.polygon:
-		right_x = max(right_x, p.x)
-	poly.set_meta("rightmost_x_local", right_x)
-
-
-func get_cached_rightmost_x(poly: Polygon2D) -> float:
-	var local_x: float = poly.get_meta("rightmost_x_local")
-	return poly.to_global(Vector2(local_x, 0)).x
+	selected_country = country_name
+	
+	for node in get_tree().get_nodes_in_group(country_name):
+		var polygon : Polygon2D = node.get_child(1)
+		var line = Line2D.new()
+		line.joint_mode = Line2D.LINE_JOINT_ROUND
+		line.antialiased = true
+		line.width = 1  # outline thickness
+		line.default_color = Color.GHOST_WHITE
+		line.points = polygon.polygon.duplicate()
+		polygon.color = COUNTRY_HIGHLIGHT_CLR
+		line.add_point(polygon.polygon[0])  # close polygon
+		selected_country_outline.append(line)
+		self.add_child(line)
 
 
 #### INPUT ####
 func _on_input_event(viewport, event, shape_idx, polygon_name : String):
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			if event.double_click:
-				print("Double clicked at:", event.position, polygon_name)
-				#ZOOM INTO THAT POSITION
-				emit_signal("country_selected")
-				
-				# HIGHLIGHT POLYGON OF COUNTRY
-				highlight_polygon(polygon_name)
-				
-				ui.show_country_menu(polygon_name, country_data.get(polygon_name, null))
-			else:
-				print("Polygon clicked at:", event.position, polygon_name)
+		if event.is_pressed():
+			if event.button_index == MOUSE_BUTTON_LEFT:
+				if event.double_click:
+					print("Double clicked at:", event.position, polygon_name)
+					#ZOOM INTO THAT POSITION
+					emit_signal("country_selected")
+					
+					# HIGHLIGHT POLYGON OF COUNTRY
+					highlight_polygon(polygon_name)
+					
+					ui.show_country_menu(polygon_name, country_data.get(polygon_name, null))
+			elif event.button_index == MOUSE_BUTTON_RIGHT:
+				print("Polygon right-clicked at:", event.position, polygon_name)
 				emit_signal("country_single_clicked", polygon_name)
 
 func _on_mouse_entered(country_name : String):
 	for n in get_tree().get_nodes_in_group(country_name):
-		n.get_child(1).color = COUNTRY_FOCUS_CLR
+		hover_polygon = n.get_child(1)
+		hover_polygon_name = country_name
+		if selected_country != country_name:
+			# only show hover highlight clr if not selected -> other color
+			n.get_child(1).color = COUNTRY_FOCUS_CLR
 	emit_signal("country_entered", country_name)
 
 func _on_mouse_exited(country_name : String):
 	for n in get_tree().get_nodes_in_group(country_name):
-		n.get_child(1).color = COUNTRY_CLR
-	emit_signal("country_exited")
+		if hover_polygon == n.get_child(1):
+			hover_polygon = null
+			hover_polygon_name = ""
+		if selected_country != country_name:
+			# only go back to initial color if the country isn't currently selected
+			n.get_child(1).color = COUNTRY_CLR
+	emit_signal("country_exited", hover_polygon)
+
+func is_mouse_over_ui() -> bool:
+	var hovered = get_viewport().gui_get_hovered_control()
+	if hovered != null:
+		print(hovered.is_in_group("interactive_ui"))
+	return hovered != null and hovered.is_in_group("interactive_ui")
+
+
+func _on_country_details_hidden() -> void:
+	_unselect_country()
+
+
+func _unselect_country() -> void:
+	if selected_country_outline:
+		for n in selected_country_outline:
+			n.queue_free()
+		selected_country_outline = []
+		for n in get_tree().get_nodes_in_group(selected_country):
+			# unhighlight country
+			n.get_child(1).color = COUNTRY_CLR

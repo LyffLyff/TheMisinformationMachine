@@ -1,24 +1,40 @@
-[gd_scene load_steps=7 format=3 uid="uid://bvyvobfrdrd7i"]
+[gd_scene load_steps=10 format=3 uid="uid://bvyvobfrdrd7i"]
 
 [ext_resource type="Shader" uid="uid://brpy426nv2xqf" path="res://ressources/shaders/fog.gdshader" id="1_fe2o3"]
 [ext_resource type="Texture2D" uid="uid://b5l2vlk0tbikc" path="res://project_files/logo.png" id="1_sl1te"]
 [ext_resource type="LabelSettings" uid="uid://c140fckgvg1tu" path="res://ressources/label/ui_font_small.tres" id="3_1g8jr"]
+[ext_resource type="AudioStream" uid="uid://cwx24j6cx24a8" path="res://assets/sounds/music/333640__cabled_mess__retro-scifi-sequenced-sine-fm.mp3" id="4_m1kxf"]
+[ext_resource type="LabelSettings" uid="uid://dwnyj25h5arxv" path="res://ressources/label/roboto_large.tres" id="4_x2yvf"]
+
+[sub_resource type="Gradient" id="Gradient_1g8jr"]
+colors = PackedColorArray(0.8235294, 0.25490198, 0.28235295, 1, 0.078431375, 0.4117647, 0.2784314, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fe2o3"]
+noise_type = 2
+seed = 50
+frequency = 0.0737
+offset = Vector3(468.09, 0, 0)
+fractal_octaves = 2
+fractal_lacunarity = 3.0
+fractal_gain = 1.475
+fractal_weighted_strength = 1.0
+cellular_distance_function = 3
+cellular_return_type = 3
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1g8jr"]
-width = 1920
-height = 1080
+width = 192
+height = 108
+noise = SubResource("FastNoiseLite_fe2o3")
+color_ramp = SubResource("Gradient_1g8jr")
 seamless = true
 seamless_blend_skirt = 1.0
-noise = SubResource("FastNoiseLite_fe2o3")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1g8jr"]
 shader = ExtResource("1_fe2o3")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_1g8jr")
-shader_parameter/smoke_color = Color(0.273142, 0.273142, 0.273142, 0.847059)
-shader_parameter/distortion_speed = 0.2
-shader_parameter/density = 1.0
+shader_parameter/smoke_color = Color(0.8235294, 0.25490198, 0.28235295, 1)
+shader_parameter/distortion_speed = 0.0800000038
+shader_parameter/density = 0.3410000161975
 
 [node name="MainMenu" type="PanelContainer"]
 anchors_preset = 15
@@ -62,6 +78,7 @@ layout_mode = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
 text = "NEW RUN"
+label_settings = ExtResource("4_x2yvf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -69,6 +86,7 @@ vertical_alignment = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
 text = "Settings"
+label_settings = ExtResource("4_x2yvf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -76,6 +94,7 @@ vertical_alignment = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
 text = "Quit"
+label_settings = ExtResource("4_x2yvf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -88,46 +107,64 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 text = "Made By 
-Sebstian Hinterberger 
+Sebastian Hinterberger 
 / 
 LyffLyff"
 label_settings = ExtResource("3_1g8jr")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/GameInfo"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/GameInfo/VBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 10
 text = "Godot Wild Jam 75 Theme:"
+label_settings = ExtResource("3_1g8jr")
 
-[node name="Theme" type="RichTextLabel" parent="MarginContainer/VBoxContainer/GameInfo/VBoxContainer"]
+[node name="ThemeMain" type="Label" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 size_flags_stretch_ratio = 3.0
-theme_override_font_sizes/normal_font_size = 72
-bbcode_enabled = true
-text = "[center]EXPANSION"
-fit_content = true
+text = "EXPANSION"
+label_settings = ExtResource("4_x2yvf")
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/GameInfo"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/GameInfo/VBoxContainer2"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 10
 text = "WildCards:"
+label_settings = ExtResource("3_1g8jr")
 
-[node name="Theme" type="RichTextLabel" parent="MarginContainer/VBoxContainer/GameInfo/VBoxContainer2"]
+[node name="Theme" type="Label" parent="MarginContainer/VBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 2
+size_flags_vertical = 6
 size_flags_stretch_ratio = 3.0
-theme_override_font_sizes/normal_font_size = 32
-bbcode_enabled = true
-text = "[center]- SINGLE LOACTION -
-"
-fit_content = true
+text = "- SINGLE LOCATION -"
+label_settings = ExtResource("3_1g8jr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MainMenuBG" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_m1kxf")
+volume_db = -10.0
+autoplay = true

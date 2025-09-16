@@ -10,10 +10,11 @@ config_version=5
 
 [application]
 
-config/name="GodotWildJam2025"
+config/name="The Misinformation Machine"
 run/main_scene="uid://brnpe61hgy7ud"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://assets/icon.svg"
+boot_splash/name="The Misinformation Ma"
 
 [autoload]
 
@@ -91,6 +92,10 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
 
+[global_group]
+
+interactive_ui=""
+
 [gui]
 
 theme/custom="uid://7iq241q8m666"
@@ -116,4 +121,6 @@ dialogic_default_action={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-environment/defaults/default_clear_color=Color(0.10153, 0.303463, 0.522911, 1)
+anti_aliasing/quality/msaa_2d=1
+environment/defaults/default_clear_color=Color(0.11764706, 0.24705882, 0.4, 1)
+anti_aliasing/quality/screen_space_aa=1

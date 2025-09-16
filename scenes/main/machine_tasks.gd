@@ -7,7 +7,7 @@ const IDLE_CORE = preload("res://scenes/main/MachineTask/idle_core.tscn")
 @onready var idle_core_container: VBoxContainer = %IdleCores
 @onready var cores_amount: Label = %CoresAmount
 
-const STARTING_CORES : int = 20
+const STARTING_CORES : int = 3
 
 enum  TASK_TYPES {
 	CHARACTER_CREATION,
@@ -23,6 +23,9 @@ func _ready() -> void:
 	# Init Menu Data
 	_update_cores_amount(total_cores)
 	_init_idle_cores()
+	
+	# Connect to Skill Unlock
+	Global.connect("start_skill_task", self.start_skill_task)
 
 func _update_cores_amount(new_amount : int) -> void:
 	# Called when updating the total amount of Cores -> Upgrade
@@ -56,6 +59,19 @@ func start_new_task(task_title : String, type : TASK_TYPES, money_cost : int, ti
 		##TODO -> REDUCE MONEY COST FROM THE MONEY AMOUNT AVAILABLE
 		new_task._init_task(task_title, time_cost)
 		new_task.connect("task_finished", Callable(_machine_task_completed).bind(type, Global.CURRENT_COUNTRY, extra_values))
+		new_task.connect("task_finished", self._start_idling_core)
+		_remove_idle_core()
+	else:
+		printerr("NO MORE CORES AVAILABLE")
+
+
+func start_skill_task(new_skill : Skill) -> void:
+	if _get_available_cores() > 0:
+		busy_cores += 1
+		var new_task := CORE_TASK.instantiate()
+		busy_core_container.add_child(new_task)
+		new_task._init_task(new_skill.name, new_skill.time_cost)
+		new_task.connect("task_finished", Global.skill_unlocked.bind(new_skill.identifier))
 		new_task.connect("task_finished", self._start_idling_core)
 		_remove_idle_core()
 	else:

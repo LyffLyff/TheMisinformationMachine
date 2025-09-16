@@ -1,44 +1,62 @@
 extends Label
 
-# Start time
-var start_timestamp = _datetime_to_unix(2025, 9, 25, 12, 30, 20)
-var elapsed_seconds := 0
-var timer : Timer
+signal time_run_out
+
+ # 10 days in seconds -> Time for the entire game
+const START_SECONDS := 10 * 24 * 60 * 60
+
+var remaining_seconds: int = START_SECONDS
+var timer: Timer
+var time_multiplier: float = 10.0
+var display_seconds: float = START_SECONDS
 
 func _ready():
-	# Create Timer in code
+	# Timer setup
 	timer = Timer.new()
-	timer.wait_time = 1.0      # update every second
+	timer.wait_time = 1.0
 	timer.one_shot = false
 	timer.autostart = true
 	add_child(timer)
-	
+	#Global.connect("time_modifier_changed",  _update_global_timer_speed)
+
 	timer.timeout.connect(Callable(self, "_on_timer_timeout"))
-	
-	# Initial display
+
 	_update_label()
 
 func _on_timer_timeout():
-	elapsed_seconds += 1
+	# Subtract time with multiplier
+	remaining_seconds -= int(1 * time_multiplier)
+	if remaining_seconds < 0:
+		remaining_seconds = 0
+		emit_signal("time_run_out")
+		timer.stop()
+
+	# Tween smoothly towards the new remaining time
+	create_tween().tween_property(
+		self, 
+		"display_seconds",
+		float(remaining_seconds), 
+		1.0
+		).set_trans(Tween.TRANS_LINEAR)
+
+
+func _process(delta: float):
 	_update_label()
 
 func _update_label():
-	var total_seconds = start_timestamp + elapsed_seconds
-	var t = Time.get_datetime_dict_from_unix_time(total_seconds)
-	
-	text = "%04d-%02d-%02d %02d:%02d:%02d" % [
-		t.year, t.month, t.day,
-		t.hour, t.minute, t.second
+	var t = _seconds_to_dhms(int(display_seconds))
+	text = "%02d days \n%02dh %02dm %02ds" % [
+		t.days, t.hours, t.minutes, t.seconds
 	]
 
-# Helper: convert a specific datetime to Unix timestamp
-func _datetime_to_unix(year, month, day, hour, minute, second):
-	var dt = {
-		"year": year,
-		"month": month,
-		"day": day,
-		"hour": hour,
-		"minute": minute,
-		"second": second
+func _seconds_to_dhms(seconds: int) -> Dictionary:
+	var days = seconds / 86400
+	var hours = (seconds % 86400) / 3600
+	var minutes = (seconds % 3600) / 60
+	var secs = seconds % 60
+	return {
+		"days": days,
+		"hours": hours,
+		"minutes": minutes,
+		"seconds": secs
 	}
-	return  Time.get_unix_time_from_datetime_dict(dt)

@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=3 uid="uid://bv453ybl43dp3"]
+[gd_scene load_steps=4 format=3 uid="uid://bv453ybl43dp3"]
 
-[ext_resource type="PackedScene" uid="uid://bhaw00rwnrbhn" path="res://scenes/ui/popup_top_bar.tscn" id="1_aue15"]
 [ext_resource type="Script" uid="uid://b26804e2cd71a" path="res://scenes/main/upgrades/machine_upgrades.gd" id="1_yhn32"]
 [ext_resource type="Texture2D" uid="uid://buwukiuf4ykgv" path="res://assets/icon.svg" id="2_7kqun"]
 
@@ -24,13 +23,13 @@ script = ExtResource("1_yhn32")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-
-[node name="PopupTopBar" parent="MarginContainer/VBoxContainer" instance=ExtResource("1_aue15")]
-layout_mode = 2
-title = "Self Improvement Upgrades"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -41,10 +40,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 16
 alignment = 1
-
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
 
 [node name="Card" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -60,6 +55,10 @@ size_flags_vertical = 2
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
 text = "[center]LVL: XX"
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -77,5 +76,3 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[connection signal="close_menu" from="MarginContainer/VBoxContainer/PopupTopBar" to="." method="_on_popup_top_bar_close_menu"]

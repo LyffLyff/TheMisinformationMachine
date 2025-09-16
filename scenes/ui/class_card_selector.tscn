@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b4w726818yl3x"]
+[gd_scene load_steps=5 format=3 uid="uid://b4w726818yl3x"]
 
 [ext_resource type="Script" uid="uid://bkd7q4xrwbgdv" path="res://scenes/ui/popup_menu.gd" id="1_carp8"]
+[ext_resource type="PackedScene" uid="uid://bhaw00rwnrbhn" path="res://scenes/ui/popup_top_bar.tscn" id="2_m12fg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mkaj8"]
 bg_color = Color(0.00594617, 0.00594617, 0.00594617, 0.447059)
@@ -40,9 +41,14 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_carp8")
 [node name="VBoxContainer" type="VBoxContainer" parent="ContentContainer/PanelContainer"]
 layout_mode = 2
 
+[node name="PopupTopBar" parent="ContentContainer/PanelContainer/VBoxContainer" instance=ExtResource("2_m12fg")]
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="ContentContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 ratio = 6.3067
 stretch_mode = 0
 
@@ -53,15 +59,11 @@ size_flags_vertical = 3
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ContentContainer/PanelContainer/VBoxContainer"]
+[node name="CardDescription" type="RichTextLabel" parent="ContentContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Control" type="Control" parent="ContentContainer/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Select" type="Button" parent="ContentContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="UnlockCard" type="Button" parent="ContentContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
@@ -69,6 +71,4 @@ theme_override_font_sizes/font_size = 64
 text = "SELECT CARD"
 flat = true
 
-[node name="Control2" type="Control" parent="ContentContainer/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
+[connection signal="close_menu" from="ContentContainer/PanelContainer/VBoxContainer/PopupTopBar" to="." method="_on_popup_top_bar_close_menu"]

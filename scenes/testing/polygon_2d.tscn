@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dabp3fowe3bfq"]
+
+[ext_resource type="Shader" uid="uid://dsd1wvl8uyfdu" path="res://ressources/shaders/outline.gdshader" id="1_j52ag"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5tpmn"]
+shader = ExtResource("1_j52ag")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+
+[node name="Polygon2D" type="Polygon2D"]
+material = SubResource("ShaderMaterial_5tpmn")
+polygon = PackedVector2Array(285, 46, 225, 142, 488, 249, 773, 139, 431, 62, 366, 141)

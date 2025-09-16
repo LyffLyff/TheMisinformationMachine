@@ -1,10 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://botyfwwae687k"]
+[gd_scene load_steps=8 format=3 uid="uid://botyfwwae687k"]
 
 [ext_resource type="Script" uid="uid://cvlnvq3i4esck" path="res://scenes/ui/pause_menu.gd" id="1_0lmf7"]
-[ext_resource type="LabelSettings" uid="uid://1ljsk78eilts" path="res://ressources/label/ui_font_v1.tres" id="1_6tw0m"]
+[ext_resource type="Shader" uid="uid://dwnv1l157e6x" path="res://scenes/ui/crt_turn_on.gdshader" id="1_8uki6"]
+[ext_resource type="FontFile" uid="uid://cboudv34kyac0" path="res://assets/fonts/Roboto-Bold.ttf" id="2_f6eus"]
+[ext_resource type="AudioStream" uid="uid://6bsv7pf8hcpw" path="res://assets/sounds/music/584332__signalsinnoise__acoustic-guitar-bassline.wav" id="3_f6eus"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0lmf7"]
 bg_color = Color(0.0968115, 0.0968115, 0.0968115, 0.784314)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8uki6"]
+font = ExtResource("2_f6eus")
+font_size = 128
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.6784314)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8uki6"]
+shader = ExtResource("1_8uki6")
+shader_parameter/spacing = 10.0
+shader_parameter/animation_progress = 0.0
+shader_parameter/dot_size = 1.0
+shader_parameter/dot_color = Color(0, 0, 0, 1)
 
 [node name="PauseMenu" type="PanelContainer"]
 process_mode = 2
@@ -16,25 +31,45 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0lmf7")
 script = ExtResource("1_0lmf7")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 text = "PAUSED"
-label_settings = ExtResource("1_6tw0m")
+label_settings = SubResource("LabelSettings_8uki6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="QuitButton" type="Button" parent="VBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+
+[node name="AbandonRun" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 42
-text = "QUIT TO MENU"
+text = "ABANDON RUN"
 flat = true
 
-[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[node name="TransitionRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_8uki6")
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PauseMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_f6eus")
+volume_db = -10.0
+autoplay = true
+
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/AbandonRun" to="." method="_on_abandon_run_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/VBoxContainer/AbandonRun" to="." method="_on_abandon_run_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/AbandonRun" to="." method="_on_abandon_run_pressed"]

@@ -13,8 +13,15 @@ var last_mouse_pos: Vector2
 func _ready():
 	# Enable camera
 	enabled = true
+	
+	# LIMITS
+	limit_bottom = DisplayServer.window_get_size().y * 1.5
+	limit_top = -DisplayServer.window_get_size().y * 0.5
+	limit_right = DisplayServer.window_get_size().x * 1.5
+	limit_left = -DisplayServer.window_get_size().x * 0.5
 
-func _input(event):
+func _unhandled_input(event):	# unhandled input -> so when UI takes the input the camera doesn't do shit
+	
 	# Handle mouse wheel for zooming
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
@@ -60,7 +67,9 @@ func zoom_out():
 
 func zoom_into_position(dst_pos : Vector2= get_global_mouse_position()) -> void:
 	var target_zoom = Vector2(3, 3)
-	var duration = 0.5
+	
+	#  dividing by Engine.time_sclae,  makes the camera zoom in independent of time_scale
+	var duration = 0.5 * Engine.time_scale
 	
 	var tween := create_tween()
 	
@@ -68,11 +77,11 @@ func zoom_into_position(dst_pos : Vector2= get_global_mouse_position()) -> void:
 		self,
 		"zoom",
 		Vector2(3,3),
-		0.5
+		duration
 	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property(
 		self,
 		"global_position",
 		dst_pos,
-		0.5
+		duration
 	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
