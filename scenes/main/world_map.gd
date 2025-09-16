@@ -180,6 +180,8 @@ func create_single_polygon(polygon_coords, country_title : String) -> Node2D:
 		points = fix_russia(points, 10)
 	points = clean_geojson_polygon(points)
 	polygon2d.polygon = points
+	cache_leftmost(polygon2d)
+	cache_rightmost(polygon2d)
 	polygon2d.antialiased = true
 	collision_shape.polygon = points
 	
@@ -254,6 +256,48 @@ func highlight_polygon(country_name: String) -> void:
 	for node in nodes:
 		node.get_child(1).color = Color.CRIMSON
 
+
+func _process(delta: float) -> void:
+	var cam_x: float = camera_2d.global_position.x
+
+	for country in country_container.get_children():
+		for islands in country.get_children():
+			var poly: Polygon2D = islands.get_child(0).get_child(1)
+
+			var left: float = get_cached_leftmost_x(poly)
+			var right: float = get_cached_rightmost_x(poly)
+
+			# If polygon is too far left, push it right
+			if right < cam_x - screen_width / 2.0:
+				poly.position.x += screen_width
+
+			# If polygon is too far right, push it left
+			elif left > cam_x + screen_width / 2.0:
+				poly.position.x -= screen_width
+
+
+
+func cache_leftmost(poly: Polygon2D):
+	var left_x = INF
+	for p in poly.polygon:
+		left_x = min(left_x, p.x)
+	poly.set_meta("leftmost_local_x", left_x)
+
+func get_cached_leftmost_x(poly: Polygon2D) -> float:
+	var local_x: float = poly.get_meta("leftmost_local_x")
+	return poly.to_global(Vector2(local_x, 0)).x
+
+
+func cache_rightmost(poly: Polygon2D):
+	var right_x = -INF
+	for p in poly.polygon:
+		right_x = max(right_x, p.x)
+	poly.set_meta("rightmost_x_local", right_x)
+
+
+func get_cached_rightmost_x(poly: Polygon2D) -> float:
+	var local_x: float = poly.get_meta("rightmost_x_local")
+	return poly.to_global(Vector2(local_x, 0)).x
 
 
 #### INPUT ####

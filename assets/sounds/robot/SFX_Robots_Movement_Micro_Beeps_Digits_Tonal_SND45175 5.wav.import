@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://db15qnu4oej8l"
+path="res://.godot/imported/SFX_Robots_Movement_Micro_Beeps_Digits_Tonal_SND45175 5.wav-d43b4952935ac057b4a3c6f1213b8ed0.sample"
+
+[deps]
+
+source_file="res://assets/sounds/robot/SFX_Robots_Movement_Micro_Beeps_Digits_Tonal_SND45175 5.wav"
+dest_files=["res://.godot/imported/SFX_Robots_Movement_Micro_Beeps_Digits_Tonal_SND45175 5.wav-d43b4952935ac057b4a3c6f1213b8ed0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

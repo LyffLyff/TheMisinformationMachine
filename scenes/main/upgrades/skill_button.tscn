@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjobm83r0ww7n"]
+
+[ext_resource type="Texture2D" uid="uid://buwukiuf4ykgv" path="res://assets/icon.svg" id="1_a2t0y"]
+[ext_resource type="Script" uid="uid://bovbmnguyse6u" path="res://scenes/main/upgrades/skill_button.gd" id="1_lvcwb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4fkh4"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[node name="SkillContainer" type="PanelContainer"]
+custom_minimum_size = Vector2(400, 0)
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 6.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4fkh4")
+script = ExtResource("1_lvcwb")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+texture_normal = ExtResource("1_a2t0y")
+stretch_mode = 5
+
+[node name="SkillInfo" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+text = "[center]INFO
+"
+fit_content = true
+
+[node name="Unlock" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Unlock Upgrade"

@@ -24,10 +24,14 @@ Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 [dialogic]
 
 directories/dch_directory={
+"boss": "res://dialogues_monologues/characters/boss.dch",
 "char_01": "res://dialogues_monologues/characters/char_01.dch",
+"char_02": "res://dialogues_monologues/characters/char_02.dch",
 "robot_01": "res://dialogues_monologues/characters/robot_01.dch"
 }
 directories/dtl_directory={
+"death": "res://dialogues_monologues/timelines/death.dtl",
+"game_start": "res://dialogues_monologues/timelines/game_start.dtl",
 "test": "res://dialogues_monologues/test.dtl"
 }
 layout/style_directory={

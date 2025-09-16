@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c6pavm1yqe72n"
+path="res://.godot/imported/SFX_Robots_Vocal_Inhuman_Engine_Voice_SND104147 2.wav-737b29cb18d45ae36e6d1580c46fee1d.sample"
+
+[deps]
+
+source_file="res://assets/sounds/ambience/SFX_Robots_Vocal_Inhuman_Engine_Voice_SND104147 2.wav"
+dest_files=["res://.godot/imported/SFX_Robots_Vocal_Inhuman_Engine_Voice_SND104147 2.wav-737b29cb18d45ae36e6d1580c46fee1d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

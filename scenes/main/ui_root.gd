@@ -23,7 +23,6 @@ func show_country_menu(country_title : String, details) -> void:
 	country_details.show_details(country_title, details)
 
 func load_general_country_info(country_title : String) -> void:
-	if left_column_menu_container.get_child_count() == 0:
-		var general_info := GENERAL_COUNTRY_INFO.instantiate()
-		left_column_menu_container.add_child(general_info)
-		general_info.init_country_info(country_title, CountryData.get_country_data_dict(country_title))
+	var general_info := GENERAL_COUNTRY_INFO.instantiate()
+	left_column_menu_container.add_child(general_info)
+	general_info.init_country_info(country_title, CountryData.get_country_data_dict(country_title))

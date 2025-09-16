@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bakc1l1i3ldxq"
+path="res://.godot/imported/SFX_Electricity_Buzz_Hum_Powertower_Windy_SND65678 3.wav-9b051109f857d36b0bc23f421447caea.sample"
+
+[deps]
+
+source_file="res://assets/sounds/ambience/SFX_Electricity_Buzz_Hum_Powertower_Windy_SND65678 3.wav"
+dest_files=["res://.godot/imported/SFX_Electricity_Buzz_Hum_Powertower_Windy_SND65678 3.wav-9b051109f857d36b0bc23f421447caea.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

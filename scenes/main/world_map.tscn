@@ -150,14 +150,14 @@ size_flags_stretch_ratio = 10.0
 
 [node name="LeftColumnMenuContainer" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 
 [node name="CountryDetails" type="PanelContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer"]
 unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 script = ExtResource("9_i6oof")
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails"]

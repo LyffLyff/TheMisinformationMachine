@@ -1,0 +1,26 @@
+audio music "res://assets/sounds/ambience/SFX_Robots_Vocal_Inhuman_Engine_Voice_SND104147 2.wav" [fade="3.0" volume="-12.0" loop="true"]
+boss: [mood=default]Hey!
+boss: [mood=default]Hello!
+[wait time="1.0"]
+boss: [mood=default]!Qxortcha no lastma! (Why isn't this thing turning on?)
+[wait time="1.5"]
+audio "res://assets/sounds/robot/SFX_Robots_Movement_Micro_Beeps_Digits_Tonal_SND45175 2.wav"
+do Global.tween_label_counter()
+boss: ?GITTSHEMNA? (Finally!)
+boss: Welcome to this universe,......ehhmm........Version.....B_0249
+boss: Hopefully I'm not stressing you out or something, y'know! With my presence and all, since you were just brought into existence and all that kerfufle.
+boss: ?Sikra? Exucse my poor manners!
+boss: I'am V_A0260, but you can call me your humble Creator
+audio "res://assets/sounds/robot/SFX_Robots_Movement_Micro_Beeps_Digits_Tonal_SND45175 4.wav"
+TODO -> OPEN EYES ANIMATION
+boss: As you may have noticed, you cannot use [pulse freq=2.0][u]speech[/u][/pulse]
+boss: But! I was so gracious of a being to programm into you the most important language of your place of work!
+boss: Planet B273  of the Genesis Cluster, a.k.a [pulse freq=2.0][u]Earth[/u][/pulse] as its inhabitants call it, a.k.a. the only place you'll ever  be alowed to see!
+boss: You won't need to speak our language, since you'll  be all alone doing your task! But do not despair. I'm told that I'm a very good talking buddy!
+boss: Oh, sry  [pulse freq=2.0][u]Your Task[/u][/pulse]! Yes, Yes, it is something special indeed, very special to be exact!
+boss: [NIHILISTIC SHITTALK]
+[SPEECH RECOGNITION BUFFER OVERLOAD; RESTARTING MODULE......]
+[wait time="2.0"]
+audio "res://assets/sounds/robot/SFX_Robots_Movement_Micro_Beeps_Digits_Tonal_SND45175 5.wav"
+[SPEECH MODULE SUCCESSFULLY RESTARTED IN  2.0000653 seconds]
+boss: .......and that is how I won the intergalactic architecture competition in 45JKL after the 35th nucleus hit the Delta Cluster....anyhow.....
