@@ -1,21 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://b3551ws5lkjxn"]
 
+[ext_resource type="StyleBox" uid="uid://dtjeyk0ieed3c" path="res://ressources/taks/character_task.tres" id="1_k0xs4"]
 [ext_resource type="Script" uid="uid://yw60ntjpwcee" path="res://scenes/main/MachineTask/core_task.gd" id="1_mes0m"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mes0m"]
-bg_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
 
 [node name="CoreTask" type="PanelContainer"]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 91.0
 grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_mes0m")
+theme_override_styles/panel = ExtResource("1_k0xs4")
 script = ExtResource("1_mes0m")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

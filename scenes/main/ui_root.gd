@@ -7,6 +7,7 @@ const TIME_MODIFIER = preload("uid://bcykwg0e386nb")
 @onready var country_details: PanelContainer = %CountryDetails
 @onready var left_column_menu_container: VBoxContainer = %LeftColumnMenuContainer
 @onready var bottom_middle_container: Control = %BottomMiddleContainer
+@onready var card_menu_button_bar: VBoxContainer = %CardMenuButtonBar
 
 var general_info_menu : Control
 

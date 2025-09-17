@@ -1,5 +1,8 @@
 extends PanelContainer
 
+const UPGRADE_TASK = preload("uid://c835belg2ate2")
+const CHARACTER_TASK = preload("uid://dtjeyk0ieed3c")
+
 @onready var task_label: Label = %TaskLabel
 @onready var task_progress_bar: ProgressBar = %TaskProgressBar
 @onready var timer: Timer = $Timer
@@ -9,7 +12,13 @@ signal task_finished
 var task_price : int = 1 # update with specific changes to a class/value/money
 var task_time : float
 
-func _init_task(title : String, time : float) -> void:
+func _init_task(title : String, time : float, is_upgrade_task : bool = false) -> void:
+	# Style
+	self.add_theme_stylebox_override(
+		"panel",
+		UPGRADE_TASK if is_upgrade_task else CHARACTER_TASK
+	)
+	
 	task_label.text = title
 	
 	# every percent change it updates the progress bar

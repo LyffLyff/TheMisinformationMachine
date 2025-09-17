@@ -15,7 +15,7 @@
 "skip_characters": 0.0,
 "sound_path": "res://assets/sounds/dialogue/SFX_Mechanical_Switch_Electronics_Fuse_Switch_On_And_Off_SND3072.wav",
 "volume_base": 2.5,
-"volume_variance": 0.3
+"volume_variance": 0.30000000000000004
 }
 },
 "style": "",

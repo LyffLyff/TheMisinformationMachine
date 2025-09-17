@@ -1,13 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://bvyvobfrdrd7i"]
+[gd_scene load_steps=12 format=3 uid="uid://bvyvobfrdrd7i"]
 
+[ext_resource type="Script" uid="uid://3fxb67o4hraq" path="res://scenes/ui/main_menu.gd" id="1_btxxm"]
 [ext_resource type="Shader" uid="uid://brpy426nv2xqf" path="res://ressources/shaders/fog.gdshader" id="1_fe2o3"]
 [ext_resource type="Texture2D" uid="uid://b5l2vlk0tbikc" path="res://project_files/logo.png" id="1_sl1te"]
 [ext_resource type="LabelSettings" uid="uid://c140fckgvg1tu" path="res://ressources/label/ui_font_small.tres" id="3_1g8jr"]
 [ext_resource type="AudioStream" uid="uid://cwx24j6cx24a8" path="res://assets/sounds/music/333640__cabled_mess__retro-scifi-sequenced-sine-fm.mp3" id="4_m1kxf"]
+[ext_resource type="FontFile" uid="uid://b01mrm5rtsv5" path="res://assets/fonts/SpaceGrotesk-Bold.ttf" id="4_wb0q5"]
 [ext_resource type="LabelSettings" uid="uid://dwnyj25h5arxv" path="res://ressources/label/roboto_large.tres" id="4_x2yvf"]
-
-[sub_resource type="Gradient" id="Gradient_1g8jr"]
-colors = PackedColorArray(0.8235294, 0.25490198, 0.28235295, 1, 0.078431375, 0.4117647, 0.2784314, 1)
+[ext_resource type="Texture2D" uid="uid://c55xi4aqjk8ll" path="res://assets/portraits/boss/laughing.png" id="6_uhagc"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fe2o3"]
 noise_type = 2
@@ -25,14 +25,13 @@ cellular_return_type = 3
 width = 192
 height = 108
 noise = SubResource("FastNoiseLite_fe2o3")
-color_ramp = SubResource("Gradient_1g8jr")
 seamless = true
 seamless_blend_skirt = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1g8jr"]
 shader = ExtResource("1_fe2o3")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_1g8jr")
-shader_parameter/smoke_color = Color(0.8235294, 0.25490198, 0.28235295, 1)
+shader_parameter/smoke_color = Color(0.22006571, 0.032322165, 0.04410743, 1)
 shader_parameter/distortion_speed = 0.0800000038
 shader_parameter/density = 0.3410000161975
 
@@ -42,6 +41,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_btxxm")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_1g8jr")
@@ -71,32 +71,33 @@ size_flags_vertical = 6
 size_flags_stretch_ratio = 2.0
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Options"]
+[node name="ButtonContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Options"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="StartGame" type="Label" parent="MarginContainer/VBoxContainer/Options/VBoxContainer"]
+[node name="StartGame" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_wb0q5")
 theme_override_font_sizes/font_size = 72
 text = "NEW RUN"
-label_settings = ExtResource("4_x2yvf")
-horizontal_alignment = 1
-vertical_alignment = 1
+flat = true
 
-[node name="Settings" type="Label" parent="MarginContainer/VBoxContainer/Options/VBoxContainer"]
+[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_wb0q5")
 theme_override_font_sizes/font_size = 72
-text = "Settings"
-label_settings = ExtResource("4_x2yvf")
-horizontal_alignment = 1
-vertical_alignment = 1
+text = "SETTINGS"
+flat = true
 
-[node name="Quit" type="Label" parent="MarginContainer/VBoxContainer/Options/VBoxContainer"]
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_wb0q5")
 theme_override_font_sizes/font_size = 72
-text = "Quit"
-label_settings = ExtResource("4_x2yvf")
-horizontal_alignment = 1
-vertical_alignment = 1
+text = "QUIT"
+flat = true
 
 [node name="GameInfo" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -168,3 +169,9 @@ vertical_alignment = 1
 stream = ExtResource("4_m1kxf")
 volume_db = -10.0
 autoplay = true
+
+[node name="Laughing" type="Sprite2D" parent="."]
+position = Vector2(264, 316)
+rotation = -0.51457244
+texture = ExtResource("6_uhagc")
+metadata/_edit_group_ = true

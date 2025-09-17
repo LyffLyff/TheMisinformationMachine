@@ -1,13 +1,20 @@
 extends Node2D
 class_name BaseGame
 
+const RUN_COMPLETED = preload("uid://bcj0vspx44k06")
+
 signal country_data_updated
+signal median_character_action_speed_updated
+signal lost_specimen_speed_updated
 
 @onready var lost_specimen_counter_label : Label = %LostSpecimenLabel
 @onready var per_second_label: Label = %PerSecondLabel
+@onready var completion_percentage: Label = %CompletionPercentage
+
 
 var earth_population : int = 8.23 * 100000000 	# around 7 billion down there
 var lost_specimen : float = 0.0						# amount of people converted/lost hope
+var lost_speciment_percentage : float = 0.0
 var lost_specimen_per_second : float = 0.0
 var specimen_timer : Timer
 
@@ -20,13 +27,12 @@ var country_data : Dictionary[String, Dictionary] =  {
 }
 
 
-func on_specimen_timer_timeout() -> void:
-	# Lost Specimen
-	lost_specimen += lost_specimen_per_second
-	Global.tween_label_counter(lost_specimen_counter_label, lost_specimen)
-	
-	# Per Second
-	per_second_label.text = str(lost_specimen_per_second)
+func check_run_completion() -> bool:
+	# run counts as completed when 90% of the earths population is demoralized
+	lost_speciment_percentage = ( lost_specimen / earth_population)
+	completion_percentage.text = str("%0.2f" % (lost_speciment_percentage * 100))+"%"
+	return false if lost_speciment_percentage < 0.9 else true
+
 
 func _get_empty_country_data_value() -> Dictionary[String, Array]:
 	# Returns the Inner Dictionary of the Country Data for a newly added country
@@ -56,7 +62,7 @@ func new_character_created(character_type : String, country : String) -> void:
 	else:
 		# first Character in Country -> Initialize Value Dictionary in Country Data
 		country_data[country] = _get_empty_country_data_value()
-		country_data[country]["JOKER"].append(Joker.new(country))
+		country_data[country]["JOKER"].append(new_character_object)
 	
 	# Re-Calculate Influence Function
 	lost_specimen_calculator()
@@ -64,6 +70,9 @@ func new_character_created(character_type : String, country : String) -> void:
 	# Emits signal with the updated countries name and values
 	emit_signal("country_data_updated", country, country_data[country])
 	print("NEW CHAR: ", character_type, country)
+	
+	# Emit Signal with new median action speed of updated character class
+	emit_signal("median_character_action_speed_updated", _get_character_action_speed(country, character_type))
 
 
 func lost_specimen_calculator() -> void:
@@ -102,8 +111,27 @@ func lost_specimen_calculator() -> void:
 
 func update_lost_specimen_per_second(new_value :float) -> void:
 	lost_specimen_per_second = new_value
-	if specimen_timer.is_stopped():
-		specimen_timer.wait_time = lost_specimen_per_second
-		specimen_timer.start()
-	else:
-		specimen_timer.wait_time = lost_specimen_per_second
+	emit_signal("lost_specimen_speed_updated", lost_specimen_per_second)
+
+
+func _get_character_action_speed(country : String, character : String) -> int:
+	# action speed for a class in a country is the sum of their action speed divided by how many of them there are
+	# used for progress bars on country menu
+	var sum : int = 0
+	var character_type_data : Array = country_data.get(country)[character]
+	for idx in character_type_data.size():
+		sum += character_type_data[idx].action_speed
+	return sum / character_type_data.size()
+
+
+func _process(delta: float) -> void:
+	# Counting up lost specimens
+	
+	lost_specimen += (lost_specimen_per_second * delta)
+	
+	# Per Second
+	per_second_label.text = str(lost_specimen_per_second)
+	
+	# Check Completion
+	if check_run_completion():
+		get_tree().change_scene_to_packed(RUN_COMPLETED)

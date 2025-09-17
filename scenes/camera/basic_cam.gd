@@ -69,9 +69,9 @@ func zoom_into_position(dst_pos : Vector2= get_global_mouse_position()) -> void:
 	var target_zoom = Vector2(3, 3)
 	
 	#  dividing by Engine.time_sclae,  makes the camera zoom in independent of time_scale
-	var duration = 0.5 * Engine.time_scale
+	var duration = 0.5
 	
-	var tween := create_tween()
+	var tween := create_tween().set_ignore_time_scale()
 	
 	tween.tween_property(
 		self,

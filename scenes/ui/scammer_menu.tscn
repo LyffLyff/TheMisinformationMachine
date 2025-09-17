@@ -1,0 +1,116 @@
+[gd_scene load_steps=6 format=3 uid="uid://b7txeh62p4i8q"]
+
+[ext_resource type="Script" uid="uid://dhwcffnop28l8" path="res://scenes/ui/scammer_menu.gd" id="1_fipbl"]
+[ext_resource type="StyleBox" uid="uid://bdshyk1db1kl0" path="res://ressources/menu_transparent_bg.tres" id="2_fohss"]
+[ext_resource type="PackedScene" uid="uid://bhaw00rwnrbhn" path="res://scenes/ui/popup_top_bar.tscn" id="3_ydlfh"]
+[ext_resource type="LabelSettings" uid="uid://bk2vqu4v7foy2" path="res://ressources/label/header_small.tres" id="4_fyg71"]
+[ext_resource type="Texture2D" uid="uid://7pespmqojr6u" path="res://assets/characters/scammer.png" id="5_fipbl"]
+
+[node name="ScammerMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_force_pass_scroll_events = false
+script = ExtResource("1_fipbl")
+
+[node name="Bg" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_fohss")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ratio = 3.0
+stretch_mode = 0
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="AspectRatioContainer"]
+layout_mode = 2
+ratio = 2.0
+stretch_mode = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="AspectRatioContainer/AspectRatioContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="PopupTopBar" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_ydlfh")]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="Control" type="Control" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "The Scammer"
+label_settings = ExtResource("4_fyg71")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+texture = ExtResource("5_fipbl")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Description" type="RichTextLabel" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[b][color=#9a7dce]The Scammer[/color][/b] is a type of person who [color=#c28c8c][b]exploits[/b][/color] the current [i]capitalistic system[/i] to his full advantage,  
+excusing it as [u][color=#a1a1a1]“just being a cog in the system.”[/color][/u]  
+
+They have lost any [color=#8c8c8c]sense of community[/color], living an [i]ego-driven[/i] and ultimately [color=#b37f7f]unfulfilling[/color] life  
+by [pulse freq=1.8][b]scamming[/b][/pulse] others out of their belongings — primarily [color=#d1b77f][b]money[/b][/color].  
+
+This character is especially [b][pulse freq=1.5]effective[/pulse][/b] in countries with a [color=#7fa3a3]higher median age[/color]  
+and a [color=#7fa3a3]higher standard of living[/color].  
+
+[b][color=#d1b77f]TIP:[/color][/b] Use your [color=#d1b77f]resources[/color] and [color=#d1b77f]money[/color]  
+to [wave amp=18 freq=2]educate people with big egos and small pockets[/wave]  
+into becoming [b][pulse freq=2]scammers[/b][/pulse],  
+helping you [color=#b37f7f][wave amp=25 freq=2]destabilize this planet[/wave][/color].
+"
+
+[node name="PanelContainer" type="PanelContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="DataContainer" type="VBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="close_menu" from="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/PopupTopBar" to="." method="_on_popup_top_bar_close_menu"]

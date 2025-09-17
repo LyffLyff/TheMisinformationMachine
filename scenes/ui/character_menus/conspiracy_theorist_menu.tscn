@@ -1,0 +1,119 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3boouhv04ia6"]
+
+[ext_resource type="StyleBox" uid="uid://bdshyk1db1kl0" path="res://ressources/menu_transparent_bg.tres" id="1_7axp6"]
+[ext_resource type="Script" uid="uid://lp28entcq3vr" path="res://scenes/ui/character_menus/conspiracy_theorist_menu.gd" id="1_vvckt"]
+[ext_resource type="PackedScene" uid="uid://bhaw00rwnrbhn" path="res://scenes/ui/popup_top_bar.tscn" id="2_vvckt"]
+[ext_resource type="LabelSettings" uid="uid://bk2vqu4v7foy2" path="res://ressources/label/header_small.tres" id="3_krtx6"]
+[ext_resource type="Texture2D" uid="uid://dvxd15d1030ls" path="res://assets/characters/conspirator.png" id="5_vvckt"]
+
+[node name="ConspiracyTheorist" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_force_pass_scroll_events = false
+script = ExtResource("1_vvckt")
+
+[node name="Bg" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_7axp6")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ratio = 3.0
+stretch_mode = 0
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="AspectRatioContainer"]
+layout_mode = 2
+ratio = 2.0
+stretch_mode = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="AspectRatioContainer/AspectRatioContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="PopupTopBar" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_vvckt")]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="Control" type="Control" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "The Politician"
+label_settings = ExtResource("3_krtx6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+texture = ExtResource("5_vvckt")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Description" type="RichTextLabel" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[b][color=#9a7dce]The Conspiracy Theorist[/color][/b] is a [color=#c28c8c]desperate soul[/color], searching for hidden magic in a world that has stripped individuals of it.  
+
+They crave [color=#b37f7f][pulse freq=1.5]significance[/pulse][/color] by uncovering [u][color=#a1a1a1]“truths”[/color][/u] that exist only in their imagination.  
+
+Driven by [color=#b37f7f]fear[/color], [color=#b37f7f]frustration[/color], and a relentless need to feel [wave amp=15 freq=2]special[/wave],  
+they [pulse freq=1.8]connect dots[/pulse] that were never meant to be connected.  
+
+This perfect mix of [color=#b37f7f]paranoia[/color] and [color=#c28c8c]hopelessness[/color] makes them ideal pawns for a [color=#c28c8c][b]carefully laid plan[/b][/color].  
+
+[b][wave amp=18 freq=2]Feed them stories![/wave][/b] [b][wave amp=18 freq=2]Whisper promises of secret knowledge![/wave][/b]  
+Give them the [pulse freq=2][color=#7fa3a3]attention and magic[/color][/pulse] they so desperately seek, and suddenly they’ll work tirelessly for your cause —  
+convinced they are [u][b]heroes[/b][/u], never realizing they’re not even facing their demise.
+
+[b][color=#d1b77f]TIP:[/color][/b] These characters unlock once you have a [color=#7fa3a3]well-connected network of agents[/color] within a country.  
+They are especially [b][pulse freq=1.5]effective[/pulse][/b] in [color=#a1a1a1]less densely populated countries[/color],  
+where isolation from the real world and other people comes easily.
+"
+
+[node name="PanelContainer" type="PanelContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="DataContainer" type="VBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="close_menu" from="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/PopupTopBar" to="." method="_on_popup_top_bar_close_menu"]

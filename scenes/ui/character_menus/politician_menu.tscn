@@ -1,0 +1,119 @@
+[gd_scene load_steps=6 format=3 uid="uid://bacgvwdsmiltv"]
+
+[ext_resource type="Script" uid="uid://cxrwbohp1kfjw" path="res://scenes/ui/character_menus/politician_menu.gd" id="1_4a3fa"]
+[ext_resource type="StyleBox" uid="uid://bdshyk1db1kl0" path="res://ressources/menu_transparent_bg.tres" id="2_mjnjs"]
+[ext_resource type="PackedScene" uid="uid://bhaw00rwnrbhn" path="res://scenes/ui/popup_top_bar.tscn" id="3_poj1a"]
+[ext_resource type="LabelSettings" uid="uid://bk2vqu4v7foy2" path="res://ressources/label/header_small.tres" id="4_bqgej"]
+[ext_resource type="Texture2D" uid="uid://cn3hjslvweesk" path="res://assets/characters/politician.png" id="5_4a3fa"]
+
+[node name="Politician" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_force_pass_scroll_events = false
+script = ExtResource("1_4a3fa")
+
+[node name="Bg" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_mjnjs")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ratio = 3.0
+stretch_mode = 0
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="AspectRatioContainer"]
+layout_mode = 2
+ratio = 2.0
+stretch_mode = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="AspectRatioContainer/AspectRatioContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="PopupTopBar" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_poj1a")]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="Control" type="Control" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "The Politician"
+label_settings = ExtResource("4_bqgej")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+texture = ExtResource("5_4a3fa")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Description" type="RichTextLabel" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[b][color=#9a7dce]The Politician[/color][/b] may have the [color=#c28c8c][b]most important task[/b][/color] in society:  
+serving the people of their country by [i]governing responsibly[/i] and [i]discussing policy[/i]  
+to lead them into a [color=#7fa3a3]brighter future[/color].  
+
+Well… that [b][pulse freq=1.5]rarely works[/pulse][/b].  
+The [color=#b37f7f]power[/color] promised by these positions often leads to an [color=#c28c8c]unprecedented level of corruption[/color] —  
+if it wasn’t already there to begin with.  
+
+Every country has its set of politicians, [wave amp=15 freq=2]directing the flow of power[/wave] over their people [i]like gods[/i].  
+
+The good news for us is that this [color=#b37f7f][pulse freq=1.8]flow of power[/pulse][/color] is easily corruptible  
+with a few [color=#d1b77f]bribes[/color] (depending on existing corruption levels)  
+and the lure of [color=#c28c8c]promised power[/color].  
+
+[b][color=#d1b77f]TIP:[/color][/b] Use your [color=#d1b77f]money[/color] to [pulse freq=2][b]bribe politicians[/b][/pulse] to act as your agents.  
+More powerful politicians are [color=#b37f7f]more expensive[/color], so [wave amp=18 freq=2]start with the small fish[/wave].
+"
+
+[node name="PanelContainer" type="PanelContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="DataContainer" type="VBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="close_menu" from="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/PopupTopBar" to="." method="_on_popup_top_bar_close_menu"]

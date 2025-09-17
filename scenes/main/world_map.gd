@@ -34,14 +34,12 @@ var selected_country : String
 
 func _ready():
 	# BaseGameClass Ready
-	specimen_timer = Timer.new()
-	self.add_child(specimen_timer)
-	specimen_timer.connect("timeout", self.on_specimen_timer_timeout)
 	
 	# Signals
 	self.connect("country_selected", camera_2d.zoom_into_position)
 	self.connect("country_data_updated", country_details.reload_data)
 	self.connect("country_single_clicked", ui.load_general_country_info)
+	
 	machine_tasks.connect("character_created", self.new_character_created)
 	
 	var start_time := Time.get_unix_time_from_system()
@@ -58,6 +56,7 @@ func _ready():
 	
 	var load_time := Time.get_unix_time_from_system() - start_time
 	print("World Loaded In: %s seconds" % load_time)
+
 
 func get_all_files_from_folder(folder_path: String = COUNTRY_DATA_FOLDER) -> Array[String]:
 	var files: Array[String] = []
@@ -177,9 +176,9 @@ func create_single_polygon(polygon_coords, country_title : String) -> Node2D:
 	# Set the polygon points
 	if country_title == "russia":
 		points = fix_russia(points, 3)
-	#else:
-	#	# for now just to fasten the debug times -> loads the map faster
-	#	points = fix_russia(points, 10)
+	else:
+		# for now just to fasten the debug times -> loads the map faster
+		points = fix_russia(points, 10)
 	points = clean_geojson_polygon(points)
 	polygon2d.polygon = points
 	polygon2d.antialiased = true

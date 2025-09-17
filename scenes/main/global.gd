@@ -47,3 +47,8 @@ func skill_unlocked(unlocked_skill_id : String):
 
 func _set_time_modifier(new_time_modifier_value : float) -> void:
 	time_modifier = new_time_modifier_value
+
+
+func get_current_country_character_data() -> Dictionary:
+	# Fetches the Current Data Dictionary from the Game's Root
+	return get_tree().root.get_child(get_tree().root.get_child_count() - 1).country_data[CURRENT_COUNTRY]

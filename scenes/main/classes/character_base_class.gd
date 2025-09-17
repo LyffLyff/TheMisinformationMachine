@@ -4,6 +4,8 @@ class_name Character
 
 var median_societal_damage_per_second : float = 0
 
+var action_speed : int
+
 var COUNTRY_OF_ORIGIN : String
 
 # Time this Character was Created -> Important for many Damage Calculation

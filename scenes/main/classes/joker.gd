@@ -28,7 +28,8 @@ func _init(country : String) -> void:
 	effectiveness = randf_range(0.0001, 0.9999)
 	
 	# random integer strictly between 180s and 86400s
-	speed = randi_range(181, 86399)
+	speed = randi_range(20, 200)
+	action_speed = speed
 	
 	# outreach starts with a small random float between 0.1 and 10
 	outreach = randf_range(0.1, 10.0)

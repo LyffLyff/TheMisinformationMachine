@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjobm83r0ww7n"]
+[gd_scene load_steps=5 format=3 uid="uid://cjobm83r0ww7n"]
 
 [ext_resource type="Texture2D" uid="uid://buwukiuf4ykgv" path="res://assets/icon.svg" id="1_a2t0y"]
 [ext_resource type="Script" uid="uid://bovbmnguyse6u" path="res://scenes/main/upgrades/skill_button.gd" id="1_lvcwb"]
+[ext_resource type="LabelSettings" uid="uid://dao5uukhxa6gb" path="res://ressources/label/roboto_medium.tres" id="2_l2uw3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4fkh4"]
 bg_color = Color(0, 0, 0, 1)
@@ -32,6 +33,19 @@ layout_mode = 2
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="SkillTitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 8
+label_settings = ExtResource("2_l2uw3")
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
 
 [node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true

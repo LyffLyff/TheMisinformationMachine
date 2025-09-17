@@ -7,7 +7,7 @@ const PAUSE_MENU = preload("res://scenes/ui/pause_menu.tscn")
 
 signal pause
 
-func _process(_delta: float) -> void:
+func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("pause"):
 		emit_signal("pause")
 		get_tree().paused = !get_tree().paused

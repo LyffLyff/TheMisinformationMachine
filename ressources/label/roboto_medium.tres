@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dao5uukhxa6gb"]
+
+[ext_resource type="FontFile" uid="uid://byy7g18fjfkag" path="res://assets/fonts/Roboto-SemiBold.ttf" id="1_ogwuq"]
+
+[resource]
+font = ExtResource("1_ogwuq")
+font_size = 42
+shadow_color = Color(0, 0, 0, 0.5568628)
+shadow_offset = Vector2(2, 1)

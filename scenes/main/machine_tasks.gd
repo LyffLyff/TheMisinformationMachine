@@ -57,7 +57,7 @@ func start_new_task(task_title : String, type : TASK_TYPES, money_cost : int, ti
 		busy_core_container.add_child(new_task)
 		##TODO -> ADD PRICE after finishing this taks
 		##TODO -> REDUCE MONEY COST FROM THE MONEY AMOUNT AVAILABLE
-		new_task._init_task(task_title, time_cost)
+		new_task._init_task(task_title, time_cost, false)
 		new_task.connect("task_finished", Callable(_machine_task_completed).bind(type, Global.CURRENT_COUNTRY, extra_values))
 		new_task.connect("task_finished", self._start_idling_core)
 		_remove_idle_core()
@@ -70,7 +70,7 @@ func start_skill_task(new_skill : Skill) -> void:
 		busy_cores += 1
 		var new_task := CORE_TASK.instantiate()
 		busy_core_container.add_child(new_task)
-		new_task._init_task(new_skill.name, new_skill.time_cost)
+		new_task._init_task(new_skill.name, new_skill.time_cost, true)
 		new_task.connect("task_finished", Global.skill_unlocked.bind(new_skill.identifier))
 		new_task.connect("task_finished", self._start_idling_core)
 		_remove_idle_core()
