@@ -10,6 +10,7 @@ const COUNTRY_CLR := Color("#4C7031")
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var machine_tasks: PanelContainer = %MachineTasks
 @onready var country_details: PanelContainer = %CountryDetails
+@onready var money_display: VBoxContainer = %MoneyDisplay
 
 signal country_entered
 signal country_exited
@@ -39,6 +40,7 @@ func _ready():
 	self.connect("country_selected", camera_2d.zoom_into_position)
 	self.connect("country_data_updated", country_details.reload_data)
 	self.connect("country_single_clicked", ui.load_general_country_info)
+	self.connect("finances_changed", money_display.update_values)
 	
 	machine_tasks.connect("character_created", self.new_character_created)
 	
@@ -279,7 +281,7 @@ func _on_input_event(viewport, event, shape_idx, polygon_name : String):
 					# HIGHLIGHT POLYGON OF COUNTRY
 					highlight_polygon(polygon_name)
 					
-					ui.show_country_menu(polygon_name, country_data.get(polygon_name, null))
+					ui.show_country_menu(polygon_name, CountryData.character_data_per_country.get(polygon_name, null))
 			elif event.button_index == MOUSE_BUTTON_RIGHT:
 				print("Polygon right-clicked at:", event.position, polygon_name)
 				emit_signal("country_single_clicked", polygon_name)

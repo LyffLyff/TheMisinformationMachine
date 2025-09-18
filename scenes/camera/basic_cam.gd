@@ -3,8 +3,14 @@ extends Camera2D
 # Camera movement settings
 @export var pan_speed: float = 1.0
 @export var zoom_speed: float = 0.1
-@export var min_zoom: float = 0.5
-@export var max_zoom: float = 5.0
+@export var min_zoom: float = 1.0
+@export var max_zoom: float = 3.0
+
+# Limits deifned myself since dragging kinda did funky things on the edges
+var lim_bottom := DisplayServer.window_get_size().y * 0.7
+var lim_top := DisplayServer.window_get_size().y * 0.2
+var lim_right := DisplayServer.window_get_size().x * 0.7
+var lim_left := DisplayServer.window_get_size().x * 0.3
 
 # Internal variables
 var is_dragging: bool = false
@@ -13,12 +19,7 @@ var last_mouse_pos: Vector2
 func _ready():
 	# Enable camera
 	enabled = true
-	
-	# LIMITS
-	limit_bottom = DisplayServer.window_get_size().y * 1.5
-	limit_top = -DisplayServer.window_get_size().y * 0.5
-	limit_right = DisplayServer.window_get_size().x * 1.5
-	limit_left = -DisplayServer.window_get_size().x * 0.5
+
 
 func _unhandled_input(event):	# unhandled input -> so when UI takes the input the camera doesn't do shit
 	
@@ -47,8 +48,19 @@ func stop_drag():
 
 func pan_camera(mouse_pos: Vector2):
 	var delta = (last_mouse_pos - mouse_pos) * pan_speed / zoom
-	global_position += delta
-	last_mouse_pos = mouse_pos
+	var new_pos = global_position + delta
+
+	# Clamp position
+	new_pos.x = clamp(new_pos.x, lim_left, lim_right)
+	new_pos.y = clamp(new_pos.y, lim_top, lim_bottom)
+
+	# Apply only the movement that actually happened
+	var applied_delta = new_pos - global_position
+	global_position = new_pos
+
+	# Update last_mouse_pos *relative to applied movement*
+	last_mouse_pos -= applied_delta * zoom / pan_speed
+
 
 func zoom_in():
 	var new_zoom = zoom * (1.0 + zoom_speed)
@@ -66,6 +78,8 @@ func zoom_out():
 
 
 func zoom_into_position(dst_pos : Vector2= get_global_mouse_position()) -> void:
+	last_mouse_pos = Vector2.ZERO
+	
 	var target_zoom = Vector2(3, 3)
 	
 	#  dividing by Engine.time_sclae,  makes the camera zoom in independent of time_scale

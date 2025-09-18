@@ -4,8 +4,6 @@ extends CharacterMenu
 # Limits -> pass
 # Expected Growth
 
-var is_global : bool = false
-
 @onready var country_label: Label = %CountryLabel
 
 func _ready() -> void:

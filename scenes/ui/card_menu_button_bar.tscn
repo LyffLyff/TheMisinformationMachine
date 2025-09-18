@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://ca0ctijclrk2v"]
+[gd_scene load_steps=7 format=3 uid="uid://ca0ctijclrk2v"]
 
 [ext_resource type="Script" uid="uid://dd0exsduracqq" path="res://scenes/ui/card_menu_button_bar.gd" id="1_ntipx"]
+[ext_resource type="Texture2D" uid="uid://dtbjdalxu13t6" path="res://assets/characters/you.png" id="2_p68w1"]
 [ext_resource type="Texture2D" uid="uid://dvmxq28qdvpwe" path="res://assets/characters/joker.png" id="2_yc1bn"]
 [ext_resource type="Texture2D" uid="uid://7pespmqojr6u" path="res://assets/characters/scammer.png" id="3_p68w1"]
 [ext_resource type="Texture2D" uid="uid://dvxd15d1030ls" path="res://assets/characters/conspirator.png" id="4_io1gj"]
@@ -20,46 +21,52 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
-layout_mode = 2
-
-[node name="Joker" type="TextureButton" parent="HBoxContainer/PanelContainer"]
+[node name="Self" type="Button" parent="HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture_normal = ExtResource("2_yc1bn")
-ignore_texture_size = true
-stretch_mode = 5
+tooltip_text = "Yourself"
+icon = ExtResource("2_p68w1")
+icon_alignment = 1
+expand_icon = true
 
-[node name="PanelContainer2" type="PanelContainer" parent="HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="Scammer" type="TextureButton" parent="HBoxContainer/PanelContainer2"]
+[node name="Joker" type="Button" parent="HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture_normal = ExtResource("3_p68w1")
-ignore_texture_size = true
-stretch_mode = 5
+tooltip_text = "Joker"
+icon = ExtResource("2_yc1bn")
+icon_alignment = 1
+expand_icon = true
 
-[node name="PanelContainer3" type="PanelContainer" parent="HBoxContainer"]
-layout_mode = 2
-
-[node name="Conspirator" type="TextureButton" parent="HBoxContainer/PanelContainer3"]
+[node name="Scammer" type="Button" parent="HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture_normal = ExtResource("4_io1gj")
-ignore_texture_size = true
-stretch_mode = 5
+tooltip_text = "Scammer"
+icon = ExtResource("3_p68w1")
+icon_alignment = 1
+expand_icon = true
 
-[node name="PanelContainer4" type="PanelContainer" parent="HBoxContainer"]
-layout_mode = 2
-
-[node name="Politician" type="TextureButton" parent="HBoxContainer/PanelContainer4"]
+[node name="Conspirator" type="Button" parent="HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture_normal = ExtResource("5_wbi3h")
-ignore_texture_size = true
-stretch_mode = 5
+tooltip_text = "Conspiracy Theorist"
+icon = ExtResource("4_io1gj")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Politician" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+tooltip_text = "Politician"
+icon = ExtResource("5_wbi3h")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="HBoxContainer/Self" to="." method="_on_self_pressed"]

@@ -4,10 +4,15 @@ extends PanelContainer
 @onready var jokers: VBoxContainer = %Jokers
 @onready var scammers: VBoxContainer = %Scammers
 @onready var politicians: VBoxContainer = %Politicians
-@onready var insiders: VBoxContainer = %Insiders
 @onready var conspiracy_theorists: VBoxContainer = %ConspiracyTheorists
 @onready var popup_top_bar: BoxContainer = %CountryTopBar
+@onready var country_progress: VBoxContainer = %CountryProgress
 
+@onready var char_menus := [
+	scammers,
+	conspiracy_theorists,
+	politicians,
+]
 
 func _ready() -> void:
 	popup_top_bar.connect("close_menu", self.close_menu)
@@ -16,10 +21,23 @@ func _ready() -> void:
 # called when the country is selected -> animation, loading data from the conspirators
 func show_details(title : String, country_data) -> void:
 	title_label.text = title.to_upper()
+	country_progress.init_progress()
+	
 	# Country Details can be null -> no characters addded to that region
 	jokers.update_count(
 		country_data["JOKER"].size() if country_data else 0
 	)
+	
+	# Hide/Show Characters deepending on unlock state/progreession
+	for n in char_menus.size():
+		var active : bool = CountryData.get_character_unlock() >= n
+		char_menus[n].visible = active
+		if active:
+			# Update Character Data if unlocked
+			if n == 2:
+				# POLITICIAN
+				char_menus[n].set_to_politican_mode()
+	
 	self.show()
 
 

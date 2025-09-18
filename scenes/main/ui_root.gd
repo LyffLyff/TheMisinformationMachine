@@ -1,4 +1,4 @@
-extends MarginContainer
+extends UISoundManager
 
 const GENERAL_COUNTRY_INFO = preload("res://scenes/ui/general_country_info.tscn")
 const TIME_MODIFIER = preload("uid://bcykwg0e386nb")
@@ -7,6 +7,7 @@ const TIME_MODIFIER = preload("uid://bcykwg0e386nb")
 @onready var country_details: PanelContainer = %CountryDetails
 @onready var left_column_menu_container: VBoxContainer = %LeftColumnMenuContainer
 @onready var bottom_middle_container: Control = %BottomMiddleContainer
+@onready var bottom_right_container: VBoxContainer = %BottomRightContainer
 @onready var card_menu_button_bar: VBoxContainer = %CardMenuButtonBar
 
 var general_info_menu : Control
@@ -18,12 +19,12 @@ func _ready() -> void:
 	country_details.hide()
 
 func _on_world_map_country_entered(title : String) -> void:
-	country_title_label.text = "Country: " + title.to_upper()
+	country_title_label.text = "COUNTRY: " + title.to_upper().replace("_", " ")
 
 func _on_world_map_country_exited(country_polygon) -> void:
 	if !country_polygon:
 		# only empty label when the mouse actually isn't within any country
-		country_title_label.text = "Country: /"
+		country_title_label.text = "COUNTRY: /"
 
 func show_country_menu(country_title : String, details) -> void:
 	Global.CURRENT_COUNTRY = country_title
@@ -39,4 +40,4 @@ func load_general_country_info(country_title : String) -> void:
 
 func show_time_modifier() -> void:
 	var modifier := TIME_MODIFIER.instantiate()
-	bottom_middle_container.add_child(modifier)
+	bottom_right_container.add_child(modifier)

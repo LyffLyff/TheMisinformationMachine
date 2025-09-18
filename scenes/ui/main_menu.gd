@@ -6,6 +6,7 @@ const WORLD_MAP = preload("uid://brnpe61hgy7ud")
 @onready var start_game: Button = %StartGame
 @onready var settings: Button = %Settings
 @onready var quit: Button = %Quit
+@onready var credits: Button = %Credits
 
 func _ready() -> void:
 	for n in button_container.get_children():
@@ -21,6 +22,8 @@ func on_menu_option_pressed(idx : int) -> void:
 		1:
 			print("YES I HAVE SETTINGS")
 		2:
+			print("OPEN CREDITS")
+		3:
 			get_tree().quit()
 		_:
 			printerr("INVALID MENU OPTION IDX")

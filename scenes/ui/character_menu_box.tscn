@@ -13,7 +13,7 @@ offset_top = -62.0
 offset_right = 4.0
 grow_horizontal = 2
 grow_vertical = 0
-size_flags_vertical = 10
+size_flags_vertical = 2
 script = ExtResource("1_enh5y")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -29,6 +29,9 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="AddButton" type="Button" parent="."]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="."]
 layout_mode = 2
 
 [connection signal="pressed" from="AddButton" to="." method="_on_add_button_pressed"]

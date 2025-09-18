@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://brnpe61hgy7ud"]
+[gd_scene load_steps=36 format=3 uid="uid://brnpe61hgy7ud"]
 
 [ext_resource type="Script" uid="uid://dkelfofxdstt6" path="res://scenes/main/world_map.gd" id="1_u0v3u"]
 [ext_resource type="Shader" uid="uid://brpy426nv2xqf" path="res://ressources/shaders/fog.gdshader" id="2_0sgek"]
@@ -12,13 +12,22 @@
 [ext_resource type="Script" uid="uid://btyumjugwdmpd" path="res://scenes/main/ui_root.gd" id="4_0084n"]
 [ext_resource type="Script" uid="uid://cqoipa2i081wm" path="res://scenes/ui/clock.gd" id="5_2035q"]
 [ext_resource type="PackedScene" uid="uid://botyfwwae687k" path="res://scenes/ui/pause_menu.tscn" id="8_06qpl"]
-[ext_resource type="LabelSettings" uid="uid://c140fckgvg1tu" path="res://ressources/label/ui_font_small.tres" id="8_2035q"]
 [ext_resource type="Script" uid="uid://ovlohigfp6nd" path="res://scenes/main/country_details.gd" id="9_i6oof"]
 [ext_resource type="LabelSettings" uid="uid://bk2vqu4v7foy2" path="res://ressources/label/header_small.tres" id="9_pta4i"]
 [ext_resource type="PackedScene" uid="uid://bhaw00rwnrbhn" path="res://scenes/ui/popup_top_bar.tscn" id="10_66y8f"]
 [ext_resource type="Script" uid="uid://dmlv4iuxus264" path="res://scenes/main/machine_tasks.gd" id="10_kn8nd"]
+[ext_resource type="Script" uid="uid://d1stb2edb3bi6" path="res://scenes/main/money_display.gd" id="13_01hs2"]
 [ext_resource type="PackedScene" uid="uid://dwy3m3mupj6op" path="res://scenes/ui/character_menu_box.tscn" id="13_8f6qd"]
+[ext_resource type="Texture2D" uid="uid://d1khg0w034v5x" path="res://assets/icons/Animations/Coin/Coins_00.png" id="13_lh3vv"]
+[ext_resource type="Texture2D" uid="uid://cgk84dyvm036n" path="res://assets/icons/Animations/Coin/Coins_01.png" id="14_xov0s"]
+[ext_resource type="Texture2D" uid="uid://rrb51k5nrbvs" path="res://assets/icons/Animations/Coin/Coins_02.png" id="15_b77df"]
+[ext_resource type="Texture2D" uid="uid://dhc0i1srp8vfa" path="res://assets/icons/Animations/Coin/Coins_03.png" id="16_01hs2"]
+[ext_resource type="Texture2D" uid="uid://b75xk852w2vc4" path="res://assets/icons/up@1x.png" id="17_b77df"]
 [ext_resource type="PackedScene" uid="uid://ca0ctijclrk2v" path="res://scenes/ui/card_menu_button_bar.tscn" id="18_ra53n"]
+[ext_resource type="AudioStream" uid="uid://jvlnm0hngh4c" path="res://assets/sounds/music/824090__cybergenic2021__stringers012.mp3" id="20_00ivn"]
+[ext_resource type="PackedScene" uid="uid://hsjfke2n7o5" path="res://scenes/ui/country_progress.tscn" id="21_gki8l"]
+[ext_resource type="LabelSettings" uid="uid://dao5uukhxa6gb" path="res://ressources/label/roboto_medium.tres" id="23_01hs2"]
+[ext_resource type="Texture2D" uid="uid://dvqsk8bpv2puk" path="res://assets/icons/unlocked.png" id="25_gki8l"]
 
 [sub_resource type="Gradient" id="Gradient_8f6qd"]
 colors = PackedColorArray(0.11764706, 0.24705882, 0.4, 1, 0.06580512, 0.15621221, 0.26303023, 1)
@@ -54,6 +63,17 @@ border_width_right = 4
 border_width_bottom = 4
 border_color = Color(0, 0, 0, 1)
 
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_gki8l"]
+frames = 4
+frame_0/texture = ExtResource("13_lh3vv")
+frame_0/duration = 0.22
+frame_1/texture = ExtResource("14_xov0s")
+frame_1/duration = 0.2
+frame_2/texture = ExtResource("15_b77df")
+frame_2/duration = 0.2
+frame_3/texture = ExtResource("16_01hs2")
+frame_3/duration = 0.2
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8f6qd"]
 
 [node name="WorldMap" type="Node2D"]
@@ -85,7 +105,7 @@ metadata/_edit_lock_ = true
 [node name="Camera2D" type="Camera2D" parent="."]
 process_mode = 1
 position = Vector2(954, 543)
-limit_smoothed = true
+limit_enabled = false
 script = ExtResource("2_twtjt")
 metadata/_edit_lock_ = true
 
@@ -115,6 +135,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_famxf")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/UIRoot/PanelContainer"]
 layout_mode = 2
+theme_override_constants/separation = 10
 metadata/_edit_lock_ = true
 
 [node name="Top" type="HBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer"]
@@ -175,6 +196,45 @@ label_settings = ExtResource("3_0084n")
 horizontal_alignment = 2
 script = ExtResource("5_2035q")
 
+[node name="MoneyDisplay" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("13_01hs2")
+
+[node name="MoneyJinglePlayer" type="AudioStreamPlayer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer2/MoneyDisplay"]
+max_polyphony = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer2/MoneyDisplay"]
+layout_mode = 2
+
+[node name="StaticMoneyLabel" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer2/MoneyDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Spendable Money"
+label_settings = ExtResource("3_0084n")
+horizontal_alignment = 2
+
+[node name="Coin" type="TextureRect" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer2/MoneyDisplay/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("AnimatedTexture_gki8l")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="DiffMoneyPerSecondButton" type="Button" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer2/MoneyDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Money IN"
+icon = ExtResource("17_b77df")
+flat = true
+alignment = 2
+icon_alignment = 2
+expand_icon = true
+
+[node name="MoneyCounter" type="Timer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer2/MoneyDisplay"]
+unique_name_in_owner = true
+autostart = true
+
 [node name="ColorRect" type="ColorRect" parent="UI/UIRoot/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 4)
 layout_mode = 2
@@ -213,35 +273,40 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="CountryProgress" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer" instance=ExtResource("21_gki8l")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="Jokers" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer" instance=ExtResource("13_8f6qd")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 0
 title = "Jokers:"
 button_text = "Farm Jokers"
 
 [node name="Scammers" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer" instance=ExtResource("13_8f6qd")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 0
 title = "Scammers:"
 button_text = "Inform"
-
-[node name="Politicians" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer" instance=ExtResource("13_8f6qd")]
-unique_name_in_owner = true
-layout_mode = 2
-title = "Politicians:"
-button_text = "Bribe"
-
-[node name="Insiders" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer" instance=ExtResource("13_8f6qd")]
-unique_name_in_owner = true
-layout_mode = 2
-title = "Insiders:"
-button_text = "Network"
 
 [node name="ConspiracyTheorists" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer" instance=ExtResource("13_8f6qd")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 0
 title = "Conspiracy Theorists:"
 button_text = "Generate Theory"
+
+[node name="Politicians" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer" instance=ExtResource("13_8f6qd")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+title = "Politicians:"
+button_text = "Bribe"
 
 [node name="EmptyCenter" type="Control" parent="UI/UIRoot/PanelContainer/VBoxContainer/Center"]
 layout_mode = 2
@@ -322,7 +387,8 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6
 text = "Country: /"
-label_settings = ExtResource("8_2035q")
+label_settings = ExtResource("23_01hs2")
+autowrap_mode = 2
 
 [node name="BottomMiddleContainer" type="PanelContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Bottom"]
 unique_name_in_owner = true
@@ -335,40 +401,61 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Bottom"]
+[node name="BottomRightContainer" type="VBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Bottom"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Bottom/VBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Bottom/BottomRightContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
+size_flags_vertical = 6
+tooltip_text = "Skill Points"
 alignment = 1
 
-[node name="Label" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Bottom/VBoxContainer2/HBoxContainer"]
-layout_mode = 2
-text = "SKILL POINTS: "
-
-[node name="SkillPointsCounterLabel" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Bottom/VBoxContainer2/HBoxContainer"]
+[node name="SkillPointsCounterLabel" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Bottom/BottomRightContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "0"
+label_settings = ExtResource("9_pta4i")
 
-[node name="OpenUpgradesButton" type="Button" parent="UI/UIRoot/PanelContainer/VBoxContainer/Bottom/VBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="UI/UIRoot/PanelContainer/VBoxContainer/Bottom/BottomRightContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 3
-text = "Open Upgrades"
+texture = ExtResource("25_gki8l")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="PopupContainer" type="Control" parent="UI"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="PauseMenu" parent="UI" instance=ExtResource("8_06qpl")]
 unique_name_in_owner = true
 visible = false
+
+[node name="BGMusicPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("20_00ivn")
+volume_db = -20.0
+pitch_scale = 0.6
+autoplay = true
+parameters/looping = true
+
+[node name="AmbiencePlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 1
 
 [connection signal="country_entered" from="." to="UI/UIRoot" method="_on_world_map_country_entered"]
 [connection signal="country_exited" from="." to="UI/UIRoot" method="_on_world_map_country_exited"]
 [connection signal="lost_specimen_speed_updated" from="." to="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer/LostSpecimenLabel" method="_on_world_map_lost_specimen_speed_updated"]
 [connection signal="median_character_action_speed_updated" from="." to="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer/Jokers" method="_on_world_map_median_character_action_speed_updated"]
 [connection signal="pause" from="." to="UI" method="_on_world_map_pause"]
+[connection signal="timeout" from="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer2/MoneyDisplay/MoneyCounter" to="." method="_on_money_counter_timeout"]
 [connection signal="hidden" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails" to="." method="_on_country_details_hidden"]
 [connection signal="button_pressed" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer/Jokers" to="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks" method="_on_jokers_button_pressed"]
-[connection signal="pressed" from="UI/UIRoot/PanelContainer/VBoxContainer/Bottom/VBoxContainer2/OpenUpgradesButton" to="UI" method="_on_open_upgrades_button_pressed"]

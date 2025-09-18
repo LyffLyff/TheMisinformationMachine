@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://m5y5dt38h6n7"
+path="res://.godot/imported/SFX_User_Interface_Beep_Button_Happy_Select_Confirm_Deselect_Cancel_SND68348 1.wav-2e8b82ce87fe29968bb9cc3cdade8d73.sample"
+
+[deps]
+
+source_file="res://assets/sounds/ui_effects/SFX_User_Interface_Beep_Button_Happy_Select_Confirm_Deselect_Cancel_SND68348 1.wav"
+dest_files=["res://.godot/imported/SFX_User_Interface_Beep_Button_Happy_Select_Confirm_Deselect_Cancel_SND68348 1.wav-2e8b82ce87fe29968bb9cc3cdade8d73.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

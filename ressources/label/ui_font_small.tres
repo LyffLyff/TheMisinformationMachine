@@ -4,7 +4,7 @@
 
 [resource]
 font = ExtResource("1_xsxx2")
-font_size = 32
+font_size = 20
 shadow_size = 2
 shadow_color = Color(0, 0, 0, 0.5254902)
 shadow_offset = Vector2(2, 1)

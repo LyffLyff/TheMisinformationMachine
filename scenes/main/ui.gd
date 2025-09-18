@@ -6,13 +6,15 @@ const UPGRADE_MENU = preload("uid://dy8snr10xmwmw")
 const CHARACTER_MENUS : Array[PackedScene]  = [
 	preload("uid://buyu42ltal2u7"),		# JOKER
 	preload("uid://b7txeh62p4i8q"),		# SCAMMER
-	preload("uid://b3boouhv04ia6"),		# CONSPIRATOR
 	preload("uid://bacgvwdsmiltv"),		# Politician
+	preload("uid://b3boouhv04ia6"),		# CONSPIRATOR
 ]
 
 @onready var pause_menu: PanelContainer = %PauseMenu
 @onready var card_menu_button_bar: VBoxContainer = %CardMenuButtonBar
 @onready var remaining_time_label : Label = $UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer2/RemainingTime
+@onready var popup_container: Control = %PopupContainer
+
 
 func _ready() -> void:
 	card_menu_button_bar.connect("character_menu_button_selected", self.show_character_menu)
@@ -32,6 +34,10 @@ func run_failed() -> void:
 
 
 func show_character_menu(idx : int) -> void:
-	var menu := CHARACTER_MENUS[idx].instantiate()
-	menu.is_global = true
-	self.add_child(menu)
+	var menu
+	if idx == -1:
+		menu = UPGRADE_MENU.instantiate()
+	else:
+		menu = CHARACTER_MENUS[idx].instantiate()
+		menu.is_global = true
+	popup_container.add_child(menu)

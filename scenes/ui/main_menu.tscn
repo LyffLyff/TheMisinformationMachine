@@ -1,13 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://bvyvobfrdrd7i"]
+[gd_scene load_steps=16 format=3 uid="uid://bvyvobfrdrd7i"]
 
 [ext_resource type="Script" uid="uid://3fxb67o4hraq" path="res://scenes/ui/main_menu.gd" id="1_btxxm"]
 [ext_resource type="Shader" uid="uid://brpy426nv2xqf" path="res://ressources/shaders/fog.gdshader" id="1_fe2o3"]
 [ext_resource type="Texture2D" uid="uid://b5l2vlk0tbikc" path="res://project_files/logo.png" id="1_sl1te"]
 [ext_resource type="LabelSettings" uid="uid://c140fckgvg1tu" path="res://ressources/label/ui_font_small.tres" id="3_1g8jr"]
 [ext_resource type="AudioStream" uid="uid://cwx24j6cx24a8" path="res://assets/sounds/music/333640__cabled_mess__retro-scifi-sequenced-sine-fm.mp3" id="4_m1kxf"]
-[ext_resource type="FontFile" uid="uid://b01mrm5rtsv5" path="res://assets/fonts/SpaceGrotesk-Bold.ttf" id="4_wb0q5"]
 [ext_resource type="LabelSettings" uid="uid://dwnyj25h5arxv" path="res://ressources/label/roboto_large.tres" id="4_x2yvf"]
 [ext_resource type="Texture2D" uid="uid://c55xi4aqjk8ll" path="res://assets/portraits/boss/laughing.png" id="6_uhagc"]
+[ext_resource type="Shader" uid="uid://c5ud71dw6t1gs" path="res://scenes/ui/moving_sprite.gdshader" id="9_otr3d"]
+[ext_resource type="Texture2D" uid="uid://dvxd15d1030ls" path="res://assets/characters/conspirator.png" id="10_8ekit"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fe2o3"]
 noise_type = 2
@@ -35,6 +36,90 @@ shader_parameter/smoke_color = Color(0.22006571, 0.032322165, 0.04410743, 1)
 shader_parameter/distortion_speed = 0.0800000038
 shader_parameter/density = 0.3410000161975
 
+[sub_resource type="Shader" id="Shader_7suek"]
+code = "shader_type canvas_item;
+
+uniform float speed_multiplier : hint_range(0.1, 10.0) = 0.005;
+uniform float bounce_range : hint_range(5.0, 50.0) = 15.0;
+uniform float scale_range : hint_range(0.1, 2.0) = 0.4;
+uniform float min_scale : hint_range(0.3, 1.0) = 0.6;
+uniform float random_seed : hint_range(0.0, 1000.0) = 1.0;
+
+// Simple pseudo-random function
+float random(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+}
+
+// Smooth noise function
+float noise(vec2 st) {
+    vec2 i = floor(st);
+    vec2 f = fract(st);
+
+    float a = random(i);
+    float b = random(i + vec2(1.0, 0.0));
+    float c = random(i + vec2(0.0, 1.0));
+    float d = random(i + vec2(1.0, 1.0));
+
+    vec2 u = f * f * (3.0 - 2.0 * f);
+
+    return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+}
+
+void vertex() {
+    // Extremely slow time progression for scary effect
+    float glacial_time = TIME * speed_multiplier;
+
+    // Create different frequencies for different movements using random seed
+    vec2 seed_offset = vec2(random_seed, random_seed * 1.23);
+    float scale_seed = random_seed * 2.34;
+
+    // Generate extremely slow random movement using noise
+    float offset_x = (noise(vec2(glacial_time * 0.3 + seed_offset.x, 0.0)) - 0.5) * bounce_range;
+    float offset_y = (noise(vec2(glacial_time * 0.2 + seed_offset.y, 100.0)) - 0.5) * bounce_range;
+
+    // Add some very slow circular/orbital motion
+    float orbit_x = sin(glacial_time * 0.15 + random_seed) * bounce_range * 0.4;
+    float orbit_y = cos(glacial_time * 0.1 + random_seed * 1.5) * bounce_range * 0.4;
+
+    // Combine movements
+    VERTEX.x += offset_x + orbit_x;
+    VERTEX.y += offset_y + orbit_y;
+
+    // Extremely slow scale changes - breathing/pulsing effect
+    float scale_noise = noise(vec2(glacial_time * 0.08 + scale_seed, 50.0));
+    float scale_pulse = sin(glacial_time * 0.12 + scale_seed) * 0.5 + 0.5;
+
+    // Combine noise and pulse for organic scaling
+    float scale_factor = min_scale + (scale_noise * 0.7 + scale_pulse * 0.3) * scale_range;
+
+    // Apply non-uniform scaling for more unsettling effect
+    float x_scale = scale_factor + sin(glacial_time * 0.09 + scale_seed) * 0.1;
+    float y_scale = scale_factor + cos(glacial_time * 0.07 + scale_seed * 1.3) * 0.1;
+
+    VERTEX.x *= x_scale;
+    VERTEX.y *= y_scale;
+}
+
+void fragment() {
+    COLOR = texture(TEXTURE, UV);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_otr3d"]
+shader = SubResource("Shader_7suek")
+shader_parameter/speed_multiplier = 1.4000000632401202
+shader_parameter/bounce_range = 20.0000007125
+shader_parameter/scale_range = 0.70000002999012
+shader_parameter/min_scale = 0.80000003567093
+shader_parameter/random_seed = 737.2630350199925
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ekit"]
+shader = ExtResource("9_otr3d")
+shader_parameter/speed_multiplier = 1.00000004424012
+shader_parameter/bounce_range = 15.0
+shader_parameter/scale_range = 0.70000002999012
+shader_parameter/min_scale = 0.80000003567093
+shader_parameter/random_seed = 605.39602875631
+
 [node name="MainMenu" type="PanelContainer"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -42,10 +127,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_btxxm")
+metadata/_edit_lock_ = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_1g8jr")
 layout_mode = 2
+metadata/_edit_lock_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -53,23 +140,27 @@ theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 8
+metadata/_edit_lock_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+metadata/_edit_lock_ = true
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 560)
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
+size_flags_stretch_ratio = 5.0
 texture = ExtResource("1_sl1te")
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_lock_ = true
 
 [node name="Options" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 size_flags_stretch_ratio = 2.0
 alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="ButtonContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Options"]
 unique_name_in_owner = true
@@ -78,7 +169,6 @@ layout_mode = 2
 [node name="StartGame" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_wb0q5")
 theme_override_font_sizes/font_size = 72
 text = "NEW RUN"
 flat = true
@@ -86,42 +176,50 @@ flat = true
 [node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_wb0q5")
 theme_override_font_sizes/font_size = 72
 text = "SETTINGS"
+flat = true
+
+[node name="Credits" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "CREDITS"
 flat = true
 
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_wb0q5")
 theme_override_font_sizes/font_size = 72
 text = "QUIT"
 flat = true
 
 [node name="GameInfo" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="LiterallyMe" type="Label" parent="MarginContainer/VBoxContainer/GameInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
 text = "Made By 
 Sebastian Hinterberger 
 / 
 LyffLyff"
 label_settings = ExtResource("3_1g8jr")
+vertical_alignment = 1
+autowrap_mode = 2
+justification_flags = 162
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 8
+metadata/_edit_lock_ = true
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
+metadata/_edit_lock_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2"]
 layout_mode = 2
@@ -171,7 +269,16 @@ volume_db = -10.0
 autoplay = true
 
 [node name="Laughing" type="Sprite2D" parent="."]
-position = Vector2(264, 316)
+material = SubResource("ShaderMaterial_otr3d")
+position = Vector2(265, 328)
 rotation = -0.51457244
 texture = ExtResource("6_uhagc")
+metadata/_edit_group_ = true
+
+[node name="Conspirator" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_8ekit")
+position = Vector2(1690.9999, 204.00003)
+rotation = 0.16201173
+scale = Vector2(0.58772266, 0.6286787)
+texture = ExtResource("10_8ekit")
 metadata/_edit_group_ = true

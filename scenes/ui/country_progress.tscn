@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://hsjfke2n7o5"]
+
+[ext_resource type="Script" uid="uid://ck7cpekrw1vtl" path="res://scenes/ui/country_progress.gd" id="1_g1pri"]
+
+[node name="CountryProgress" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g1pri")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Country Progress:"
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+step = 0.001
+value = 64.0
+
+[node name="NextUnlockLabel" type="Label" parent="."]
+layout_mode = 2

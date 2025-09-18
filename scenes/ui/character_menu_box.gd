@@ -10,6 +10,7 @@ extends VBoxContainer
 
 signal button_pressed
 
+# JOKER, SCAMMER & CONSPIRATOR
 var progress_per_second : float = 0.0  # in % per second
 var progression_started : bool = false
 var progress : float = 0.0
@@ -33,6 +34,9 @@ func update_progress_speed(new_progress : float) -> void:
 	progress_per_second = new_progress
 	if !progression_started:
 		progression_started = true
+
+func set_to_politican_mode():
+	add_button.text = "Bribe: %0.2f$/day" % CountryData.get_next_bribe_cost_per_day(1)
 
 func _on_add_button_pressed() -> void:
 	emit_signal("button_pressed")

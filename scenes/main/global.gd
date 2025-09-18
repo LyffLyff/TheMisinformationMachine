@@ -8,11 +8,27 @@ const class_costs : Dictionary = {
 # VARIABLES THAT MUST BE UPDATED REGULARLY
 var CURRENT_COUNTRY : String 	# holds the country name which currently is in focus
 
-func tween_label_counter(label : Label, new_value, duration : float = 0.5) -> void:
+func tween_label_counter(label : Label, new_value, duration : float = 1.0, is_float : bool = false) -> void:
+	var val
+	var current_val
+	if is_float:
+		val = float(new_value)
+		current_val = float(label.text)
+	else:
+		val = int(new_value)
+		current_val = int(label.text)
+	
+	print("C: %d, N: %d" % [current_val, val])
+		
 	create_tween().tween_method(
-		func(value): label.text = str(int(new_value)),
-		int(label.text),                      
-		new_value,                        
+		func(value): 
+			if label:
+				if is_float:
+					label.text = "%.1f" % value  # 1 decimal place for floats
+				else:
+					label.text = str(int(value)),  # No decimals for integers
+		current_val,                      
+		val,                        
 		duration                     
 	)
 

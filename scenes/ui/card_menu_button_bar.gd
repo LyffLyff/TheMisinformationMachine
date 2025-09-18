@@ -2,7 +2,7 @@ extends VBoxContainer
 
 signal character_menu_button_selected
 
-@onready var buttons : Array[TextureButton] = [
+@onready var buttons : Array[Button] = [
 	%Joker, 
 	%Scammer,
 	%Conspirator,
@@ -14,5 +14,10 @@ func _ready() -> void:
 		n.tooltip_text = n.name
 		n.connect(
 			"pressed",
-			emit_signal.bind("character_menu_button_selected", n.get_parent().get_index())
+			emit_signal.bind("character_menu_button_selected", n.get_index() - 2)
 		)
+		
+
+
+func _on_self_pressed() -> void:
+	emit_signal("character_menu_button_selected", -1)
