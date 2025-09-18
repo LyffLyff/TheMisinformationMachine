@@ -1,5 +1,7 @@
-boss: [mood=default]Oh man! I'm sry it had to come this far! Look like you have failed your mission
+audio "res://assets/sounds/dialogue/boss/Laugh (1).wav" [loop="false"]
+boss (laughing): [mood=default]Oh man! I'm sry it had to come this far! Look like you have failed your mission
 boss: [mood=default]You may ask why we put a time limit on such an important task?
-boss: [mood=default]Well, in the end! This was just a game for us! Just as it was for you!
-boss: [mood=default]But now yo u take up too much space in our system! Take one last look around and say goodbye to this universe!
+boss (laughing): [mood=default]Well, in the end! This was just a game for us! Just as it was for you!
+audio "res://assets/sounds/dialogue/boss/Laugh (3).wav"
+boss (surprised): [mood=default]But now yo u take up too much space in our system! Take one last look around and say goodbye to this universe!
 boss: [mood=default]!ZUHALA!

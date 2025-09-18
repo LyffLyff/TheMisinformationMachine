@@ -24,4 +24,4 @@ func set_next_unlock(idx : int):
 	next_unlock_label.text = UNLOCKS[idx]
 
 func init_progress():
-	progress_bar.value = CountryData.get_progression()
+	progress_bar.value = CountryData.get_total_progression()

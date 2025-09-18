@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=37 format=3 uid="uid://7iq241q8m666"]
+[gd_resource type="Theme" load_steps=39 format=3 uid="uid://7iq241q8m666"]
 
 [ext_resource type="FontFile" uid="uid://cboudv34kyac0" path="res://assets/fonts/Roboto-Bold.ttf" id="1_mfj2l"]
 [ext_resource type="Texture2D" uid="uid://duw1tgvi0xo3b" path="res://ressources/themes/black_and_white_theme/icons/checked.svg" id="1_rdkwa"]
@@ -137,44 +137,69 @@ content_margin_right = 2.0
 bg_color = Color(0, 0, 0, 1)
 anti_aliasing = false
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fj6ix"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_up5n0"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rtw43"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qb0p1"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_mfj2l"]
 color = Color(1, 1, 1, 1)
 grow_begin = 2.0
 grow_end = 2.0
 thickness = 2
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmmbi"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uofra"]
 bg_color = Color(0, 0, 0, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8usut"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c6ptg"]
 bg_color = Color(0, 0, 0, 1)
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 border_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_77rre"]
-bg_color = Color(1, 1, 1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rlf55"]
-bg_color = Color(0.12549, 0.12549, 0.12549, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(1, 1, 1, 1)
 
 [resource]
 Button/colors/font_color = Color(1, 1, 1, 1)
@@ -225,18 +250,20 @@ CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_it01w")
 CheckButton/styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_ru8ql")
 CheckButton/styles/normal = SubResource("StyleBoxFlat_5h1yr")
 CheckButton/styles/pressed = SubResource("StyleBoxFlat_l7rt4")
+HScrollBar/styles/grabber = SubResource("StyleBoxFlat_fj6ix")
+HScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_up5n0")
+HScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_rtw43")
+HScrollBar/styles/scroll = SubResource("StyleBoxFlat_qb0p1")
 HSeparator/styles/separator = SubResource("StyleBoxLine_mfj2l")
 HSlider/icons/grabber = ExtResource("7_c6ptg")
 HSlider/icons/grabber_highlight = ExtResource("8_0r4r1")
 HSlider/icons/tick = ExtResource("9_tg2rm")
-HSlider/styles/grabber_area = SubResource("StyleBoxFlat_mmmbi")
-HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_8usut")
-HSlider/styles/slider = SubResource("StyleBoxFlat_77rre")
 Label/font_sizes/font_size = 16
 Label/fonts/font = ExtResource("1_mfj2l")
 MarginContainer/constants/margin_bottom = 10
 MarginContainer/constants/margin_left = 10
 MarginContainer/constants/margin_right = 10
 MarginContainer/constants/margin_top = 10
-PanelContainer/styles/panel = SubResource("StyleBoxFlat_rlf55")
+Panel/styles/panel = SubResource("StyleBoxFlat_uofra")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_c6ptg")
 RichTextLabel/fonts/bold_font = ExtResource("2_mfj2l")

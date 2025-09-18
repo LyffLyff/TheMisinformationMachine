@@ -1,4 +1,4 @@
-extends PanelContainer
+extends UISoundManager
 
 const WORLD_MAP = preload("uid://brnpe61hgy7ud")
 
@@ -7,6 +7,7 @@ const WORLD_MAP = preload("uid://brnpe61hgy7ud")
 @onready var settings: Button = %Settings
 @onready var quit: Button = %Quit
 @onready var credits: Button = %Credits
+
 
 func _ready() -> void:
 	for n in button_container.get_children():

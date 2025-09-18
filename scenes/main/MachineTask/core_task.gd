@@ -8,9 +8,11 @@ const CHARACTER_TASK = preload("uid://dtjeyk0ieed3c")
 @onready var timer: Timer = $Timer
 
 signal task_finished
+signal upgrade_finished
 
 var task_price : int = 1 # update with specific changes to a class/value/money
 var task_time : float
+var upgrade : bool = false
 
 func _init_task(title : String, time : float, is_upgrade_task : bool = false) -> void:
 	# Style
@@ -20,6 +22,7 @@ func _init_task(title : String, time : float, is_upgrade_task : bool = false) ->
 	)
 	
 	task_label.text = title
+	upgrade = is_upgrade_task
 	
 	# every percent change it updates the progress bar
 	Global.connect("time_modifier_changed", self._update_task_speed)
@@ -38,6 +41,10 @@ func _update_progess() -> void:
 	var new_value : int = task_progress_bar.value + 1
 	if new_value == 100:
 		emit_signal("task_finished")
+		GlobalSoundPlayer.play_generic_task_jingle()
+		if upgrade:
+			emit_signal("upgrade_finished")
+			# TODO PLAY SOUND
 		_close_core()
 	task_progress_bar.set_value_no_signal(new_value)
 

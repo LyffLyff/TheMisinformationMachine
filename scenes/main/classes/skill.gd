@@ -6,6 +6,8 @@ var identifier : String = ""
 
 var description : String = "Description"
 
+var icon : Texture2D
+
 var money_cost : int = 10000
 
 var skill_point_cost : int = 1
@@ -21,6 +23,7 @@ var repeatable_unlock : bool = false
 func _init(
 	unique_id : String,
 	i_name : String,  
+	skill_icon : Texture2D,
 	i_decription : String, 
 	m_cost : int, 
 	s_cost : int, 
@@ -30,6 +33,7 @@ func _init(
 ) -> void:
 	identifier = unique_id
 	name = i_name
+	icon = skill_icon
 	description = i_decription
 	money_cost = m_cost
 	skill_point_cost = s_cost

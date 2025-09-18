@@ -3,6 +3,9 @@ class_name UISoundManager
 
 var playback:AudioStreamPlaybackPolyphonic
 
+const CLOSE_SOUND = preload("uid://m5y5dt38h6n7")
+
+
 func _enter_tree() -> void:
 	# Create an audio player
 	var player = AudioStreamPlayer.new()
@@ -20,17 +23,23 @@ func _enter_tree() -> void:
 
 
 func _on_node_added(node:Node) -> void:
-	if node is Button or node is TextureButton:
+	
+	if node.is_in_group("menu_option") or node.is_in_group("increase_button"):
+		node.pressed.connect(_menu_button_pressed)
+	elif node.is_in_group("close"):
+		node.pressed.connect(_play_close_sound)
+	elif node is Button or node is TextureButton:
 		# If the added node is a button we connect to its mouse_entered and pressed signals
 		# and play a sound
 		node.mouse_entered.connect(_play_hover)
-		node.pressed.connect(_play_pressed)
 
 
 func _play_hover() -> void:
 	playback.play_stream(preload("res://assets/sounds/ui_effects/SFX_User_Interface_Alert_Notification_Mobile_App_General_04_SND76973.wav"), 0, 0, randf_range(0.9, 1.1))
 
+func _play_close_sound():
+	playback.play_stream(CLOSE_SOUND)
 
-func _play_pressed() -> void:
-	print("pressed")
-	#playback.play_stream(preload('res://beep_long.wav'), 0, 0, randf_range(0.9, 1.1))
+func _menu_button_pressed() -> void:
+	playback.play_stream(
+		preload("res://assets/sounds/ui_effects/SFX_User_Interface_Beep_Button_Happy_Select_Confirm_Deselect_Cancel_SND68348.wav"), 0, 0, randf_range(0.9, 1.1))

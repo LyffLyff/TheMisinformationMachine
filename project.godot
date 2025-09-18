@@ -21,6 +21,7 @@ boot_splash/name="The Misinformation Ma"
 Global="*res://scenes/main/global.gd"
 CountryData="*res://scenes/main/classes/country_data.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
+GlobalSoundPlayer="*res://scenes/main/classes/GlobalSoundPlayer.gd"
 
 [dialogic]
 
@@ -33,6 +34,8 @@ directories/dch_directory={
 directories/dtl_directory={
 "death": "res://dialogues_monologues/timelines/death.dtl",
 "game_start": "res://dialogues_monologues/timelines/game_start.dtl",
+"intro": "res://dialogues_monologues/timelines/intro.dtl",
+"money_run_out": "res://dialogues_monologues/timelines/money_run_out.dtl",
 "run_completed": "res://dialogues_monologues/timelines/run_completed.dtl",
 "run_failed": "res://dialogues_monologues/timelines/run_failed.dtl",
 "test": "res://dialogues_monologues/test.dtl"
@@ -72,6 +75,18 @@ audio/channel_defaults={
 "loop": false,
 "volume": 0.0
 },
+"ambience": {
+"audio_bus": "",
+"fade_length": 3.0,
+"loop": true,
+"volume": -25.0
+},
+"laugh": {
+"audio_bus": "",
+"fade_length": 1.0,
+"loop": true,
+"volume": 0.0
+},
 "music": {
 "audio_bus": "",
 "fade_length": 0.0,
@@ -97,6 +112,9 @@ enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
 [global_group]
 
 interactive_ui=""
+menu_option=""
+increase_button=""
+close=""
 
 [gui]
 
@@ -110,7 +128,7 @@ wav={
 "compress/mode": 2,
 "edit/loop_begin": 0,
 "edit/loop_end": -1,
-"edit/loop_mode": 2,
+"edit/loop_mode": 1,
 "edit/normalize": false,
 "edit/trim": false,
 "force/8_bit": false,

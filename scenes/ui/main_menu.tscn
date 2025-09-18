@@ -166,28 +166,28 @@ metadata/_edit_lock_ = true
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="StartGame" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer"]
+[node name="StartGame" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer" groups=["menu_option"]]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
 text = "NEW RUN"
 flat = true
 
-[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer"]
+[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer" groups=["menu_option"]]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
 text = "SETTINGS"
 flat = true
 
-[node name="Credits" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer"]
+[node name="Credits" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer" groups=["menu_option"]]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
 text = "CREDITS"
 flat = true
 
-[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer"]
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer" groups=["menu_option"]]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 72

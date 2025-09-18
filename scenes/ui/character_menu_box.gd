@@ -36,7 +36,7 @@ func update_progress_speed(new_progress : float) -> void:
 		progression_started = true
 
 func set_to_politican_mode():
-	add_button.text = "Bribe: %0.2f$/day" % CountryData.get_next_bribe_cost_per_day(1)
+	add_button.text = "Bribe: %0.2f$/day" % CountryData.get_next_bribe_cost_per_day()
 
 func _on_add_button_pressed() -> void:
 	emit_signal("button_pressed")

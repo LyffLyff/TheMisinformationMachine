@@ -8,28 +8,32 @@ func _ready() -> void:
 		skill.init_skill(MACHINE_UPGRADES.values()[n])
 
 var MACHINE_UPGRADES : Dictionary = {
+	"BACKGROUND_SCRIPT" : Skill.new(
+		"BACKGROUND_SCRIPT",
+		"Automatic Poisoning",
+		load("res://assets/icons/789_Lorc_RPG_icons/Icon.1_39.png"),
+		"Python is a [color=#9a7dce][b]powerful[/b][/color] language for [color=#7fa3a3]scripting[/color].\nUse your knowledge to [wave amp=15 freq=2]craft a convoluted algorithm[/wave] that will automatically [pulse freq=1.5][color=#b37f7f]poison the minds[/color][/pulse] of unsuspecting individuals.",
+		0,
+		100,
+		4,
+		"",
+		false
+	),
 	"TIME_MULTIPLIER" : Skill.new(
 		"TIME_MULTIPLIER",
 		"Time Perception\nModifier",
-		"In the corners of you OS you have detected a little Slider to modify your perception of time\nSpent a few minutes to programm a script to allow you to edit it on demand\n[WARNING: THIS DOES AFFECT YOUR LIFESPAN]",
+		load("res://assets/icons/789_Lorc_RPG_icons/Icon.2_98.png"),
+		"In the corners of your OS you have detected a little [color=#9a7dce][pulse freq=1.5]Slider[/pulse][/color] to modify your perception of [color=#b37f7f]time[/color].\nSpent a few minutes to [wave amp=15 freq=2]program a script[/wave] to allow you to edit it on demand.\n[color=#d1b77f][b][pulse freq=1.5][WARNING][/pulse]: THIS DOES AFFECT YOUR LIFESPAN[/b][/color]",
 		0,
 		1,
 		1.0,
 		"TIME_MULTIPLIER",
 	),
-	"UNLOCK_NEW_CLASS" : Skill.new(
-		"UNLOCK_NEW_CLASS",
-		"Unlock Next Class",
-		"Unlock the next pawn in this worthless game",
-		0,
-		5,
-		100,
-		"",
-	),
 	"IDLE_CORE_MINER" : Skill.new(
 		"IDLE_CORE_MINER",
 		"Idle Core\nBitcoin Miner",
-		"In this  age and time, people have created this illusion  of a free and independent money system called BITCOIN. Mine them yourself by making use of your free idling cores",
+		load("res://assets/icons/789_Lorc_RPG_icons/Icon.2_25.png"),
+		"In this age and time, people have created the illusion of a [color=#7fa3a3][pulse freq=1.5]free and independent money system[/pulse][/color] called [b][color=#c28c8c]BITCOIN[/color][/b].\n[wave amp=12 freq=2]Mine them yourself[/wave] by making use of your free [color=#b37f7f]idling cores[/color].",
 		20,
 		1,
 		10,
@@ -38,7 +42,8 @@ var MACHINE_UPGRADES : Dictionary = {
 	"INCREASE_CPU_CORES" : Skill.new(
 		"INCREASE_CPU_CORES",
 		"E-Waste CPUs",
-		"While scrolling through the Web you found an Add for unused CPUs. You could buy them and expand your amount of cores.\nWatch out though prices are always fluctuating",
+		load("res://assets/icons/789_Lorc_RPG_icons/Icon.3_14.png"),
+		"While scrolling through the Web you found an [color=#9a7dce][pulse freq=1.5]Ad[/pulse][/color] for [b][color=#7fa3a3]unused CPUs[/color][/b].\nYou could [wave amp=14 freq=2]buy them[/wave] and expand your amount of [color=#b37f7f]cores[/color].\n[color=#d1b77f][b]Watch out[/b][/color] though — [pulse freq=1.2]prices are always fluctuating[/pulse].",
 		randi_range(2, 200),
 		0,
 		10,
@@ -48,7 +53,8 @@ var MACHINE_UPGRADES : Dictionary = {
 	"OVERCLOCK" : Skill.new(
 		"OVERCLOCK",
 		"Overclock\nyour cores",
-		"These dumb inhabitants of this planet have limited power supplies to your CPUs to a few volts limiting your effectiveness. Why not increase that a bit?\n(WARNING: TOO MUCH INCREASE CAN FRY YOUR CORES AND KILL YOU)",
+		load("res://assets/icons/789_Lorc_RPG_icons/Icons8_76.png"),
+		"These dumb inhabitants of this planet have limited [color=#7fa3a3]power supplies[/color] to your CPUs, restricting you to only a few volts.\n[wave amp=14 freq=2]Why not increase that a bit?[/wave]\n[color=#d1b77f][b][pulse freq=1.5](WARNING: TOO MUCH CAN FRY YOUR CORES AND KILL YOU)[/pulse][/b][/color]",
 		0,
 		0,
 		0,
@@ -58,7 +64,8 @@ var MACHINE_UPGRADES : Dictionary = {
 	"BANK_HEISTS" : Skill.new(
 		"BANK_HEISTS",
 		"Do a\nbank Heist",
-		"Since the inhabitants have discovered electricity, it lead to the increased digitization of once phyisical goods including money. Use this obviously flawed system and move some money into your digital pockets",
+		load("res://assets/icons/789_Lorc_RPG_icons/Icons8_32.png"),
+		"Since the inhabitants discovered [color=#7fa3a3]electricity[/color], it led to the digitization of once-physical goods — including [color=#b37f7f]money[/color].\nUse this obviously flawed system and [pulse freq=1.5][b]move some money[/b][/pulse] into your [wave amp=12 freq=2]digital pockets[/wave].",
 		0,
 		100,
 		4,

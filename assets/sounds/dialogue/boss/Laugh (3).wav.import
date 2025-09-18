@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://blptll0astv26"
+path="res://.godot/imported/Laugh (3).wav-847a5f1be32e98d2506475265d00f2f2.sample"
+
+[deps]
+
+source_file="res://assets/sounds/dialogue/boss/Laugh (3).wav"
+dest_files=["res://.godot/imported/Laugh (3).wav-847a5f1be32e98d2506475265d00f2f2.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=1
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

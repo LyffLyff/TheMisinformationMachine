@@ -1,4 +1,5 @@
 extends Character
+class_name Politician
 
 var bribe_money_per_day : float = 0.0
 

@@ -5,7 +5,7 @@
 &"color": Color(1, 1, 1, 1),
 &"custom_info": {
 "prefix": "",
-"sound_mood_default": "",
+"sound_mood_default": "default",
 "sound_moods": {
 "default": {
 "mode": 0,
@@ -18,21 +18,70 @@
 "volume_variance": 0.30000000000000004
 }
 },
-"style": "",
+"style": "premade_dialogue",
 "suffix": ""
 },
-&"default_portrait": "silent",
+&"default_portrait": "default",
 &"description": "",
 &"display_name": "",
 &"mirror": false,
 &"nicknames": ["Boss"],
 &"offset": Vector2(0, 0),
 &"portraits": {
-"silent": {
+"angry": {
 "export_overrides": {
-"image": "\"res://assets/portraits/boss/boss_silent.png\""
+"image": "\"res://assets/portraits/boss/angry_2.png\""
 },
-"ignore_char_scale": false,
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "default"
+},
+"default": {
+"export_overrides": {
+"image": "\"res://assets/portraits/boss/default.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "default"
+},
+"excited": {
+"export_overrides": {
+"image": "\"res://assets/portraits/boss/excited.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "default"
+},
+"laughing": {
+"export_overrides": {
+"image": "\"res://assets/portraits/boss/laughing.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "default"
+},
+"pouty": {
+"export_overrides": {
+"image": "\"res://assets/portraits/boss/pouty.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "default"
+},
+"surprised": {
+"export_overrides": {
+"image": "\"res://assets/portraits/boss/surprised_neutral.png\""
+},
 "mirror": false,
 "offset": Vector2(0, 0),
 "scale": 1,

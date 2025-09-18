@@ -1,8 +1,18 @@
 extends Node
 
+
+enum TASK_TYPES {
+	CHARACTER_CREATION,
+	NETWORKING,
+	BRIBING_POLITICIAN,
+}
+
 # Defines the  Costs of each Character Class
 const class_costs : Dictionary = {
-	"JOKER" : 1	# time in seconds -> initial value -> upgrades can speed up this time
+	"JOKER" : 1,	# time in seconds -> initial value -> upgrades can speed up this time
+	"POLITICIAN" : 2,
+	"SCAMMER" : 20,
+	"CONSPIRATOR" : 30,
 }
 
 # VARIABLES THAT MUST BE UPDATED REGULARLY
@@ -60,6 +70,12 @@ func skill_unlocked(unlocked_skill_id : String):
 			self.connect("time_modifier_changed", self._set_time_modifier)
 		_:
 			printerr("UNKNOWN SKILL")
+		
+	# Audio
+	GlobalSoundPlayer.play_skill_jingle()
+
+func add_skill_point() -> void:
+	SKILL_POINTS += 1
 
 func _set_time_modifier(new_time_modifier_value : float) -> void:
 	time_modifier = new_time_modifier_value
@@ -68,3 +84,10 @@ func _set_time_modifier(new_time_modifier_value : float) -> void:
 func get_current_country_character_data() -> Dictionary:
 	# Fetches the Current Data Dictionary from the Game's Root
 	return get_tree().root.get_child(get_tree().root.get_child_count() - 1).country_data[CURRENT_COUNTRY]
+
+
+func get_normalized_country_name(country_name : String) -> String:
+	return country_name.capitalize().replace("_", " ")
+
+func unselect_country():
+	Global.CURRENT_COUNTRY = ""

@@ -9,12 +9,8 @@ const IDLE_CORE = preload("res://scenes/main/MachineTask/idle_core.tscn")
 
 const STARTING_CORES : int = 3
 
-enum  TASK_TYPES {
-	CHARACTER_CREATION,
-	NETWORKING
-}
-
 signal character_created
+signal politician_bribe_valid
 
 var total_cores : int = STARTING_CORES
 var busy_cores  : int = 0
@@ -50,7 +46,7 @@ func core_upgrade(extra_cores : int) -> void:
 func _get_available_cores() -> int:
 	return total_cores - busy_cores
 
-func start_new_task(task_title : String, type : TASK_TYPES, money_cost : int, time_cost : int, extra_values : Array = []) -> void:
+func start_new_task(task_title : String, type : Global.TASK_TYPES, money_cost : int, time_cost : int, extra_values : Array = []) -> void:
 	if _get_available_cores() > 0:
 		busy_cores += 1
 		var new_task := CORE_TASK.instantiate()
@@ -78,10 +74,10 @@ func start_skill_task(new_skill : Skill) -> void:
 		printerr("NO MORE CORES AVAILABLE")
 
 
-func _machine_task_completed(type : TASK_TYPES, country : String, extra_values : Array = []) -> void:
+func _machine_task_completed(type : Global.TASK_TYPES, country : String, extra_values : Array = []) -> void:
 	#  cannot take the Global country since the Country could be changed during the task completion time
 	match type:
-		TASK_TYPES.CHARACTER_CREATION:
+		Global.TASK_TYPES.CHARACTER_CREATION:
 			emit_signal("character_created", extra_values[0], country)
 		_:
 			printerr("INVALID TAKS TYPE")
@@ -91,7 +87,29 @@ func _on_jokers_button_pressed() -> void:
 	const CLASS_TITLE : String = "JOKER"
 	start_new_task(
 		"Joker Creation",
-		TASK_TYPES.CHARACTER_CREATION, 
+		Global.TASK_TYPES.CHARACTER_CREATION, 
+		0,										# free
+		Global.class_costs[CLASS_TITLE],		# time
+		[CLASS_TITLE]							# sends class title as extra_values[0]
+	)
+
+
+func _on_scammers_button_pressed() -> void:
+	const CLASS_TITLE : String = "SCAMMER"
+	start_new_task(
+		"Educating New Scammers",
+		Global.TASK_TYPES.CHARACTER_CREATION, 
+		0,										# free
+		Global.class_costs[CLASS_TITLE],		# time
+		[CLASS_TITLE]							# sends class title as extra_values[0]
+	)
+
+
+func _on_conspiracy_theorists_button_pressed() -> void:
+	const CLASS_TITLE : String = "CONSPIRATOR"
+	start_new_task(
+		"Generate & Distribute\nConspiracy Theory",
+		Global.TASK_TYPES.CHARACTER_CREATION, 
 		0,										# free
 		Global.class_costs[CLASS_TITLE],		# time
 		[CLASS_TITLE]							# sends class title as extra_values[0]

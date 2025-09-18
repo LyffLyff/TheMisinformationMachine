@@ -31,7 +31,6 @@ var country_container : Node2D
 var hover_polygon: Polygon2D = null
 var hover_polygon_name :  String = ""
 var selected_country_outline : Array[Line2D] = []
-var selected_country : String
 
 func _ready():
 	# BaseGameClass Ready
@@ -41,6 +40,7 @@ func _ready():
 	self.connect("country_data_updated", country_details.reload_data)
 	self.connect("country_single_clicked", ui.load_general_country_info)
 	self.connect("finances_changed", money_display.update_values)
+	CountryData.connect("update_calculations", self.update_calculations)
 	
 	machine_tasks.connect("character_created", self.new_character_created)
 	
@@ -147,6 +147,8 @@ func create_polygons_from_geojson(geojson_data, country):
 	var new_country : Node = Node2D.new()
 	country_container.add_child(new_country)
 	for feature in geojson_data.features:
+		if feature.geometry == null:
+			continue
 		if feature.geometry.type == "Polygon":
 			var part_of_country := create_single_polygon(feature.geometry.coordinates, country)
 			new_country.add_child(part_of_country)
@@ -179,8 +181,12 @@ func create_single_polygon(polygon_coords, country_title : String) -> Node2D:
 	if country_title == "russia":
 		points = fix_russia(points, 3)
 	else:
+		pass
 		# for now just to fasten the debug times -> loads the map faster
-		points = fix_russia(points, 10)
+		if points.size() > 200:
+			points = fix_russia(points, 3)
+		elif points.size() > 1000:
+			points = fix_russia(points, 10)
 	points = clean_geojson_polygon(points)
 	polygon2d.polygon = points
 	polygon2d.antialiased = true
@@ -252,7 +258,7 @@ func fix_russia(points: PackedVector2Array, step: int) -> PackedVector2Array:
 func highlight_polygon(country_name: String) -> void:
 	_unselect_country()
 	
-	selected_country = country_name
+	Global.CURRENT_COUNTRY = country_name
 	
 	for node in get_tree().get_nodes_in_group(country_name):
 		var polygon : Polygon2D = node.get_child(1)
@@ -275,8 +281,12 @@ func _on_input_event(viewport, event, shape_idx, polygon_name : String):
 			if event.button_index == MOUSE_BUTTON_LEFT:
 				if event.double_click:
 					print("Double clicked at:", event.position, polygon_name)
+					
 					#ZOOM INTO THAT POSITION
 					emit_signal("country_selected")
+					
+					# COUNTRY DATA INITIALLZE COUNTRY
+					CountryData.init_country(polygon_name)
 					
 					# HIGHLIGHT POLYGON OF COUNTRY
 					highlight_polygon(polygon_name)
@@ -290,7 +300,7 @@ func _on_mouse_entered(country_name : String):
 	for n in get_tree().get_nodes_in_group(country_name):
 		hover_polygon = n.get_child(1)
 		hover_polygon_name = country_name
-		if selected_country != country_name:
+		if Global.CURRENT_COUNTRY != country_name:
 			# only show hover highlight clr if not selected -> other color
 			n.get_child(1).color = COUNTRY_FOCUS_CLR
 	emit_signal("country_entered", country_name)
@@ -300,7 +310,7 @@ func _on_mouse_exited(country_name : String):
 		if hover_polygon == n.get_child(1):
 			hover_polygon = null
 			hover_polygon_name = ""
-		if selected_country != country_name:
+		if Global.CURRENT_COUNTRY != country_name:
 			# only go back to initial color if the country isn't currently selected
 			n.get_child(1).color = COUNTRY_CLR
 	emit_signal("country_exited", hover_polygon)
@@ -321,6 +331,6 @@ func _unselect_country() -> void:
 		for n in selected_country_outline:
 			n.queue_free()
 		selected_country_outline = []
-		for n in get_tree().get_nodes_in_group(selected_country):
+		for n in get_tree().get_nodes_in_group(Global.CURRENT_COUNTRY):
 			# unhighlight country
 			n.get_child(1).color = COUNTRY_CLR

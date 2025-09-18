@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bcykwg0e386nb"]
 
 [ext_resource type="Script" uid="uid://7oj8vlqdkhfd" path="res://scenes/ui/time_modifier.gd" id="1_kf6ki"]
-[ext_resource type="Texture2D" uid="uid://buwukiuf4ykgv" path="res://assets/icon.svg" id="2_50x41"]
+[ext_resource type="Texture2D" uid="uid://bpvvossyo4s1d" path="res://assets/icons/return.png" id="2_50x41"]
 
 [node name="TimeModifier" type="VBoxContainer"]
 anchors_preset = 15
@@ -14,13 +14,14 @@ size_flags_vertical = 6
 script = ExtResource("1_kf6ki")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 37)
 layout_mode = 2
 alignment = 1
 
 [node name="Label" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-horizontal_alignment = 1
+horizontal_alignment = 2
 
 [node name="Reset" type="TextureButton" parent="HBoxContainer"]
 unique_name_in_owner = true
@@ -32,12 +33,12 @@ stretch_mode = 5
 
 [node name="Modifier" type="HSlider" parent="."]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 2
 min_value = 0.1
 step = 0.1
-value = 1.0
+value = 0.1
 
 [connection signal="pressed" from="HBoxContainer/Reset" to="." method="_on_reset_pressed"]
 [connection signal="value_changed" from="Modifier" to="." method="_on_modifier_value_changed"]

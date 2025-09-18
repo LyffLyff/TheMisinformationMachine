@@ -3,6 +3,7 @@ extends Node
 signal progression_updated
 signal character_unlocked
 signal country_converted
+signal update_calculations
 
 
 var character_data_per_country : Dictionary[String, Dictionary] =  {
@@ -10,6 +11,15 @@ var character_data_per_country : Dictionary[String, Dictionary] =  {
 	#	JOKER : [ARRAY OF JOKER CLASSES]
 	#}
 }
+
+func _get_empty_country_data_value() -> Dictionary[String, Variant]:
+	# Returns the Inner Dictionary of the Country Data for a newly added country
+	return {
+		"JOKER": [],
+		"SCAMMER" : [],
+		"CONSPIRATOR" : [],
+		"POLITICIAN" : [],
+	}
 
 func _ready() -> void:
 	# updating progression of country every second * Engine.time_scale
@@ -22,13 +32,20 @@ func _ready() -> void:
 	# Countries extra init
 	for n in COUNTRY_DETAILS.keys():
 		COUNTRY_DETAILS[n]["unlocks"] = 0	# only joker unlocked -> 1, 2, 3
-		COUNTRY_DETAILS[n]["progression"] = 0
+		COUNTRY_DETAILS[n]["progression"] = 0.0
+		COUNTRY_DETAILS[n]["poisoned_individuals"] = 0
+
+
+func init_country(country : String) -> void:
+	if !character_data_per_country.has(country):
+		# on Country selected -> Initialize Value Dictionary in Country Data
+		character_data_per_country[country] = _get_empty_country_data_value()
 
 
 func update_country_calculations() -> void:
 	# UPDATE COUNTRY VALUES
 	for country in COUNTRY_DETAILS.keys():
-		COUNTRY_DETAILS[country]["progression"] = get_progression(country) + (get_lost_specimen_ps(country) / get_population(country)) + 0.4
+		COUNTRY_DETAILS[country]["progression"] = get_progression(country) + (get_lost_specimen_ps(country) / get_population(country))
 		if country == Global.CURRENT_COUNTRY:
 			emit_signal("progression_updated", COUNTRY_DETAILS[Global.CURRENT_COUNTRY]["progression"])
 		_check_character_unlock(country)
@@ -42,22 +59,51 @@ func get_country_defence_value(country : String) -> float:
 		return ((country_data["population"] / country_data["size"]) * country_data["corruption"] ) / 10000
 
 
+func get_poisoned_indivduals(country : String = Global.CURRENT_COUNTRY) -> int:
+	return COUNTRY_DETAILS[country]["poisoned_individuals"]
+
+
+func get_total_poisoned_individuals() -> int:
+	var sum : int = 0
+	for n in COUNTRY_DETAILS.size():
+		sum += COUNTRY_DETAILS.values()[n]["poisoned_individuals"]
+	return sum
+
+
+func set_poisoned_individuals(new_value : int, country : String = Global.CURRENT_COUNTRY):
+	COUNTRY_DETAILS[country]["poisoned_individuals"] = new_value
+	emit_signal("update_calculations")
+
+
+func increment_poisoned_individuals(country : String = Global.CURRENT_COUNTRY):
+	COUNTRY_DETAILS[country]["poisoned_individuals"] += 1
+	emit_signal("update_calculations")
+
+
 func _check_character_unlock(country  : String) -> void:
 	if COUNTRY_DETAILS[country]["progression"] > 0.9:
 		# when 90% is lost all is lost
-		emit_signal("country_converted", country)
 		COUNTRY_DETAILS[country]["progression"] = 1.0
+		Global.add_skill_point()
+		GlobalSoundPlayer.play_country_unlock_jingle()
+		emit_signal("country_converted", country)
 	elif COUNTRY_DETAILS[country]["progression"] > 0.4 and COUNTRY_DETAILS[country]["unlocks"] < 3:
 		# UNLOCK POLITICIAN ON 40% Progress
 		COUNTRY_DETAILS[country]["unlocks"] = 3
+		Global.add_skill_point()
+		GlobalSoundPlayer.play_country_progression_jingle()
 		emit_signal("character_unlocked", 3)
 	elif COUNTRY_DETAILS[country]["progression"] > 0.25 and COUNTRY_DETAILS[country]["unlocks"] <  2:
 		# UNLOCK CONPIRATOR ON 25% Progress
 		COUNTRY_DETAILS[country]["unlocks"] = 2
+		Global.add_skill_point()
+		GlobalSoundPlayer.play_country_progression_jingle()
 		emit_signal("character_unlocked", 2)
 	elif  COUNTRY_DETAILS[country]["progression"] > 0.10 and COUNTRY_DETAILS[country]["unlocks"] == 0:
 		# UNLOCK SCAMMER ON 10% Progress
 		COUNTRY_DETAILS[country]["unlocks"] = 1
+		Global.add_skill_point()
+		GlobalSoundPlayer.play_country_progression_jingle()
 		emit_signal("character_unlocked", 1)
 
 
@@ -100,10 +146,20 @@ func get_country_data_dict(country : String) -> Dictionary:
 	return COUNTRY_DETAILS.get(country, {})
 
 
-func get_next_bribe_cost_per_day(nth_politician : int, country : String = Global.CURRENT_COUNTRY) -> float:
+func get_next_bribe_cost_per_day(nth_politician : int = get_politician_idx() + 1, country : String = Global.CURRENT_COUNTRY) -> float:
 	# returns the cost of the next bribe money for the next politician in a country per day
+	print(get_politician_idx())
 	var x : float = CountryData.get_gdp(country) / CountryData.get_population(country) / 365
 	return x * (pow(nth_politician, 2) / nth_politician)
+
+
+func get_politician_idx(country : String = Global.CURRENT_COUNTRY) -> int:
+	#  get amount of already bribed politicians peer country
+	return character_data_per_country[country]["POLITICIAN"].size()
+
+
+func get_total_progression() -> float:
+	return get_progression() + get_poisoned_indivduals()
 
 
 func get_current_base_money_for_all_countries(sorted : bool = false) -> Dictionary:

@@ -1,4 +1,4 @@
-extends PanelContainer
+extends GameEnd
 
 const MAIN_MENU = preload("uid://bvyvobfrdrd7i")
 

@@ -2,6 +2,7 @@ extends Node2D
 class_name BaseGame
 
 const RUN_COMPLETED = preload("uid://bcj0vspx44k06")
+const RUN_FAILED = preload("uid://di3cfsc8a1ps3")
 
 signal country_data_updated
 signal median_character_action_speed_updated
@@ -21,7 +22,8 @@ var specimen_timer : Timer
 
 # MONEY
 signal finances_changed
-var incoming_money_ps : float = 10.0
+const MAX_DEBT_AMOUNT : int = 10000
+var incoming_money_ps : float = 0.0
 var outgoing_money_ps : float = 0.0
 var static_money : float = 0.0
 
@@ -34,37 +36,26 @@ func check_run_completion() -> bool:
 	return false if lost_speciment_percentage < 0.9 else true
 
 
-func _get_empty_country_data_value() -> Dictionary[String, Array]:
-	# Returns the Inner Dictionary of the Country Data for a newly added country
-	return {
-		"JOKER": [],
-		"SCAMMER" : [],
-		"CONSPIRACY_THEORIST" : [],
-		"POLITICIAN" : [],
-		"GENERAL"  : [
-			# 0 -> Progression
-		],
-	}
-
-
 func new_character_created(character_type : String, country : String) -> void:
 	# MATCH CHARACTER CLASS ->  TODO MAKE CLEANER WITHOUT MATCHING -> DICT OR STH
 	var new_character_object : Character
 	match character_type:
 		"JOKER":
 			new_character_object = Joker.new(country)
+		"SCAMMER":
+			new_character_object = Scammer.new()
+		"CONSPIRATOR":
+			new_character_object = Conspirator.new(country)
+		"POLITICIAN":
+			new_character_object = Politician.new(CountryData.get_politician_idx(country))
 		_:
 			printerr("INVALID CHARACTER CLASS")
 			breakpoint
 	
-	if CountryData.character_data_per_country.has(country):
-		var country_characters : Dictionary = CountryData.character_data_per_country[country]
-		country_characters[character_type].append(new_character_object)
-		CountryData.character_data_per_country[country] = country_characters
-	else:
-		# first Character in Country -> Initialize Value Dictionary in Country Data
-		CountryData.character_data_per_country[country] = _get_empty_country_data_value()
-		CountryData.character_data_per_country[country]["JOKER"].append(new_character_object)
+	var country_characters : Dictionary = CountryData.character_data_per_country[country]
+	country_characters[character_type].append(new_character_object)
+	CountryData.character_data_per_country[country] = country_characters
+
 	
 	# Re-Calculate Influence Function
 	lost_specimen_calculator()
@@ -110,7 +101,8 @@ func lost_specimen_calculator() -> void:
 		# add sum of damage of country to global value
 		sum_of_damage += sum_of_damage_per_country
 		
-		update_lost_specimen_per_second(lost_specimen_per_second_globally)
+	lost_specimen_per_second_globally += (CountryData.get_total_poisoned_individuals() / 1000.0) # effecitveness of 0.1%/sec
+	update_lost_specimen_per_second(lost_specimen_per_second_globally)
 
 
 func update_lost_specimen_per_second(new_value :float) -> void:
@@ -128,6 +120,10 @@ func _get_character_action_speed(country : String, character : String) -> int:
 	return sum / character_type_data.size()
 
 
+func update_calculations() -> void:
+	lost_specimen_calculator()
+
+
 func _process(delta: float) -> void:
 	# Counting up lost specimens
 	lost_specimen += (lost_specimen_per_second * delta)
@@ -140,7 +136,31 @@ func _process(delta: float) -> void:
 		get_tree().change_scene_to_packed(RUN_COMPLETED)
 
 
+func add_static_money(added_money : float = randf_range(0.0, 2.0)) -> void:
+	# if no money specified -> lost individual random amount
+	static_money += added_money
+	emit_signal("finances_changed", static_money, incoming_money_ps, outgoing_money_ps)
+
+
 func _on_money_counter_timeout() -> void:
 	# Count Up Static Money with the difference of Money
 	static_money += (incoming_money_ps - outgoing_money_ps)
+	if -static_money > MAX_DEBT_AMOUNT:
+		get_tree().change_scene_to_packed(RUN_FAILED)
 	emit_signal("finances_changed", static_money, incoming_money_ps, outgoing_money_ps)
+
+
+func add_outgoing_money(amount) -> void:
+	outgoing_money_ps += amount
+	emit_signal("finances_changed", static_money, incoming_money_ps, outgoing_money_ps)
+
+
+func _on_politicians_button_pressed() -> void:
+	# TODO CHECK MONEY
+	var bribe_money_ps := CountryData.get_next_bribe_cost_per_day() / 24 / 60 / 60
+	if incoming_money_ps  - outgoing_money_ps > bribe_money_ps or static_money > bribe_money_ps:
+		# Player can go into debt
+		add_outgoing_money(bribe_money_ps)
+		new_character_created("POLITICIAN", Global.CURRENT_COUNTRY)
+	else:
+		printerr("NOT ENOUGH MONEY")

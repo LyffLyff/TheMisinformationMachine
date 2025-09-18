@@ -1,5 +1,7 @@
 extends Label
 
+@onready var clock_sound: AudioStreamPlayer = %ClockSound
+
 signal time_run_out
 
  # 10 days in seconds -> Time for the entire game
@@ -42,6 +44,7 @@ func _on_timer_timeout():
 
 func _process(delta: float):
 	_update_label()
+	clock_sound.pitch_scale = 1.0 if Engine.time_scale == 1.0 else 2.0
 
 func _update_label():
 	var t = _seconds_to_dhms(int(display_seconds))

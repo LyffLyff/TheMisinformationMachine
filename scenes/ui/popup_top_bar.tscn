@@ -17,7 +17,7 @@ script = ExtResource("1_k8hkt")
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Return" type="TextureButton" parent="HBoxContainer"]
+[node name="Return" type="TextureButton" parent="HBoxContainer" groups=["close"]]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 texture_normal = ExtResource("2_k8hkt")
