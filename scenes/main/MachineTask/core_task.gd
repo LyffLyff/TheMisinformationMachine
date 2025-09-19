@@ -26,7 +26,7 @@ func _init_task(title : String, time : float, is_upgrade_task : bool = false) ->
 	
 	# every percent change it updates the progress bar
 	Global.connect("time_modifier_changed", self._update_task_speed)
-	task_time = time
+	task_time = time / Global.CORE_MULTIPLIER
 	timer.wait_time = time_per_percent(task_time / Global.time_modifier)
 	print("TASK WAIT: ", time_per_percent(task_time / Global.time_modifier))
 	timer.connect("timeout", _update_progess)

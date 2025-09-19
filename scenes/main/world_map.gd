@@ -314,7 +314,12 @@ func _on_mouse_exited(country_name : String):
 			hover_polygon_name = ""
 		if Global.CURRENT_COUNTRY != country_name:
 			# only go back to initial color if the country isn't currently selected
-			n.get_child(1).color = COUNTRY_PROGRESSION_COLORS[CountryData.get_progression_idx(country_name)]
+			var idx : int = CountryData.get_progression_idx(country_name)
+			if idx == 0 and CountryData.has_progression_started(country_name):
+				# highlight countries the  user has done sth/has agents
+				n.get_child(1).color = Color.BLACK
+			else:
+				n.get_child(1).color = COUNTRY_PROGRESSION_COLORS[idx]
 	emit_signal("country_exited", hover_polygon)
 
 func is_mouse_over_ui() -> bool:
@@ -335,7 +340,12 @@ func _unselect_country() -> void:
 		selected_country_outline = []
 		for n in get_tree().get_nodes_in_group(Global.CURRENT_COUNTRY):
 			# unhighlight country
-			n.get_child(1).color = COUNTRY_PROGRESSION_COLORS[CountryData.get_progression_idx()]
+			var idx : int = CountryData.get_progression_idx(Global.CURRENT_COUNTRY)
+			if idx == 0 and CountryData.has_progression_started(Global.CURRENT_COUNTRY):
+				# highlight countries the  user has done sth/has agents
+				n.get_child(1).color = Color.BLACK
+			else:
+				n.get_child(1).color = COUNTRY_PROGRESSION_COLORS[idx]
 
 const COUNTRY_PROGRESSION_COLORS : PackedColorArray = [
 	Color.FOREST_GREEN,

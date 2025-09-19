@@ -41,3 +41,7 @@ func load_general_country_info(country_title : String) -> void:
 func show_time_modifier() -> void:
 	var modifier := TIME_MODIFIER.instantiate()
 	bottom_right_container.add_child(modifier)
+
+
+func _on_skill_points_counter_label_pressed() -> void:
+	pass # Replace with function body.

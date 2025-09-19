@@ -11,7 +11,7 @@ func _ready() -> void:
 		#  Showing country data of Character
 		country_label.text = Global.CURRENT_COUNTRY
 		header.bar_title.text = Global.CURRENT_COUNTRY
-		var country_character_data : Array = Global.get_current_country_character_data()["JOKER"]
+		var country_character_data : Array = CountryData.character_data_per_country[Global.CURRENT_COUNTRY]["JOKER"]
 		for idx in country_character_data.size():
 			country_character_data[idx]._print_joker()
 	else:

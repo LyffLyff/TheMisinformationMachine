@@ -5,11 +5,17 @@ extends PanelContainer
 @onready var progress_bar: ProgressBar = $MarginContainer/VBoxContainer/ProgressBar
 @onready var timer: Timer = $Timer
 
+signal money_mined
+
 func _ready() -> void:
-	_idle_core()
+	if !Global.IDLE_CORES_ACTIVATED:
+		Global.connect("unlock_idle_core_miner", self.start_mining)
+		_idle_core()
+	else:
+		pass
 
 func _idle_core() -> void:
-	while true:
+	while !Global.IDLE_CORES_ACTIVATED:
 		var tw := create_tween()
 		tw.tween_property(
 			progress_bar,
@@ -20,6 +26,14 @@ func _idle_core() -> void:
 		
 		await tw.finished
 		progress_bar.value = 0.0
+
+
+func start_mining() -> void:
+	timer.start()
+	while true:
+		await timer.timeout
+		emit_signal("money_mined", randi_range(0.1, 100.0))
+
 
 func delete_idle_core():
 	self.queue_free()

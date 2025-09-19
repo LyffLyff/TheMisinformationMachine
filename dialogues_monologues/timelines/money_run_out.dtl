@@ -1,0 +1,23 @@
+audio ambience "res://assets/sounds/ambience/467026__resaural__ominous-and-deep-ambience.wav"
+boss (default): Well, I know its hard to understand, but even as a superior species such as us.\
+You cannot let your expenses slip out of control like that
+boss: Have you forgotten with what kind of specimen we are dealing with here?
+[wait time="1.0" hide_text="false"]
+boss: They have built their whole system around this meaningless number.
+[wait time="1.0" hide_text="false"]
+boss: You could argue that money is the actual god they all truly worship. \
+That is how bad it has become!
+boss: Starting fights & wars! Breaking up relationships! Becoming insane or depressed OR BOTH!
+boss: The spend a most of their waking hours seeking more & more of it!
+boss: With that knowledge, it is not something you should have messed with so carelessly!
+[wait time="1.0" hide_text="false"]
+boss: You can be really grateful actually.
+boss: I'm giving you a heads up before they can put their hands on you.
+[wait time="1.0" hide_text="false"]
+boss: Not even a physical being like them and they will still be able to make you suffer because of your debt!
+boss (surprised): If there was money outside their own planet they, would have explored the expanses of this universe in no time!
+boss: Instead they crawl around on their little planet, without a real goal in mind!
+[wait time="1.0" hide_text="false"]
+boss: Come to think of it! Maybe this whole operation was meaningless from the start?
+[signal arg="start_fade"]
+boss: Now that I am somewhat acostumed to their selfish ways, they would have never been a real threat to anyone, but the poor species living on their own planet.

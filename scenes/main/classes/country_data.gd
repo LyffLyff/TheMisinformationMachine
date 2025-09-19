@@ -5,7 +5,6 @@ signal character_unlocked
 signal country_converted
 signal update_calculations
 
-
 var character_data_per_country : Dictionary[String, Dictionary] =  {
 	# COUNTRY TITLE (AS IDENTIFIER) : {
 	#	JOKER : [ARRAY OF JOKER CLASSES]
@@ -34,7 +33,11 @@ func _ready() -> void:
 		COUNTRY_DETAILS[n]["unlocks"] = 0	# only joker unlocked -> 1, 2, 3
 		COUNTRY_DETAILS[n]["progression_idx"] = 0
 		COUNTRY_DETAILS[n]["progression"] = 0.0
-		COUNTRY_DETAILS[n]["poisoned_individuals"] = 0
+		COUNTRY_DETAILS[n]["progression_started"] = false
+		COUNTRY_DETAILS[n]["lost_specimen"] = 0
+		COUNTRY_DETAILS[n]["dynamic_lost_specimen"] = 0.0
+		COUNTRY_DETAILS[n]["lost_specimen_per_second"] = 0.0
+		COUNTRY_DETAILS[n]["static_lost_specimen"] = 0.0
 
 
 func init_country(country : String) -> void:
@@ -60,26 +63,40 @@ func get_country_defence_value(country : String) -> float:
 		return ((country_data["population"] / country_data["size"]) * country_data["corruption"] ) / 10000
 
 
-func get_poisoned_indivduals(country : String = Global.CURRENT_COUNTRY) -> int:
-	return COUNTRY_DETAILS[country]["poisoned_individuals"]
+func get_country_lost_specimen(country : String = Global.CURRENT_COUNTRY) -> int:
+	return COUNTRY_DETAILS[country]["lost_specimen"]
 
 
-func get_total_poisoned_individuals() -> int:
+func update_lost_specimen(delta : float) -> void:
+	for country in COUNTRY_DETAILS.keys():
+		COUNTRY_DETAILS[country]["dynamic_lost_specimen"] += (get_lost_specimen_ps(country) * delta)
+
+func get_country_total_lost_specimen(country : String = Global.CURRENT_COUNTRY) -> int:
+	return COUNTRY_DETAILS[country]["dynamic_lost_specimen"] + COUNTRY_DETAILS[country]["static_lost_specimen"]
+
+func get_static_lost_specimen(country : String = Global.CURRENT_COUNTRY) -> int:
+	return COUNTRY_DETAILS[country]["static_lost_specimen"]
+
+
+func get_total_static_lost_specimen() -> int:
 	var sum : int = 0
 	for n in COUNTRY_DETAILS.size():
-		sum += COUNTRY_DETAILS.values()[n]["poisoned_individuals"]
+		sum += COUNTRY_DETAILS.values()[n]["static_lost_specimen"]
 	return sum
 
 
-func set_poisoned_individuals(new_value : int, country : String = Global.CURRENT_COUNTRY):
-	COUNTRY_DETAILS[country]["poisoned_individuals"] = new_value
+func increment_static_lost_specimen(country : String = Global.CURRENT_COUNTRY, check : bool = true):
+	COUNTRY_DETAILS[country]["static_lost_specimen"] += (1 * Global.POISONING_MULTIPLIER)
+	if check:
+		_check_for_skill_point()
 	emit_signal("update_calculations")
 
 
-func increment_poisoned_individuals(country : String = Global.CURRENT_COUNTRY):
-	COUNTRY_DETAILS[country]["poisoned_individuals"] += 1
-	_check_for_skill_point(country)
-	emit_signal("update_calculations")
+func increment_static_specimen_for_all_countries() -> void:
+	for n in COUNTRY_DETAILS.keys():
+		increment_static_lost_specimen(n, false)
+	_check_for_skill_point()
+
 
 const SKILL_POINT_UNLOCKS := [
 	10,
@@ -96,14 +113,15 @@ const SKILL_POINT_UNLOCKS := [
 
 var current_skill_lvl : int = 0
 
-func _check_for_skill_point(country : String):
+func _check_for_skill_point():
 	for n in range(current_skill_lvl, SKILL_POINT_UNLOCKS.size()):
-		if get_total_poisoned_individuals() >= SKILL_POINT_UNLOCKS[current_skill_lvl]:
+		if get_total_static_lost_specimen() + Global.LOST_SPECIMEN >= SKILL_POINT_UNLOCKS[current_skill_lvl]:
 			if n == 0:	# first skill point
 				Dialogic.start("first_skill_point_unlock")
 			Global.add_skill_point()
 			GlobalSoundPlayer.play_skill_jingle()
 			current_skill_lvl += 1
+
 
 func _check_character_unlock(country  : String) -> void:
 	if COUNTRY_DETAILS[country]["progression"] > 0.9:
@@ -140,6 +158,13 @@ func set_lost_specimen_per_country(country_name : String, lost_specimen_per_seco
 		value
 	)
 
+
+func check_progression_started(country):
+	COUNTRY_DETAILS[country]["progression_started"] = true
+
+
+func has_progression_started(country) -> bool:
+	return COUNTRY_DETAILS[country]["progression_started"]
 
 func get_character_unlock(country : String = Global.CURRENT_COUNTRY) -> int:
 	return COUNTRY_DETAILS[country].get_or_add("unlocks", 0)
@@ -187,7 +212,7 @@ func get_politician_idx(country : String = Global.CURRENT_COUNTRY) -> int:
 
 
 func get_total_progression() -> float:
-	return get_progression() + get_poisoned_indivduals()
+	return get_progression() + get_static_lost_specimen()
 
 
 func set_country_progression_idx(country, char_idx):

@@ -34,7 +34,10 @@ func _init_idle_cores() -> void:
 func _start_idling_core() -> void:
 	# called when a core task finishes
 	busy_cores -= 1
-	idle_core_container.add_child(IDLE_CORE.instantiate())
+	var idle_core := IDLE_CORE.instantiate()
+	# counts as static since it varies in amount each time
+	idle_core.connect("money_mined", Global.get_game_base().add_static_money)
+	idle_core_container.add_child(idle_core)
 
 func _remove_idle_core() -> void:
 	# removes the last idle core

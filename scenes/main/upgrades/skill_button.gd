@@ -11,3 +11,7 @@ func init_skill(skill_data : Skill) -> void:
 	skill_title_label.text = skill_data.name
 	skill_info.text = skill_data.description
 	texture_button.texture = skill_data.icon
+	
+	if Global.UNLOCKED_SKILLS.has(skill_data.identifier):
+		self.modulate.a = 0.5
+		unlock.disabled = true

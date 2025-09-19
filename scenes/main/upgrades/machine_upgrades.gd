@@ -14,9 +14,9 @@ var MACHINE_UPGRADES : Dictionary = {
 		load("res://assets/icons/789_Lorc_RPG_icons/Icon.1_39.png"),
 		"Python is a [color=#9a7dce][b]powerful[/b][/color] language for [color=#7fa3a3]scripting[/color].\nUse your knowledge to [wave amp=15 freq=2]craft a convoluted algorithm[/wave] that will automatically [pulse freq=1.5][color=#b37f7f]poison the minds[/color][/pulse] of unsuspecting individuals.",
 		0,
-		100,
-		4,
-		"",
+		1,
+		20,
+		"BACKGROUND_SCRIPT",
 		false
 	),
 	"TIME_MULTIPLIER" : Skill.new(
@@ -37,7 +37,7 @@ var MACHINE_UPGRADES : Dictionary = {
 		20,
 		1,
 		10,
-		"",
+		"IDLE_CORE_MINER",
 	),
 	"INCREASE_CPU_CORES" : Skill.new(
 		"INCREASE_CPU_CORES",
@@ -47,7 +47,29 @@ var MACHINE_UPGRADES : Dictionary = {
 		randi_range(2, 200),
 		0,
 		10,
-		"",
+		"INCREASE_CPU_CORES",
+		true
+	),
+	"AUTO_RESTART_CORE_TASKS" : Skill.new(
+		"AUTO_RESTART_CORE_TASKS",
+		"AUTO_RESTART_CORE_TASKS",
+		load("res://assets/icons/789_Lorc_RPG_icons/Icon.3_14.png"),
+		"While scrolling through the Web you found an [color=#9a7dce][pulse freq=1.5]Ad[/pulse][/color] for [b][color=#7fa3a3]unused CPUs[/color][/b].\nYou could [wave amp=14 freq=2]buy them[/wave] and expand your amount of [color=#b37f7f]cores[/color].\n[color=#d1b77f][b]Watch out[/b][/color] though — [pulse freq=1.2]prices are always fluctuating[/pulse].",
+		randi_range(2, 200),
+		0,
+		10,
+		"AUTO_RESTART_CORE_TASKS",
+		true
+	),
+	"INCREASE_EFFICIENCY" : Skill.new(
+		"Public Speaker",
+		"INCREASE_EFFICIENCY",
+		load("res://assets/icons/789_Lorc_RPG_icons/Icon.3_14.png"),
+		"Develop your skills in poisoning the minds of humans further and adress multiple people at once. Each poisoning affects multiple people",
+		randi_range(2, 200),
+		1,
+		10,
+		"INCREASE_EFFICIENCY",
 		true
 	),
 	"OVERCLOCK" : Skill.new(
@@ -58,7 +80,7 @@ var MACHINE_UPGRADES : Dictionary = {
 		0,
 		0,
 		0,
-		"",
+		"OVERCLOCK",
 		true
 	),
 	"BANK_HEISTS" : Skill.new(
@@ -67,9 +89,9 @@ var MACHINE_UPGRADES : Dictionary = {
 		load("res://assets/icons/789_Lorc_RPG_icons/Icons8_32.png"),
 		"Since the inhabitants discovered [color=#7fa3a3]electricity[/color], it led to the digitization of once-physical goods — including [color=#b37f7f]money[/color].\nUse this obviously flawed system and [pulse freq=1.5][b]move some money[/b][/pulse] into your [wave amp=12 freq=2]digital pockets[/wave].",
 		0,
-		100,
-		4,
-		"",
+		3,
+		30,
+		"BANK_HEISTS",
 		false
 	),
 }

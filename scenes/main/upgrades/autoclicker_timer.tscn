@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://r24eir7hk7i8"]
+
+[ext_resource type="Script" uid="uid://b708su34f4ie3" path="res://scenes/main/upgrades/autoclicker_timer.gd" id="1_s2khe"]
+
+[node name="AutoclickerTimer" type="Timer"]
+autostart = true
+script = ExtResource("1_s2khe")
+
+[connection signal="timeout" from="." to="." method="_on_timeout"]

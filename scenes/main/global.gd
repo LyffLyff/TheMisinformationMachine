@@ -17,6 +17,13 @@ const class_costs : Dictionary = {
 
 # VARIABLES THAT MUST BE UPDATED REGULARLY
 var CURRENT_COUNTRY : String 	# holds the country name which currently is in focus
+var POISONING_MULTIPLIER : int = 10
+var CORE_MULTIPLIER : float = 1.0		# speed modifier for each task of a core -> idle or normal
+var IDLE_CORES_ACTIVATED : bool = false
+var AUTO_RESTART_CORE_TASKS : bool = false
+var AUTOCLICKER_ACTIVATED :  bool = false
+var AUTO_CLICKER_SPEED : float = 1.0
+var CHARACTER_MULTIPLIER : float = 1.0	# multiplier for effectiveness of all characters
 
 func tween_label_counter(label : Label, new_value, duration : float = 1.0, is_float : bool = false) -> void:
 	var val
@@ -47,12 +54,19 @@ signal start_skill_task
 signal skill_points_changed
 signal insufficient_skill_points
 
+signal autoclicker_unlocked
+signal unlock_idle_core_miner
+signal overclock_cores
+signal auto_restart_core_tasks
+signal autoclicker_activated
+
 # Time Modifier
 signal time_modifier_unlocked
 signal time_modifier_changed
 var time_modifier : float = 1.0
 
-var SKILL_POINTS : int = 0 
+var SKILL_POINTS : int = 100
+var LOST_SPECIMEN :  float
 
 var UNLOCKED_SKILLS : PackedStringArray = [] # LIST OF ALL UNLOCKED SKILL IDs
 
@@ -64,14 +78,28 @@ func unlock_skill(skill_to_unlock : Skill) -> void:
 	
 	# START CORE  IF TIME IS GREATER THAN ZERO
 	emit_signal("start_skill_task", skill_to_unlock)
+	UNLOCKED_SKILLS.append(skill_to_unlock.identifier)
 
 
 func skill_unlocked(unlocked_skill_id : String):
-	UNLOCKED_SKILLS.append(unlocked_skill_id)
 	match unlocked_skill_id:
 		"TIME_MULTIPLIER":
 			emit_signal("time_modifier_unlocked")
 			self.connect("time_modifier_changed", self._set_time_modifier)
+		"OVERCLOCK":
+			pass
+		"IDLE_CORE_MINER":
+			IDLE_CORES_ACTIVATED = true
+			emit_signal("unlock_idle_core_miner")
+		"INCREASE_EFFICIENCY":
+			POISONING_MULTIPLIER += 1
+		"AUTO_RESTART_CORE_TASKS":
+			AUTO_RESTART_CORE_TASKS = true
+			emit_signal("auto_restart_core_tasks")
+		"BACKGROUND_SCRIPT":
+			AUTOCLICKER_ACTIVATED = true
+			emit_signal("autoclicker_activated")
+			call_deferred("autoclicker")
 		_:
 			printerr("UNKNOWN SKILL")
 		
@@ -92,10 +120,9 @@ func spend_skill_points(cost : int) -> bool:
 func _set_time_modifier(new_time_modifier_value : float) -> void:
 	time_modifier = new_time_modifier_value
 
-
-func get_current_country_character_data() -> Dictionary:
+func get_game_base() -> BaseGame:
 	# Fetches the Current Data Dictionary from the Game's Root
-	return get_tree().root.get_child(get_tree().root.get_child_count() - 1).country_data[CURRENT_COUNTRY]
+	return get_tree().root.get_child(get_tree().root.get_child_count() - 1)
 
 
 func get_normalized_country_name(country_name : String) -> String:
@@ -103,3 +130,17 @@ func get_normalized_country_name(country_name : String) -> String:
 
 func unselect_country():
 	Global.CURRENT_COUNTRY = ""
+
+
+func autoclicker() -> void:
+	var autoclicker_timer := Timer.new()
+	autoclicker_timer.autostart = true
+	autoclicker_timer.one_shot = true
+	self.add_child(autoclicker_timer)
+	while true:
+		autoclicker_timer.wait_time = 1.0 * AUTO_CLICKER_SPEED
+		autoclicker_timer.start()
+		
+		await autoclicker_timer.timeout
+		
+		CountryData.increment_static_specimen_for_all_countries()

@@ -19,6 +19,8 @@ var outreach : float
 # max outreach defines  the limits of this individual ->  random number from 10 to 10000
 var max_outreach : int
 
+var COUNTRY_OF_ORIGIN : String
+
 func _init(country : String) -> void:
 	# Init Class
 	COUNTRY_OF_ORIGIN = country
@@ -28,8 +30,9 @@ func _init(country : String) -> void:
 	effectiveness = randf_range(0.0001, 0.9999)
 	
 	# random integer strictly between 180s and 86400s
-	speed = randi_range(20, 200)
-	action_speed = speed
+	#speed = randi_range(2, 20)
+	speed = 1
+	action_speed_in_seconds = speed
 	
 	# outreach starts with a small random float between 0.1 and 10
 	outreach = randf_range(0.1, 10.0)
@@ -43,7 +46,7 @@ func _init(country : String) -> void:
 
 
 func calculate_societal_dmg() -> void:
-	median_societal_damage_per_second = (outreach / speed) * effectiveness
+	median_societal_damage_per_second = (outreach / speed) * effectiveness / 1000.0
 	print("DMG: ",median_societal_damage_per_second)
 
 

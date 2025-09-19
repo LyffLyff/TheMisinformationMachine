@@ -14,12 +14,13 @@ const CHARACTER_MENUS : Array[PackedScene]  = [
 @onready var card_menu_button_bar: VBoxContainer = %CardMenuButtonBar
 @onready var remaining_time_label : Label = $UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer2/RemainingTime
 @onready var popup_container: Control = %PopupContainer
-@onready var skill_points_counter_label: Label = %SkillPointsCounterLabel
+@onready var skill_points_counter_label: Button = %SkillPointsCounterLabel
 
 
 func _ready() -> void:
 	card_menu_button_bar.connect("character_menu_button_selected", self.show_character_menu)
 	remaining_time_label.connect("time_run_out", self.run_failed)
+	skill_points_counter_label.connect("pressed", _on_open_upgrades_button_pressed)
 	Global.connect("skill_points_changed", self.update_skill_point_display)
 
 func _on_world_map_pause() -> void:

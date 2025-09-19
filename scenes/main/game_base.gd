@@ -52,6 +52,8 @@ func new_character_created(character_type : String, country : String) -> void:
 			printerr("INVALID CHARACTER CLASS")
 			breakpoint
 	
+	CountryData.check_progression_started(country)
+	
 	var country_characters : Dictionary = CountryData.character_data_per_country[country]
 	country_characters[character_type].append(new_character_object)
 	CountryData.character_data_per_country[country] = country_characters
@@ -76,30 +78,27 @@ func lost_specimen_calculator() -> void:
 	#	and calculates the amount of lost specimen in a specific interval
 	var lost_specimen_per_second_globally : float
 	var lost_specimen_per_second_per_country : float
-	var sum_of_damage : float
-	var sum_of_damage_per_country : float
+
 	for country_idx in CountryData.character_data_per_country.size():
-		sum_of_damage_per_country = 0.0
 		lost_specimen_per_second_per_country = 0.0
 		# calculate damage per country
 		for character_class_idx in CountryData.character_data_per_country.values()[country_idx].size():
 			for n in CountryData.character_data_per_country.values()[country_idx].values()[character_class_idx].size():
 				var tmp_character : Character = CountryData.character_data_per_country.values()[country_idx].values()[character_class_idx][n]
-				sum_of_damage_per_country += tmp_character.get_societal_damage()
+				lost_specimen_per_second_per_country += tmp_character.get_converted_people_per_second()
 		
 		# with factors such as  population, size, age, corruption -> calculatee the lost specimen per second
 		var country_name : String = CountryData.character_data_per_country.keys()[country_idx]
-		print("-------------------------")
-		print(country_name + ":")
-		print("sum_of_damage_per_country" + str(sum_of_damage_per_country))
-		print("CountryData.get_country_defence_value(country_name)" + str(CountryData.get_country_defence_value(country_name)))
-		print("-------------------------")
-		lost_specimen_per_second_per_country = sum_of_damage_per_country / CountryData.get_country_defence_value(country_name)
-		print(country_name, lost_specimen_per_second_per_country)
+		#print("-------------------------")
+		#print(country_name + ":")
+		#print("sum_of_damage_per_country" + str(sum_of_damage_per_country))
+		#print("CountryData.get_country_defence_value(country_name)" + str(CountryData.get_country_defence_value(country_name)))
+		#print("-------------------------")
+		# lost_specimen_per_second_per_country = converted_people_per_second 
+		#print(country_name, lost_specimen_per_second_per_country)
 		CountryData.set_lost_specimen_per_country(country_name, lost_specimen_per_second_per_country)
 		lost_specimen_per_second_globally += lost_specimen_per_second_per_country
 		# add sum of damage of country to global value
-		sum_of_damage += sum_of_damage_per_country
 		
 	update_lost_specimen_per_second(lost_specimen_per_second_globally)
 
@@ -109,13 +108,13 @@ func update_lost_specimen_per_second(new_value :float) -> void:
 	emit_signal("lost_specimen_speed_updated", lost_specimen_per_second)
 
 
-func _get_character_action_speed(country : String, character : String) -> int:
+func _get_character_action_speed(country : String, character : String) -> float:
 	# action speed for a class in a country is the sum of their action speed divided by how many of them there are
 	# used for progress bars on country menu
 	var sum : int = 0
 	var character_type_data : Array = CountryData.character_data_per_country.get(country)[character]
 	for idx in character_type_data.size():
-		sum += character_type_data[idx].action_speed
+		sum += character_type_data[idx].action_speed_in_seconds
 	return sum / character_type_data.size()
 
 
@@ -125,10 +124,18 @@ func update_calculations() -> void:
 
 func _process(delta: float) -> void:
 	# Counting up lost specimens
-	lost_specimen += (lost_specimen_per_second * delta)
+	lost_specimen += lost_specimen_per_second * delta
+	Global.LOST_SPECIMEN = lost_specimen
+	# For each country aswell :(
+	CountryData.update_lost_specimen(delta)
 	
-	# Per Second
-	per_second_label.text = str(lost_specimen_per_second)
+	print(lost_specimen)
+	
+	lost_specimen_counter_label.text = str(
+		int(lost_specimen + 
+		CountryData.get_total_static_lost_specimen()
+		) # static offset)
+	)
 	
 	# Check Completion
 	if check_run_completion():

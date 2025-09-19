@@ -33,6 +33,7 @@ directories/dch_directory={
 }
 directories/dtl_directory={
 "death": "res://dialogues_monologues/timelines/death.dtl",
+"death_by_overclock": "res://dialogues_monologues/timelines/death_by_overclock.dtl",
 "first_skill_point_unlock": "res://dialogues_monologues/timelines/first_skill_point_unlock.dtl",
 "game_start": "res://dialogues_monologues/timelines/game_start.dtl",
 "intro": "res://dialogues_monologues/timelines/intro.dtl",
@@ -80,7 +81,7 @@ audio/channel_defaults={
 "audio_bus": "",
 "fade_length": 3.0,
 "loop": true,
-"volume": 0.0
+"volume": -20.0
 },
 "laugh": {
 "audio_bus": "",

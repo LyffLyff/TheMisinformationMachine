@@ -25,7 +25,7 @@ func show_details(title : String, country_data) -> void:
 	country_progress.init_progress()
 	
 	# Poisoned Individuals
-	poison_individual.text = str(CountryData.get_poisoned_indivduals())
+	poison_individual.text = "POISON %s SPECIMEN"  % Global.POISONING_MULTIPLIER
 	
 	# Country Details can be null -> no characters addded to that region
 	jokers.update_count(
@@ -61,5 +61,4 @@ func _on_machine_tasks_politician_bribe_valid() -> void:
 
 
 func _on_poison_individual_pressed() -> void:
-	CountryData.increment_poisoned_individuals()
-	poison_individual.text  = str(CountryData.get_poisoned_indivduals())
+	CountryData.increment_static_lost_specimen()
