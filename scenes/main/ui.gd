@@ -6,19 +6,21 @@ const UPGRADE_MENU = preload("uid://dy8snr10xmwmw")
 const CHARACTER_MENUS : Array[PackedScene]  = [
 	preload("uid://buyu42ltal2u7"),		# JOKER
 	preload("uid://b7txeh62p4i8q"),		# SCAMMER
-	preload("uid://bacgvwdsmiltv"),		# Politician
 	preload("uid://b3boouhv04ia6"),		# CONSPIRATOR
+	preload("uid://bacgvwdsmiltv"),		# Politician
 ]
 
 @onready var pause_menu: PanelContainer = %PauseMenu
 @onready var card_menu_button_bar: VBoxContainer = %CardMenuButtonBar
 @onready var remaining_time_label : Label = $UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer2/RemainingTime
 @onready var popup_container: Control = %PopupContainer
+@onready var skill_points_counter_label: Label = %SkillPointsCounterLabel
 
 
 func _ready() -> void:
 	card_menu_button_bar.connect("character_menu_button_selected", self.show_character_menu)
 	remaining_time_label.connect("time_run_out", self.run_failed)
+	Global.connect("skill_points_changed", self.update_skill_point_display)
 
 func _on_world_map_pause() -> void:
 	pause_menu.visible = !pause_menu.visible
@@ -41,3 +43,7 @@ func show_character_menu(idx : int) -> void:
 		menu = CHARACTER_MENUS[idx].instantiate()
 		menu.is_global = true
 	popup_container.add_child(menu)
+
+
+func update_skill_point_display(new_amount : int) -> void:
+	skill_points_counter_label.text =  str(new_amount)

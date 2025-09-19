@@ -44,6 +44,8 @@ func tween_label_counter(label : Label, new_value, duration : float = 1.0, is_fl
 
 # SKILLS #
 signal start_skill_task
+signal skill_points_changed
+signal insufficient_skill_points
 
 # Time Modifier
 signal time_modifier_unlocked
@@ -56,7 +58,9 @@ var UNLOCKED_SKILLS : PackedStringArray = [] # LIST OF ALL UNLOCKED SKILL IDs
 
 func unlock_skill(skill_to_unlock : Skill) -> void:
 	# CHECK FOR MONEY & SKILL POINTS
-	print(skill_to_unlock)
+	if skill_to_unlock.skill_point_cost > SKILL_POINTS:
+		emit_signal("insufficient_skill_points", skill_to_unlock.identifier)
+		return
 	
 	# START CORE  IF TIME IS GREATER THAN ZERO
 	emit_signal("start_skill_task", skill_to_unlock)
@@ -76,6 +80,14 @@ func skill_unlocked(unlocked_skill_id : String):
 
 func add_skill_point() -> void:
 	SKILL_POINTS += 1
+	emit_signal("skill_points_changed", SKILL_POINTS)
+
+func spend_skill_points(cost : int) -> bool:
+	if cost > SKILL_POINTS:
+		SKILL_POINTS -= cost
+		emit_signal("skill_points_changed", SKILL_POINTS)
+		return true
+	return false
 
 func _set_time_modifier(new_time_modifier_value : float) -> void:
 	time_modifier = new_time_modifier_value

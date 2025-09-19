@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://brnpe61hgy7ud"]
+[gd_scene load_steps=38 format=3 uid="uid://brnpe61hgy7ud"]
 
 [ext_resource type="Script" uid="uid://dkelfofxdstt6" path="res://scenes/main/world_map.gd" id="1_u0v3u"]
 [ext_resource type="Shader" uid="uid://brpy426nv2xqf" path="res://ressources/shaders/fog.gdshader" id="2_0sgek"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://btyumjugwdmpd" path="res://scenes/main/ui_root.gd" id="4_0084n"]
 [ext_resource type="Script" uid="uid://cqoipa2i081wm" path="res://scenes/ui/clock.gd" id="5_2035q"]
 [ext_resource type="PackedScene" uid="uid://botyfwwae687k" path="res://scenes/ui/pause_menu.tscn" id="8_06qpl"]
+[ext_resource type="Texture2D" uid="uid://521wmcixjmbk" path="res://assets/characters/lost_ones.png" id="9_hn1id"]
 [ext_resource type="Script" uid="uid://ovlohigfp6nd" path="res://scenes/main/country_details.gd" id="9_i6oof"]
 [ext_resource type="LabelSettings" uid="uid://bk2vqu4v7foy2" path="res://ressources/label/header_small.tres" id="9_pta4i"]
 [ext_resource type="PackedScene" uid="uid://bhaw00rwnrbhn" path="res://scenes/ui/popup_top_bar.tscn" id="10_66y8f"]
@@ -99,7 +100,7 @@ metadata/_edit_lock_ = true
 [node name="Fog" type="Sprite2D" parent="OceanFakery"]
 material = SubResource("ShaderMaterial_pta4i")
 position = Vector2(982, 512)
-scale = Vector2(30, 30)
+scale = Vector2(40, 40)
 texture = ExtResource("3_wx4kf")
 metadata/_edit_lock_ = true
 
@@ -148,11 +149,21 @@ size_flags_stretch_ratio = 0.5
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LostSpecimenLabel" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("9_hn1id")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="LostSpecimenLabel" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
+modulate = Color(1, 0.7529412, 0.09019608, 1)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "LOST SPECIMENS: 0"
+text = "0"
 label_settings = ExtResource("3_0084n")
 vertical_alignment = 1
 script = ExtResource("4_06qpl")
@@ -164,7 +175,7 @@ size_flags_horizontal = 0
 [node name="PerSecond" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer/PerSecondConatiner"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Per Second:"
+text = "/sec:"
 label_settings = ExtResource("9_pta4i")
 vertical_alignment = 1
 
@@ -180,7 +191,7 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Earth Population: 8.23 * 10'9 Specimens"
+text = "0%"
 label_settings = ExtResource("9_pta4i")
 vertical_alignment = 1
 
@@ -435,9 +446,11 @@ alignment = 1
 
 [node name="SkillPointsCounterLabel" type="Label" parent="UI/UIRoot/PanelContainer/VBoxContainer/Bottom/BottomRightContainer/HBoxContainer"]
 unique_name_in_owner = true
+modulate = Color(1, 0.7529412, 0.09019608, 1)
 layout_mode = 2
 text = "0"
 label_settings = ExtResource("9_pta4i")
+vertical_alignment = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/UIRoot/PanelContainer/VBoxContainer/Bottom/BottomRightContainer/HBoxContainer"]
 layout_mode = 2
@@ -462,8 +475,8 @@ visible = false
 [node name="BGMusicPlayer" type="AudioStreamPlayer" parent="."]
 process_mode = 1
 stream = ExtResource("20_00ivn")
-volume_db = -20.0
-pitch_scale = 0.6
+volume_db = -25.0
+pitch_scale = 0.7
 autoplay = true
 parameters/looping = true
 
@@ -472,7 +485,7 @@ process_mode = 1
 
 [connection signal="country_entered" from="." to="UI/UIRoot" method="_on_world_map_country_entered"]
 [connection signal="country_exited" from="." to="UI/UIRoot" method="_on_world_map_country_exited"]
-[connection signal="lost_specimen_speed_updated" from="." to="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer/LostSpecimenLabel" method="_on_world_map_lost_specimen_speed_updated"]
+[connection signal="lost_specimen_speed_updated" from="." to="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer/HBoxContainer/LostSpecimenLabel" method="_on_world_map_lost_specimen_speed_updated"]
 [connection signal="median_character_action_speed_updated" from="." to="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/VBoxContainer/Jokers" method="_on_world_map_median_character_action_speed_updated"]
 [connection signal="pause" from="." to="UI" method="_on_world_map_pause"]
 [connection signal="timeout" from="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer2/MoneyDisplay/MoneyCounter" to="." method="_on_money_counter_timeout"]

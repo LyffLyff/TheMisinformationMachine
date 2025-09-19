@@ -5,7 +5,6 @@ const GENERAL_COUNTRY_INFO = preload("res://scenes/ui/general_country_info.tscn"
 const COUNTRY_DATA_FOLDER := "res://geodata/countries/"
 const COUNTRY_FOCUS_CLR := Color.CRIMSON
 const COUNTRY_HIGHLIGHT_CLR := Color.DARK_SLATE_GRAY
-const COUNTRY_CLR := Color("#4C7031")
 
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var machine_tasks: PanelContainer = %MachineTasks
@@ -41,6 +40,8 @@ func _ready():
 	self.connect("country_single_clicked", ui.load_general_country_info)
 	self.connect("finances_changed", money_display.update_values)
 	CountryData.connect("update_calculations", self.update_calculations)
+	CountryData.connect("character_unlocked", self.change_country_visuals)
+	CountryData.connect("country_converted", self.change_country_visuals.bind(4))
 	
 	machine_tasks.connect("character_created", self.new_character_created)
 	
@@ -193,7 +194,7 @@ func create_single_polygon(polygon_coords, country_title : String) -> Node2D:
 	collision_shape.polygon = points
 	
 	# Optional: Set some visual properties
-	polygon2d.color = COUNTRY_CLR  # Light blue with transparency
+	polygon2d.color = COUNTRY_PROGRESSION_COLORS[0]  # intial color
 	polygon2d.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	
 	# Add to container
@@ -224,7 +225,7 @@ func create_polygon_holes(parent_polygon, polygon_coords):
 		hole_line.add_point(lat_lon_to_screen(hole_ring[0][0], hole_ring[0][1]))  # Close
 		
 		hole_line.width = 1.5
-		hole_line.default_color = COUNTRY_CLR
+		hole_line.default_color = COUNTRY_PROGRESSION_COLORS[0]
 		add_child(hole_line)
 
 
@@ -267,7 +268,7 @@ func highlight_polygon(country_name: String) -> void:
 		line.antialiased = true
 		line.width = 1  # outline thickness
 		line.default_color = Color.GHOST_WHITE
-		line.points = polygon.polygon.duplicate()
+		line.points = fix_russia(polygon.polygon.duplicate(),  3)
 		polygon.color = COUNTRY_HIGHLIGHT_CLR
 		line.add_point(polygon.polygon[0])  # close polygon
 		selected_country_outline.append(line)
@@ -284,6 +285,7 @@ func _on_input_event(viewport, event, shape_idx, polygon_name : String):
 					
 					#ZOOM INTO THAT POSITION
 					emit_signal("country_selected")
+					GlobalSoundPlayer.play_selected_sound()
 					
 					# COUNTRY DATA INITIALLZE COUNTRY
 					CountryData.init_country(polygon_name)
@@ -312,7 +314,7 @@ func _on_mouse_exited(country_name : String):
 			hover_polygon_name = ""
 		if Global.CURRENT_COUNTRY != country_name:
 			# only go back to initial color if the country isn't currently selected
-			n.get_child(1).color = COUNTRY_CLR
+			n.get_child(1).color = COUNTRY_PROGRESSION_COLORS[CountryData.get_progression_idx(country_name)]
 	emit_signal("country_exited", hover_polygon)
 
 func is_mouse_over_ui() -> bool:
@@ -333,4 +335,20 @@ func _unselect_country() -> void:
 		selected_country_outline = []
 		for n in get_tree().get_nodes_in_group(Global.CURRENT_COUNTRY):
 			# unhighlight country
-			n.get_child(1).color = COUNTRY_CLR
+			n.get_child(1).color = COUNTRY_PROGRESSION_COLORS[CountryData.get_progression_idx()]
+
+const COUNTRY_PROGRESSION_COLORS : PackedColorArray = [
+	Color.FOREST_GREEN,
+	Color(0.89, 0.691, 0.352, 1.0),
+	Color.CORAL,
+	Color.REBECCA_PURPLE,
+	Color.FIREBRICK
+]
+
+func change_country_visuals(country :  String, char_idx : int) -> void:
+	CountryData.set_country_progression_idx(country, char_idx)
+	if country != Global.CURRENT_COUNTRY:
+		var new_country_clr := COUNTRY_PROGRESSION_COLORS[char_idx]
+		for n in get_tree().get_nodes_in_group(Global.CURRENT_COUNTRY):
+				# unhighlight country
+				n.get_child(1).color = new_country_clr

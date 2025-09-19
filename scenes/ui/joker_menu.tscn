@@ -104,6 +104,7 @@ to [color=#b37f7f][wave amp=25 freq=2]radicalize them[/wave][/color] to your nee
 "
 
 [node name="PanelContainer" type="PanelContainer" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0

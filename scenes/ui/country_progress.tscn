@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://hsjfke2n7o5"]
+[gd_scene load_steps=3 format=3 uid="uid://hsjfke2n7o5"]
 
 [ext_resource type="Script" uid="uid://ck7cpekrw1vtl" path="res://scenes/ui/country_progress.gd" id="1_g1pri"]
+[ext_resource type="LabelSettings" uid="uid://dao5uukhxa6gb" path="res://ressources/label/roboto_medium.tres" id="2_d15c4"]
 
 [node name="CountryProgress" type="VBoxContainer"]
 anchors_preset = 15
@@ -12,11 +13,13 @@ script = ExtResource("1_g1pri")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
-text = "Country Progress:"
+text = "Progression:"
+label_settings = ExtResource("2_d15c4")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 step = 0.001
 value = 64.0
 

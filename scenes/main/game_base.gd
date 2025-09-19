@@ -101,7 +101,6 @@ func lost_specimen_calculator() -> void:
 		# add sum of damage of country to global value
 		sum_of_damage += sum_of_damage_per_country
 		
-	lost_specimen_per_second_globally += (CountryData.get_total_poisoned_individuals() / 1000.0) # effecitveness of 0.1%/sec
 	update_lost_specimen_per_second(lost_specimen_per_second_globally)
 
 

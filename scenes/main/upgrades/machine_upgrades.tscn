@@ -48,13 +48,8 @@ texture = ExtResource("2_7kqun")
 expand_mode = 4
 stretch_mode = 5
 
-[node name="LevelLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 2
-theme_override_font_sizes/normal_font_size = 32
-bbcode_enabled = true
-text = "[center]LVL: XX"
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2

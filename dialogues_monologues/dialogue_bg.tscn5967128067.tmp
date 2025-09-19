@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7bujoov7khfg"]
+
+[ext_resource type="StyleBox" uid="uid://bdshyk1db1kl0" path="res://ressources/menu_transparent_bg.tres" id="1_jpd16"]
+[ext_resource type="Script" uid="uid://ij0dax55p4l" path="res://dialogues_monologues/DialogueBG.gd" id="1_x2t52"]
+
+[node name="DialogueBG" type="Node"]
+script = ExtResource("1_x2t52")
+metadata/_custom_type_script = "uid://c8d470kti274h"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_jpd16")

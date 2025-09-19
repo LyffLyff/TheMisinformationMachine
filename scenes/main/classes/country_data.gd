@@ -32,6 +32,7 @@ func _ready() -> void:
 	# Countries extra init
 	for n in COUNTRY_DETAILS.keys():
 		COUNTRY_DETAILS[n]["unlocks"] = 0	# only joker unlocked -> 1, 2, 3
+		COUNTRY_DETAILS[n]["progression_idx"] = 0
 		COUNTRY_DETAILS[n]["progression"] = 0.0
 		COUNTRY_DETAILS[n]["poisoned_individuals"] = 0
 
@@ -77,8 +78,32 @@ func set_poisoned_individuals(new_value : int, country : String = Global.CURRENT
 
 func increment_poisoned_individuals(country : String = Global.CURRENT_COUNTRY):
 	COUNTRY_DETAILS[country]["poisoned_individuals"] += 1
+	_check_for_skill_point(country)
 	emit_signal("update_calculations")
 
+const SKILL_POINT_UNLOCKS := [
+	10,
+	1000,
+	2000,
+	5000,
+	10000,
+	100000,
+	10000000,
+	20000000,
+	50000000,
+	20000000
+]
+
+var current_skill_lvl : int = 0
+
+func _check_for_skill_point(country : String):
+	for n in range(current_skill_lvl, SKILL_POINT_UNLOCKS.size()):
+		if get_total_poisoned_individuals() >= SKILL_POINT_UNLOCKS[current_skill_lvl]:
+			if n == 0:	# first skill point
+				Dialogic.start("first_skill_point_unlock")
+			Global.add_skill_point()
+			GlobalSoundPlayer.play_skill_jingle()
+			current_skill_lvl += 1
 
 func _check_character_unlock(country  : String) -> void:
 	if COUNTRY_DETAILS[country]["progression"] > 0.9:
@@ -92,19 +117,19 @@ func _check_character_unlock(country  : String) -> void:
 		COUNTRY_DETAILS[country]["unlocks"] = 3
 		Global.add_skill_point()
 		GlobalSoundPlayer.play_country_progression_jingle()
-		emit_signal("character_unlocked", 3)
+		emit_signal("character_unlocked", country, 3)
 	elif COUNTRY_DETAILS[country]["progression"] > 0.25 and COUNTRY_DETAILS[country]["unlocks"] <  2:
 		# UNLOCK CONPIRATOR ON 25% Progress
 		COUNTRY_DETAILS[country]["unlocks"] = 2
 		Global.add_skill_point()
 		GlobalSoundPlayer.play_country_progression_jingle()
-		emit_signal("character_unlocked", 2)
+		emit_signal("character_unlocked", country, country, 2)
 	elif  COUNTRY_DETAILS[country]["progression"] > 0.10 and COUNTRY_DETAILS[country]["unlocks"] == 0:
 		# UNLOCK SCAMMER ON 10% Progress
 		COUNTRY_DETAILS[country]["unlocks"] = 1
 		Global.add_skill_point()
 		GlobalSoundPlayer.play_country_progression_jingle()
-		emit_signal("character_unlocked", 1)
+		emit_signal("character_unlocked", country, country, 1)
 
 
 func set_lost_specimen_per_country(country_name : String, lost_specimen_per_second : int) -> void:
@@ -118,6 +143,10 @@ func set_lost_specimen_per_country(country_name : String, lost_specimen_per_seco
 
 func get_character_unlock(country : String = Global.CURRENT_COUNTRY) -> int:
 	return COUNTRY_DETAILS[country].get_or_add("unlocks", 0)
+
+
+func get_progression_idx(country : String = Global.CURRENT_COUNTRY):
+	return COUNTRY_DETAILS[country]["progression_idx"]
 
 
 func get_lost_specimen_ps(country : String):
@@ -148,7 +177,6 @@ func get_country_data_dict(country : String) -> Dictionary:
 
 func get_next_bribe_cost_per_day(nth_politician : int = get_politician_idx() + 1, country : String = Global.CURRENT_COUNTRY) -> float:
 	# returns the cost of the next bribe money for the next politician in a country per day
-	print(get_politician_idx())
 	var x : float = CountryData.get_gdp(country) / CountryData.get_population(country) / 365
 	return x * (pow(nth_politician, 2) / nth_politician)
 
@@ -160,6 +188,11 @@ func get_politician_idx(country : String = Global.CURRENT_COUNTRY) -> int:
 
 func get_total_progression() -> float:
 	return get_progression() + get_poisoned_indivduals()
+
+
+func set_country_progression_idx(country, char_idx):
+	print(country)
+	COUNTRY_DETAILS[country]["progression_idx"] = char_idx
 
 
 func get_current_base_money_for_all_countries(sorted : bool = false) -> Dictionary:
@@ -965,5 +998,33 @@ var COUNTRY_DETAILS: Dictionary = {
 	"size": 26.0,
 	"corruption": 0.28,
 	"gdp_billions_usd": 0.1
-  }
+  },
+"myanmar": {
+  "population": 54500000,
+  "median_age": 28.2,
+  "size": 676578.0,
+  "corruption": 0.16,
+  "gdp_billions_usd": 74.1
+},
+"estonia": {
+  "population": 1370000,
+  "median_age": 45.0,
+  "size": 45335.0,
+  "corruption": 0.76,
+  "gdp_billions_usd": 45.0
+},
+"finland": {
+  "population": 5636000,
+  "median_age": 43.3,
+  "size": 303948.0,
+  "corruption": 0.88,
+  "gdp_billions_usd": 299.8
+},
+"jamaica": {
+  "population": 2824000,
+  "median_age": 30.9,
+  "size": 10991.0,
+  "corruption": 0.44,
+  "gdp_billions_usd": 20.6
+},
 	}
