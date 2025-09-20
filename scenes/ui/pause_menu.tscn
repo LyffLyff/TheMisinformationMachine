@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://botyfwwae687k"]
+[gd_scene load_steps=6 format=3 uid="uid://botyfwwae687k"]
 
 [ext_resource type="Script" uid="uid://cvlnvq3i4esck" path="res://scenes/ui/pause_menu.gd" id="1_0lmf7"]
-[ext_resource type="Shader" uid="uid://dwnv1l157e6x" path="res://scenes/ui/crt_turn_on.gdshader" id="1_8uki6"]
 [ext_resource type="FontFile" uid="uid://cboudv34kyac0" path="res://assets/fonts/Roboto-Bold.ttf" id="2_f6eus"]
 [ext_resource type="AudioStream" uid="uid://6bsv7pf8hcpw" path="res://assets/sounds/music/584332__signalsinnoise__acoustic-guitar-bassline.wav" id="3_f6eus"]
 
@@ -13,13 +12,6 @@ font = ExtResource("2_f6eus")
 font_size = 128
 shadow_size = 2
 shadow_color = Color(0, 0, 0, 0.6784314)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8uki6"]
-shader = ExtResource("1_8uki6")
-shader_parameter/spacing = 10.0
-shader_parameter/animation_progress = 0.0
-shader_parameter/dot_size = 1.0
-shader_parameter/dot_color = Color(0, 0, 0, 1)
 
 [node name="PauseMenu" type="PanelContainer"]
 process_mode = 2
@@ -59,11 +51,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 42
 text = "ABANDON RUN"
 flat = true
-
-[node name="TransitionRect" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_8uki6")
-layout_mode = 2
-mouse_filter = 2
 
 [node name="PauseMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_f6eus")

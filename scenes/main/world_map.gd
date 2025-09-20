@@ -2,15 +2,24 @@ extends PausingHandler
 
 const GENERAL_COUNTRY_INFO = preload("res://scenes/ui/general_country_info.tscn")
 
-const COUNTRY_DATA_FOLDER := "res://geodata/countries/"
+const COUNTRY_DATA_FOLDER := "res://geodata/countries_simplified/"
 const COUNTRY_FOCUS_CLR := Color.CRIMSON
 const COUNTRY_HIGHLIGHT_CLR := Color.DARK_SLATE_GRAY
+const COUNTRY_PROGRESSION_STARTED :=  Color.DARK_GREEN
+const COUNTRY_PROGRESSION_COLORS : PackedColorArray = [
+	Color.FOREST_GREEN,
+	Color(0.89, 0.691, 0.352, 1.0),
+	Color.CORAL,
+	Color.REBECCA_PURPLE,
+	Color.FIREBRICK
+]
 
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var machine_tasks: PanelContainer = %MachineTasks
 @onready var country_details: PanelContainer = %CountryDetails
 @onready var money_display: VBoxContainer = %MoneyDisplay
 
+signal map_loaded
 signal country_entered
 signal country_exited
 signal country_selected
@@ -27,12 +36,15 @@ var screen_width = 1920
 var screen_height = 1080
 
 var country_container : Node2D
+@onready var outline_container: Node2D = %OutlineContainer
 var hover_polygon: Polygon2D = null
 var hover_polygon_name :  String = ""
-var selected_country_outline : Array[Line2D] = []
+var premade_outlines : Dictionary[String, Array] = {
+	# Country : Array of Line2D
+}		# to fix stutter on  selection each time
 
 func _ready():
-	# BaseGameClass Ready
+	self.connect("map_loaded", Transition.fade_in, CONNECT_ONE_SHOT)
 	
 	# Signals
 	self.connect("country_selected", camera_2d.zoom_into_position)
@@ -59,6 +71,7 @@ func _ready():
 	
 	var load_time := Time.get_unix_time_from_system() - start_time
 	print("World Loaded In: %s seconds" % load_time)
+	emit_signal("map_loaded")
 
 
 func get_all_files_from_folder(folder_path: String = COUNTRY_DATA_FOLDER) -> Array[String]:
@@ -123,26 +136,6 @@ func load_geojson(file_path: String):
 	
 	return json.data
 
-func extract_bounds(geojson_data):
-	# Reset bounds
-	min_lat = 90.0
-	max_lat = -90.0
-	min_long = 180.0
-	max_long = -180.0
-	
-	for feature in geojson_data.features:
-		if feature.geometry.type == "Polygon":
-			for ring in feature.geometry.coordinates:
-				for coord in ring:
-					update_bounds(coord[0], coord[1])
-
-func update_bounds(lon: float, lat: float):
-	if lat < min_lat: min_lat = lat
-	if lat > max_lat: max_lat = lat
-	if lon < min_long: min_long = lon
-	if lon > max_long: max_long = lon
-
-
 func create_polygons_from_geojson(geojson_data, country):
 	# Second pass: create polygons
 	var new_country : Node = Node2D.new()
@@ -178,17 +171,6 @@ func create_single_polygon(polygon_coords, country_title : String) -> Node2D:
 		var screen_pos : Vector2 = lat_lon_to_screen(coord[0], coord[1])
 		points.append(screen_pos)
 	
-	# Set the polygon points
-	if country_title == "russia":
-		points = fix_russia(points, 3)
-	else:
-		pass
-		# for now just to fasten the debug times -> loads the map faster
-		if points.size() > 200:
-			points = fix_russia(points, 3)
-		elif points.size() > 1000:
-			points = fix_russia(points, 10)
-	points = clean_geojson_polygon(points)
 	polygon2d.polygon = points
 	polygon2d.antialiased = true
 	collision_shape.polygon = points
@@ -196,6 +178,22 @@ func create_single_polygon(polygon_coords, country_title : String) -> Node2D:
 	# Optional: Set some visual properties
 	polygon2d.color = COUNTRY_PROGRESSION_COLORS[0]  # intial color
 	polygon2d.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+	
+	
+	# PreMake Outlines -> load later
+	var line = Line2D.new()
+	line.joint_mode = Line2D.LINE_JOINT_ROUND
+	line.antialiased = true
+	line.width = 1  # outline thickness
+	line.default_color = Color.GHOST_WHITE
+	line.points = points
+	#line.add_point(polygon2d.polygon[0])  # close polygon
+	outline_container.add_child(line)
+	if !premade_outlines.has(country_title):
+		premade_outlines[country_title] = [line]
+	else:
+		premade_outlines[country_title].append(line)
+	line.hide()
 	
 	# Add to container
 	area.connect("mouse_entered", Callable(self, "_on_mouse_entered").bind(country_title))
@@ -229,21 +227,11 @@ func create_polygon_holes(parent_polygon, polygon_coords):
 		add_child(hole_line)
 
 
-func clean_geojson_polygon(points: Array) -> PackedVector2Array:
-	var cleaned := PackedVector2Array(points)
-	if cleaned.size() > 1 and cleaned[0] == cleaned[-1]:
-		cleaned.remove_at(cleaned.size() - 1)  # drop duplicate
-	return cleaned
-
 func lat_lon_to_screen(longitude: float, latitude: float) -> Vector2:
-	# Assuming you have screen dimensions and world bounds
-	var screen_width = get_viewport().get_visible_rect().size.x
-	var screen_height = get_viewport().get_visible_rect().size.y
-	
 	# Convert longitude to X (this is usually correct)
-	var x = (longitude - min_long) / (max_long - min_long) * screen_width
+	var x = (longitude - min_long) / (max_long - min_long) * DisplayServer.window_get_size().x
 	
-	var y = screen_height - ((latitude - min_lat) / (max_lat - min_lat) * screen_height)
+	var y = screen_height - ((latitude - min_lat) / (max_lat - min_lat) * DisplayServer.window_get_size().y)
 	
 	# -> the minus cause it was flipped + an offset to center it on screen
 	return -Vector2(x, y) + Vector2(DisplayServer.window_get_size())
@@ -255,24 +243,15 @@ func fix_russia(points: PackedVector2Array, step: int) -> PackedVector2Array:
 		new_points.append(points[i])
 	return new_points
 
-
 func highlight_polygon(country_name: String) -> void:
 	_unselect_country()
 	
 	Global.CURRENT_COUNTRY = country_name
 	
-	for node in get_tree().get_nodes_in_group(country_name):
-		var polygon : Polygon2D = node.get_child(1)
-		var line = Line2D.new()
-		line.joint_mode = Line2D.LINE_JOINT_ROUND
-		line.antialiased = true
-		line.width = 1  # outline thickness
-		line.default_color = Color.GHOST_WHITE
-		line.points = fix_russia(polygon.polygon.duplicate(),  3)
-		polygon.color = COUNTRY_HIGHLIGHT_CLR
-		line.add_point(polygon.polygon[0])  # close polygon
-		selected_country_outline.append(line)
-		self.add_child(line)
+	for outline in premade_outlines.get(country_name):
+		outline.show() #show outline
+	for n in get_tree().get_nodes_in_group(country_name):
+		n.get_child(1).color = COUNTRY_HIGHLIGHT_CLR
 
 
 #### INPUT ####
@@ -317,43 +296,32 @@ func _on_mouse_exited(country_name : String):
 			var idx : int = CountryData.get_progression_idx(country_name)
 			if idx == 0 and CountryData.has_progression_started(country_name):
 				# highlight countries the  user has done sth/has agents
-				n.get_child(1).color = Color.BLACK
+				n.get_child(1).color = COUNTRY_PROGRESSION_STARTED
 			else:
 				n.get_child(1).color = COUNTRY_PROGRESSION_COLORS[idx]
 	emit_signal("country_exited", hover_polygon)
 
-func is_mouse_over_ui() -> bool:
-	var hovered = get_viewport().gui_get_hovered_control()
-	if hovered != null:
-		print(hovered.is_in_group("interactive_ui"))
-	return hovered != null and hovered.is_in_group("interactive_ui")
-
-
 func _on_country_details_hidden() -> void:
 	_unselect_country()
 
-
 func _unselect_country() -> void:
-	if selected_country_outline:
-		for n in selected_country_outline:
-			n.queue_free()
-		selected_country_outline = []
+	if Global.CURRENT_COUNTRY != "":
+		# OUTLINE
+		for n in premade_outlines.get(Global.CURRENT_COUNTRY):
+			n.hide()
+		
+		# COLOR
+		var color : Color
+		var idx : int = CountryData.get_progression_idx(Global.CURRENT_COUNTRY)
+		if idx == 0 and CountryData.has_progression_started(Global.CURRENT_COUNTRY):
+			# highlight countries the  user has done sth/has agents
+			color = COUNTRY_PROGRESSION_STARTED
+		else:
+			color = COUNTRY_PROGRESSION_COLORS[idx]
+			
 		for n in get_tree().get_nodes_in_group(Global.CURRENT_COUNTRY):
 			# unhighlight country
-			var idx : int = CountryData.get_progression_idx(Global.CURRENT_COUNTRY)
-			if idx == 0 and CountryData.has_progression_started(Global.CURRENT_COUNTRY):
-				# highlight countries the  user has done sth/has agents
-				n.get_child(1).color = Color.BLACK
-			else:
-				n.get_child(1).color = COUNTRY_PROGRESSION_COLORS[idx]
-
-const COUNTRY_PROGRESSION_COLORS : PackedColorArray = [
-	Color.FOREST_GREEN,
-	Color(0.89, 0.691, 0.352, 1.0),
-	Color.CORAL,
-	Color.REBECCA_PURPLE,
-	Color.FIREBRICK
-]
+			n.get_child(1).color = color
 
 func change_country_visuals(country :  String, char_idx : int) -> void:
 	CountryData.set_country_progression_idx(country, char_idx)

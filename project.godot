@@ -11,10 +11,11 @@ config_version=5
 [application]
 
 config/name="The Misinformation Machine"
-run/main_scene="uid://brnpe61hgy7ud"
+run/main_scene="uid://bvyvobfrdrd7i"
 config/features=PackedStringArray("4.5", "Forward Plus")
+boot_splash/bg_color=Color(0, 0, 0, 1)
 config/icon="uid://c55xi4aqjk8ll"
-boot_splash/name="The Misinformation Ma"
+boot_splash/name="The Misinformation Machine"
 
 [autoload]
 
@@ -22,6 +23,7 @@ Global="*res://scenes/main/global.gd"
 CountryData="*res://scenes/main/classes/country_data.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 GlobalSoundPlayer="*res://scenes/main/classes/GlobalSoundPlayer.gd"
+Transition="*res://scenes/ui/transition.tscn"
 
 [dialogic]
 

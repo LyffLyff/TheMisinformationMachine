@@ -33,6 +33,7 @@ func _on_open_upgrades_button_pressed() -> void:
 
 
 func run_failed() -> void:
+	await Transition.fade_out()
 	get_tree().change_scene_to_packed(RUN_FAILED)
 
 

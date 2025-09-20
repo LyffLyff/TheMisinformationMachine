@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=39 format=3 uid="uid://7iq241q8m666"]
+[gd_resource type="Theme" load_steps=42 format=3 uid="uid://7iq241q8m666"]
 
 [ext_resource type="FontFile" uid="uid://cboudv34kyac0" path="res://assets/fonts/Roboto-Bold.ttf" id="1_mfj2l"]
 [ext_resource type="Texture2D" uid="uid://duw1tgvi0xo3b" path="res://ressources/themes/black_and_white_theme/icons/checked.svg" id="1_rdkwa"]
@@ -175,6 +175,31 @@ grow_begin = 2.0
 grow_end = 2.0
 thickness = 2
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmmbi"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8usut"]
+bg_color = Color(0, 0, 0, 1)
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_77rre"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uofra"]
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 1
@@ -258,6 +283,9 @@ HSeparator/styles/separator = SubResource("StyleBoxLine_mfj2l")
 HSlider/icons/grabber = ExtResource("7_c6ptg")
 HSlider/icons/grabber_highlight = ExtResource("8_0r4r1")
 HSlider/icons/tick = ExtResource("9_tg2rm")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_mmmbi")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_8usut")
+HSlider/styles/slider = SubResource("StyleBoxFlat_77rre")
 Label/font_sizes/font_size = 16
 Label/fonts/font = ExtResource("1_mfj2l")
 MarginContainer/constants/margin_bottom = 10

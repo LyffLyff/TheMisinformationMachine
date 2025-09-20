@@ -162,7 +162,6 @@ func set_lost_specimen_per_country(country_name : String, lost_specimen_per_seco
 func check_progression_started(country):
 	COUNTRY_DETAILS[country]["progression_started"] = true
 
-
 func has_progression_started(country) -> bool:
 	return COUNTRY_DETAILS[country]["progression_started"]
 

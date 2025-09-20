@@ -1,6 +1,8 @@
 extends UISoundManager
 
-const WORLD_MAP = preload("uid://brnpe61hgy7ud")
+const INTRO = preload("uid://f3ae7mhybktn")
+const CREDITS = preload("uid://qk3loi4ipjq4")
+const SETTINGS = preload("uid://crhspbnnhna6t")
 
 @onready var button_container: VBoxContainer = %ButtonContainer
 @onready var start_game: Button = %StartGame
@@ -10,6 +12,7 @@ const WORLD_MAP = preload("uid://brnpe61hgy7ud")
 
 
 func _ready() -> void:
+	Transition.fade_in()
 	for n in button_container.get_children():
 		n.connect("pressed", on_menu_option_pressed.bind(n.get_index()))
 		n.connect("mouse_entered", on_menu_mouse_entered.bind(n.get_index()))
@@ -19,12 +22,16 @@ func _ready() -> void:
 func on_menu_option_pressed(idx : int) -> void:
 	match idx:
 		0:
-			get_tree().change_scene_to_packed(WORLD_MAP)
+			await Transition.fade_out()
+			get_tree().change_scene_to_packed(INTRO)
 		1:
-			print("YES I HAVE SETTINGS")
+			await Transition.fade_out()
+			get_tree().change_scene_to_packed(SETTINGS)
 		2:
-			print("OPEN CREDITS")
+			await Transition.fade_out()
+			get_tree().change_scene_to_packed(CREDITS)
 		3:
+			await Transition.fade_out()
 			get_tree().quit()
 		_:
 			printerr("INVALID MENU OPTION IDX")

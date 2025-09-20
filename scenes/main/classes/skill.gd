@@ -14,9 +14,6 @@ var skill_point_cost : int = 1
 
 var time_cost : float = 10.0
 
-# function that will be called to do the actual effect mentioned in the description
-var on_skill_function : String
-
 var repeatable_unlock : bool = false
 
 
@@ -28,7 +25,6 @@ func _init(
 	m_cost : int, 
 	s_cost : int, 
 	t_cost : float, 
-	call_func : String,
 	repeatable : bool = false
 ) -> void:
 	identifier = unique_id
@@ -38,5 +34,4 @@ func _init(
 	money_cost = m_cost
 	skill_point_cost = s_cost
 	time_cost = t_cost
-	on_skill_function = call_func
 	repeatable_unlock = repeatable

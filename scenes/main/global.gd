@@ -1,6 +1,5 @@
 extends Node
 
-
 enum TASK_TYPES {
 	CHARACTER_CREATION,
 	NETWORKING,
@@ -100,6 +99,10 @@ func skill_unlocked(unlocked_skill_id : String):
 			AUTOCLICKER_ACTIVATED = true
 			emit_signal("autoclicker_activated")
 			call_deferred("autoclicker")
+		"GROUP_PROPAGANDA":
+			pass
+		"BANK_HEISTS":
+			pass
 		_:
 			printerr("UNKNOWN SKILL")
 		

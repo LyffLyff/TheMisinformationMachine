@@ -128,9 +128,7 @@ func _process(delta: float) -> void:
 	Global.LOST_SPECIMEN = lost_specimen
 	# For each country aswell :(
 	CountryData.update_lost_specimen(delta)
-	
-	print(lost_specimen)
-	
+		
 	lost_specimen_counter_label.text = str(
 		int(lost_specimen + 
 		CountryData.get_total_static_lost_specimen()

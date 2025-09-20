@@ -1,12 +1,9 @@
 extends PanelContainer
 
-const MAIN_MENU : PackedScene = preload("uid://bvyvobfrdrd7i")
-
 @onready var abandon_run_button: Button = %AbandonRun
 @onready var transition_rect: ColorRect = $TransitionRect
 
 var is_hovered : bool = false
-
 
 func _on_abandon_run_mouse_entered() -> void:
 	if !is_hovered:
@@ -19,11 +16,6 @@ func _on_abandon_run_mouse_exited() -> void:
 
 
 func _on_abandon_run_pressed() -> void:
-	await create_tween().tween_property(
-		transition_rect.material,
-		"shader_parameter/animation_progress",
-		1.0,
-		0.5
-	).from(0.0).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN).finished
+	await Transition.fade_out()
 	get_tree().paused = false
-	get_tree().change_scene_to_packed(MAIN_MENU)
+	get_tree().call_deferred("change_scene_to_packed", load("res://scenes/ui/main_menu.tscn"))
