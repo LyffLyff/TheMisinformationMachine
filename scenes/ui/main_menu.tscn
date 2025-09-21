@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://b5l2vlk0tbikc" path="res://project_files/logo.png" id="1_sl1te"]
 [ext_resource type="Material" uid="uid://dq8vm750k2vk0" path="res://ressources/fog_noise.tres" id="2_8g5eo"]
 [ext_resource type="LabelSettings" uid="uid://c140fckgvg1tu" path="res://ressources/label/ui_font_small.tres" id="3_1g8jr"]
+[ext_resource type="FontVariation" uid="uid://cb8yjr7sbvcfj" path="res://scenes/ui/main_menu.tres" id="4_7suek"]
 [ext_resource type="LabelSettings" uid="uid://bk2vqu4v7foy2" path="res://ressources/label/header_small.tres" id="4_8g5eo"]
 [ext_resource type="AudioStream" uid="uid://cwx24j6cx24a8" path="res://assets/sounds/music/333640__cabled_mess__retro-scifi-sequenced-sine-fm.mp3" id="4_m1kxf"]
-[ext_resource type="LabelSettings" uid="uid://dwnyj25h5arxv" path="res://ressources/label/roboto_large.tres" id="4_x2yvf"]
 [ext_resource type="Texture2D" uid="uid://c55xi4aqjk8ll" path="res://assets/portraits/boss/laughing.png" id="6_uhagc"]
 [ext_resource type="Shader" uid="uid://c5ud71dw6t1gs" path="res://scenes/ui/moving_sprite.gdshader" id="9_otr3d"]
 [ext_resource type="Texture2D" uid="uid://dvxd15d1030ls" path="res://assets/characters/conspirator.png" id="10_8ekit"]
@@ -146,6 +146,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("4_7suek")
 theme_override_font_sizes/font_size = 72
 text = "NEW RUN"
 flat = true
@@ -155,6 +156,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("4_7suek")
 theme_override_font_sizes/font_size = 72
 text = "CREDITS"
 flat = true
@@ -164,6 +166,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("4_7suek")
 theme_override_font_sizes/font_size = 72
 text = "QUIT"
 flat = true
@@ -202,16 +205,17 @@ size_flags_vertical = 3
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 10
+theme_override_fonts/font = ExtResource("4_7suek")
 text = "Godot Wild Jam 75 Theme:"
-label_settings = ExtResource("3_1g8jr")
 
 [node name="ThemeMain" type="Label" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 size_flags_stretch_ratio = 3.0
+theme_override_fonts/font = ExtResource("4_7suek")
+theme_override_font_sizes/font_size = 72
 text = "EXPANSION"
-label_settings = ExtResource("4_x2yvf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -223,6 +227,7 @@ size_flags_vertical = 3
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 10
+theme_override_fonts/font = ExtResource("4_7suek")
 text = "WildCards:"
 label_settings = ExtResource("3_1g8jr")
 
@@ -231,8 +236,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 size_flags_stretch_ratio = 3.0
+theme_override_fonts/font = ExtResource("4_7suek")
 text = "- SINGLE LOCATION -"
-label_settings = ExtResource("3_1g8jr")
 horizontal_alignment = 1
 vertical_alignment = 1
 

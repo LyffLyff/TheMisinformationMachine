@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://bm15fd27cx10o"]
+[gd_scene load_steps=7 format=3 uid="uid://bm15fd27cx10o"]
 
 [ext_resource type="StyleBox" uid="uid://bdshyk1db1kl0" path="res://ressources/menu_transparent_bg.tres" id="1_oyx11"]
 [ext_resource type="Script" uid="uid://dmbnpi07xga3g" path="res://scenes/ui/general_country_info.gd" id="1_tor4b"]
 [ext_resource type="PackedScene" uid="uid://bhaw00rwnrbhn" path="res://scenes/ui/popup_top_bar.tscn" id="2_c2wrg"]
-[ext_resource type="FontFile" uid="uid://b01mrm5rtsv5" path="res://assets/fonts/SpaceGrotesk-Bold.ttf" id="4_2a1uf"]
+[ext_resource type="LabelSettings" uid="uid://bk2vqu4v7foy2" path="res://ressources/label/header_small.tres" id="5_bwesf"]
+[ext_resource type="FontFile" uid="uid://uuo512rxy8j" path="res://assets/fonts/Rintvera-Regular.ttf" id="5_vb2um"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_w63fs"]
+font = ExtResource("5_vb2um")
+font_size = 32
 
 [node name="GeneralCountryInfo" type="PanelContainer"]
 anchors_preset = 15
@@ -32,13 +37,79 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="CountryData" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "POpulation:"
+label_settings = SubResource("LabelSettings_w63fs")
+vertical_alignment = 2
+
+[node name="PopulationLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/normal_font = ExtResource("4_2a1uf")
-theme_override_font_sizes/normal_font_size = 40
-theme_override_font_sizes/bold_font_size = 32
-bbcode_enabled = true
+label_settings = ExtResource("5_bwesf")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "MEDIAN AGE: "
+label_settings = SubResource("LabelSettings_w63fs")
+vertical_alignment = 2
+
+[node name="MedianAgeLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = ExtResource("5_bwesf")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "SIZE: "
+label_settings = SubResource("LabelSettings_w63fs")
+vertical_alignment = 2
+
+[node name="SizeLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = ExtResource("5_bwesf")
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Corruption INDEX: "
+label_settings = SubResource("LabelSettings_w63fs")
+vertical_alignment = 2
+
+[node name="CorruptionIndexLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = ExtResource("5_bwesf")
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "GDP: "
+label_settings = SubResource("LabelSettings_w63fs")
+vertical_alignment = 2
+
+[node name="GDPLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5"]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = ExtResource("5_bwesf")
 
 [connection signal="close_menu" from="PanelContainer/MarginContainer/VBoxContainer/TopBar" to="." method="_on_top_bar_close_menu"]

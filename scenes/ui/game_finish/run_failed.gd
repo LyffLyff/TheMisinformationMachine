@@ -19,3 +19,9 @@ func _ready() -> void:
 func on_timeline_finished() -> void:
 	await Transition.fade_out()
 	get_tree().change_scene_to_packed(load("uid://bvyvobfrdrd7i"))
+
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("skip_dialogue"):
+		Dialogic.end_timeline(true)
+		on_timeline_finished()

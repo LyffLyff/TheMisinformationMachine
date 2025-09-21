@@ -7,6 +7,7 @@ const BRIBE_SORTED_DISPLAYER = preload("uid://bcubw5t3fpyvq")
 
 func _ready() -> void:
 	#  TODO: Maybe cache that value
+	amount_label.text = " BASE BRIBE PER COUNTRY"
 	var base_bribes := CountryData.get_current_base_money_for_all_countries(true)
 	var max_bribe : float =  base_bribes.values()[0]
 	for n in base_bribes.size():

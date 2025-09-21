@@ -271,7 +271,7 @@ func highlight_polygon(country_name: String) -> void:
 			n.get_child(1).material = load("uid://1b0sxwd5rtsl")
 			n.get_child(1).material.set_shader_parameter("ink_color", COUNTRY_HIGHLIGHT_CLR)
 			n.get_child(1).material.set_shader_parameter("splash_center", get_global_mouse_position())
-			create_tween().tween_property(
+			create_tween().set_ignore_time_scale().tween_property(
 				n.get_child(1).material,
 				"shader_parameter/radius",
 				500.0,

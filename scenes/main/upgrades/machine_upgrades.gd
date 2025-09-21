@@ -30,7 +30,7 @@ var MACHINE_UPGRADES : Dictionary = {
 	"GROUP_PROPAGANDA" : Skill.new(
 		"GROUP_PROPAGANDA",
 		"Group Therapy",
-		load("res://assets/icons/789_Lorc_RPG_icons/Icon.3_14.png"),
+		load("res://assets/icons/789_Lorc_RPG_icons/Icon.6_01.png"),
 		"Speak to [color=#9a7dce]groups[/color] instead of one-to-one, adding a [color=#7fa3a3]group dynamic[/color] and letting you [color=#b37f7f]poison multiple minds[/color] with a [color=#d1b77f]single press[/color].",
 		10,
 		1,

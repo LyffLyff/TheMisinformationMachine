@@ -31,6 +31,9 @@ text = "You get Skill points for reaching Progression Goals for every single cou
 
 Countries will automatically be fully converted if you reach over 90% conversion"
 
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3

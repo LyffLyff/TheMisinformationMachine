@@ -1,33 +1,30 @@
 extends PanelContainer
 
-@onready var country_data_label: RichTextLabel = %CountryData
 @onready var top_bar: VBoxContainer = %TopBar
+@onready var population_label: Label = %PopulationLabel
+@onready var median_age_label: Label = %MedianAgeLabel
+@onready var size_label: Label = %SizeLabel
+@onready var corruption_index_label: Label = %CorruptionIndexLabel
+@onready var gdp_label: Label = %GDPLabel
+
 
 func init_country_info(country_title : String, country_data : Dictionary) -> void:
-	top_bar.bar_title.text = country_title.to_upper()
-	
-	# Display Country Data
-	country_data_label.clear()
+	top_bar.bar_title.text = Global.get_normalized_country_name(country_title)
 	
 	# Population → Cyan shades
-	var pop: int = country_data["population"]
-	var pop_color: String = get_value_color(pop, [1_000_000, 10_000_000], ["#66ffff", "#009999"])
-	country_data_label.append_text("[b]Population:[/b] [color=%s]%d[/color]\n" % [pop_color, pop])
+	population_label.text = Global.format_big_number(country_data["population"])[0] + " " + Global.format_big_number(country_data["population"])[1]
 
 	# Median age → Purple shades
-	var age: float = country_data["median_age"]
-	var age_color: String = get_value_color(age, [20, 60], ["#cc99ff", "#6600cc"])
-	country_data_label.append_text("[b]Median Age:[/b] [color=%s]%.1f[/color]\n" % [age_color, age])
+	median_age_label.text = Global.format_big_number(country_data["median_age"])[0] + " " +  Global.format_big_number(country_data["median_age"])[1]
 
 	# Size → Blue shades
-	var size: float = country_data["size"]
-	var size_color: String = get_value_color(size, [10_000, 1_000_000], ["#99ccff", "#003366"])
-	country_data_label.append_text("[b]Size:[/b] [color=%s]%.1f km²[/color]\n" % [size_color, size])
+	size_label.text = Global.format_big_number(country_data["size"])[0] + " " + Global.format_big_number(country_data["size"])[1] + "m2"
 
 	# Corruption → Red (bad) to Green (good)
-	var corruption: float = country_data["corruption"]
-	var corruption_color: String = get_value_color(corruption, [0.0, 1.0], ["#ff6666", "#66ff66"])
-	country_data_label.append_text("[b]Corruption:[/b] [color=%s]%.2f[/color]\n" % [corruption_color, corruption])
+	corruption_index_label.text = "%0.2f" % country_data["corruption"]
+	
+	# GDP in Billion USD
+	gdp_label.text = "%0.2f Billion USD" % country_data["gdp_billions_usd"]
 
 
 func _on_top_bar_close_menu() -> void:

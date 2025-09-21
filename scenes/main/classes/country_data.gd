@@ -35,7 +35,9 @@ func _get_empty_country_data_value() -> Dictionary[String, Variant]:
 
 func _ready() -> void:
 	calc_total_population()
-	# Countries extra init
+	init_extra_details()
+
+func init_extra_details():
 	for n in COUNTRY_DETAILS.keys():
 		COUNTRY_DETAILS[n]["unlocks"] = 0	# only joker unlocked -> 1, 2, 3
 		COUNTRY_DETAILS[n]["progression_idx"] = 0
@@ -47,6 +49,7 @@ func _ready() -> void:
 		COUNTRY_DETAILS[n]["lost_specimen_per_second"] = 0.0
 		COUNTRY_DETAILS[n]["static_lost_specimen"] = 0.0
 		COUNTRY_DETAILS[n]["is_completed"] = false
+
 
 func init_country(country : String) -> void:
 	if !character_data_per_country.has(country):
@@ -990,6 +993,13 @@ var COUNTRY_DETAILS: Dictionary = {
 	"corruption": 0.91,
 	"gdp_billions_usd": 254.9
   },
+"cape_verde": {
+	"population": 598682,
+	"median_age": 29.6,
+	"size": 4033.0,
+	"corruption": 0.60,
+	"gdp_billions_usd": 2.6
+},
   "fiji": {
 	"population": 933154,
 	"median_age": 28.0,

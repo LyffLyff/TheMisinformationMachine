@@ -12,6 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
+mouse_filter = 0
 script = ExtResource("1_kf6ki")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -36,6 +37,7 @@ stretch_mode = 5
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_force_pass_scroll_events = false
 min_value = 0.1
 step = 0.1
 value = 0.1

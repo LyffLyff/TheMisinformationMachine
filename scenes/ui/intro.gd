@@ -3,6 +3,7 @@ extends PanelContainer
 const WORLD_MAP = preload("uid://brnpe61hgy7ud")
 
 func _ready() -> void:
+	# ACTUALLY START
 	await Transition.fade_in()
 	Dialogic.connect("timeline_ended", load_run)
 	Dialogic.start("intro")

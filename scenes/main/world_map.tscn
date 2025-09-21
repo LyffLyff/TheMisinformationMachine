@@ -153,7 +153,6 @@ limit_left = -3000
 limit_top = -2000
 limit_right = 3000
 limit_bottom = 2000
-position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 script = ExtResource("2_twtjt")
 metadata/_edit_lock_ = true
@@ -569,7 +568,6 @@ process_mode = 1
 [connection signal="lost_specimen_speed_updated" from="." to="UI/UIRoot/PanelContainer/VBoxContainer/Top/VBoxContainer/HBoxContainer/LostSpecimenLabel" method="_on_world_map_lost_specimen_speed_updated"]
 [connection signal="pause" from="." to="UI" method="_on_world_map_pause"]
 [connection signal="hidden" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails" to="." method="_on_country_details_hidden"]
-[connection signal="pressed" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer/PoisonIndividual" to="." method="add_static_money"]
 [connection signal="pressed" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer/PoisonIndividual" to="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails" method="_on_poison_individual_pressed"]
 [connection signal="button_pressed" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer/Jokers" to="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks" method="_on_jokers_button_pressed"]
 [connection signal="button_pressed" from="UI/UIRoot/PanelContainer/VBoxContainer/Center/LeftColumnMenuContainer/CountryDetails/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer/Scammers" to="UI/UIRoot/PanelContainer/VBoxContainer/Center/MachineTasks" method="_on_scammers_button_pressed"]

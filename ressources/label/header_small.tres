@@ -11,5 +11,5 @@ baseline_offset = 0.05
 font = SubResource("FontVariation_d18ew")
 font_size = 48
 shadow_size = 4
-shadow_color = Color(0, 0, 0, 0.50200003)
+shadow_color = Color(0, 0, 0, 0.72300005)
 shadow_offset = Vector2(2, 1)

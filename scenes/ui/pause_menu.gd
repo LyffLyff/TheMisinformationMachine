@@ -17,4 +17,5 @@ func _on_abandon_run_mouse_exited() -> void:
 func _on_abandon_run_pressed() -> void:
 	await Transition.fade_out()
 	get_tree().paused = false
+	Global.AUTOCLICKER_ACTIVATED = false # to fix the bug that it kept counting up
 	get_tree().call_deferred("change_scene_to_packed", load("res://scenes/ui/main_menu.tscn"))

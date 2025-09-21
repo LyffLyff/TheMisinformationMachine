@@ -1,0 +1,7 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://cb8yjr7sbvcfj"]
+
+[ext_resource type="FontFile" uid="uid://uuo512rxy8j" path="res://assets/fonts/Rintvera-Regular.ttf" id="1_lgkkd"]
+
+[resource]
+base_font = ExtResource("1_lgkkd")
+variation_embolden = 0.9

@@ -54,7 +54,7 @@ layout/default_style="res://ressources/dialogue/premade_dialogue.tres"
 variables={}
 extensions_folder="res://addons/dialogic_additions"
 text/letter_speed=0.02
-text/initial_text_reveal_skippable=false
+text/initial_text_reveal_skippable=true
 text/text_reveal_skip_delay=0.5
 text/advance_delay=0.5
 text/autoadvance_per_character_delay=0.1
@@ -83,7 +83,7 @@ audio/channel_defaults={
 "audio_bus": "",
 "fade_length": 3.0,
 "loop": true,
-"volume": -20.0
+"volume": 0.0
 },
 "laugh": {
 "audio_bus": "",
@@ -101,12 +101,13 @@ audio/channel_defaults={
 animations/leave_default="Instant Out"
 animations/cross_fade_default="Fade Cross"
 animations/join_default="Instant In"
+text/autoadvance_fixed_delay=0.5
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=2
+window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [editor_plugins]

@@ -4,7 +4,7 @@ extends Camera2D
 @export var pan_speed: float = 1.0
 @export var zoom_speed: float = 0.1
 @export var min_zoom: float = 1.0
-@export var max_zoom: float = 5.0
+@export var max_zoom: float = 15.0
 
 # Map bounds (adjust these to your actual map size)
 @export var map_bounds: Rect2 = Rect2(-400, -300, 2800, 1500)
@@ -13,6 +13,7 @@ extends Camera2D
 var is_dragging: bool = false
 var last_mouse_pos: Vector2
 var viewport_size: Vector2
+var pos_tw : Tween
 
 func _ready():
 	# Enable camera
@@ -52,6 +53,13 @@ func pan_camera(mouse_pos: Vector2):
 	# Apply zoom-aware limits
 	new_pos = clamp_camera_position(new_pos)
 	
+	#pos_tw = create_tween().set_ignore_time_scale(true)
+	#pos_tw.tween_property(
+	#	self,
+	#	"global_position",
+	#	new_pos,
+	#	0.1
+	#).set_ease(Tween.EASE_OUT)
 	global_position = new_pos
 	last_mouse_pos = mouse_pos  # Simply update to current mouse position
 
@@ -178,4 +186,5 @@ func _input(event):
 		# Update viewport size if window was resized
 		viewport_size = get_viewport().get_visible_rect().size
 	if Input.is_action_just_pressed("reset_camera"):
-		self.global_position = Vector2(1000, 450)
+		#self.global_position = Vector2(1000, 450)
+		pan_camera(Vector2(1000, 450))

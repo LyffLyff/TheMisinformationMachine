@@ -12,6 +12,7 @@ const SETTINGS = preload("uid://crhspbnnhna6t")
 @onready var failed_runs_label: Label = %FailedRunsLabel
 
 func _ready() -> void:
+	Engine.time_scale = 1.0
 	completed_runs_label.text = "COMPLETED RUNS: " + str(Global.game_data["completed_runs"])
 	failed_runs_label.text = "FAILED RUNS: " + str(Global.game_data["failed_runs"])
 	Transition.fade_in()
@@ -27,6 +28,7 @@ func on_menu_option_pressed(idx : int) -> void:
 		0:
 			await Transition.fade_out()
 			Global.game_data["playthroughs"] += 1
+			reset_sigleton_vars()
 			get_tree().change_scene_to_packed(INTRO)
 		1:
 			await Transition.fade_out()
@@ -38,8 +40,27 @@ func on_menu_option_pressed(idx : int) -> void:
 			printerr("INVALID MENU OPTION IDX")
 
 
+func reset_sigleton_vars() -> void:
+	# RESET SINGLETON DATA
+	Global.SKILL_POINTS = 0
+	Global.LOST_SPECIMEN = 0.0
+	Global.CURRENT_COUNTRY = ""
+	Global.POISONING_MULTIPLIER = 1
+	Global.CORE_MULTIPLIER = 1.0
+	Global.IDLE_CORES_ACTIVATED= false
+	Global.AUTO_RESTART_CORE_TASKS= false
+	Global.AUTOCLICKER_ACTIVATED = false
+	Global.AUTO_CLICKER_SPEED = 1.0
+	Global.CHARACTER_MULTIPLIER = 1.0
+	Global.time_modifier = 1.0
+	Global.UNLOCKED_SKILLS = []
+	CountryData.character_data_per_country = {}
+	CountryData.current_skill_lvl = 0
+	CountryData.init_extra_details()
+
+
 func on_menu_mouse_entered(idx : int):
-	button_container.get_child(idx).text = "-" + button_container.get_child(idx).text + "-"
+	button_container.get_child(idx).text = "- " + button_container.get_child(idx).text + " -"
 
 func on_menu_mouse_exited(idx: int):
-	button_container.get_child(idx).text = button_container.get_child(idx).text.trim_suffix("-").trim_prefix("-")
+	button_container.get_child(idx).text = button_container.get_child(idx).text.trim_suffix(" -").trim_prefix("- ")

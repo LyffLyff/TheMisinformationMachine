@@ -99,7 +99,7 @@ signal time_modifier_unlocked
 signal time_modifier_changed
 var time_modifier : float = 1.0
 
-var SKILL_POINTS : int = 1	# STARTING OF WITH NONE
+var SKILL_POINTS : int = 0	# STARTING OF WITH NONE
 var LOST_SPECIMEN :  float
 
 var UNLOCKED_SKILLS : PackedStringArray = [] # LIST OF ALL UNLOCKED SKILL IDs
@@ -110,10 +110,10 @@ func unlock_skill(skill_to_unlock : Skill) -> void:
 		emit_signal("insufficient_skill_points", skill_to_unlock.identifier)
 		GlobalSoundPlayer.play_insufficient_skill_points()
 		return
-	elif get_game_base().machine_tasks._get_available_cores() == 0:
+	if get_game_base().machine_tasks._get_available_cores() == 0:
 		GlobalSoundPlayer.play_insufficient_skill_points()
 		return
-	elif skill_to_unlock.money_cost > get_game_base().static_money:
+	if skill_to_unlock.money_cost > get_game_base().static_money:
 		GlobalSoundPlayer.play_insufficient_skill_points()
 		return
 	
@@ -202,11 +202,10 @@ func autoclicker() -> void:
 	autoclicker_timer.autostart = true
 	autoclicker_timer.one_shot = true
 	self.add_child(autoclicker_timer)
-	while true:
+	while AUTOCLICKER_ACTIVATED:
 		autoclicker_timer.wait_time = AUTO_CLICKER_SPEED
 		autoclicker_timer.start()
 		
 		await autoclicker_timer.timeout
 		
-		print(Time.get_datetime_string_from_system())
 		CountryData.increment_static_specimen_for_all_countries()
