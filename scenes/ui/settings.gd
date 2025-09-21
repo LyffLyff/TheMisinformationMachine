@@ -5,5 +5,6 @@ func _ready() -> void:
 
 
 func _on_popup_top_bar_close_menu() -> void:
+	GlobalSoundPlayer.play_selected_sound()
 	await Transition.fade_out()
 	get_tree().change_scene_to_packed(load("res://scenes/ui/main_menu.tscn"))

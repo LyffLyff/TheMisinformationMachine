@@ -32,7 +32,7 @@ func start_mining() -> void:
 	timer.start()
 	while true:
 		await timer.timeout
-		emit_signal("money_mined", randi_range(0.1, 100.0))
+		emit_signal("money_mined", randf_range(0.1, 100.0))
 
 
 func delete_idle_core():

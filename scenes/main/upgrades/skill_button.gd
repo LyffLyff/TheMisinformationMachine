@@ -23,9 +23,12 @@ func init_skill(skill_data : Skill) -> void:
 	
 	# UNLCOK REQUIREMENTS
 	skill_points_label.text = "SKILL POINTS: %d" % skill_data.skill_point_cost 
-	money_label.text = "MONEY: %0.2f" % skill_data.money_cost 
+	money_label.text = "MONEY: %s" % str(skill_data.money_cost).pad_decimals(0)
 	time_label.text = "UNLOCK TIME: %d" % skill_data.time_cost 
 	
 	if Global.UNLOCKED_SKILLS.has(skill_data.identifier):
-		self.modulate.a = 0.5
-		unlock.disabled = true
+		if !skill_data.repeatable_unlock:
+			self.modulate.a = 0.5
+			unlock.disabled = true
+		else:
+			pass

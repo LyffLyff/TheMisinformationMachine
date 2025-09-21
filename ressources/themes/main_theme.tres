@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=42 format=3 uid="uid://7iq241q8m666"]
+[gd_resource type="Theme" load_steps=44 format=3 uid="uid://7iq241q8m666"]
 
 [ext_resource type="FontFile" uid="uid://cboudv34kyac0" path="res://assets/fonts/Roboto-Bold.ttf" id="1_mfj2l"]
 [ext_resource type="Texture2D" uid="uid://duw1tgvi0xo3b" path="res://ressources/themes/black_and_white_theme/icons/checked.svg" id="1_rdkwa"]
@@ -226,6 +226,32 @@ corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 anti_aliasing = false
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fjle8"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0r4r1"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
 [resource]
 Button/colors/font_color = Color(1, 1, 1, 1)
 Button/colors/font_focus_color = Color(1, 1, 1, 1)
@@ -294,4 +320,6 @@ MarginContainer/constants/margin_right = 10
 MarginContainer/constants/margin_top = 10
 Panel/styles/panel = SubResource("StyleBoxFlat_uofra")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_c6ptg")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_fjle8")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_0r4r1")
 RichTextLabel/fonts/bold_font = ExtResource("2_mfj2l")

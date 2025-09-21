@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bm15fd27cx10o"]
+[gd_scene load_steps=5 format=3 uid="uid://bm15fd27cx10o"]
 
+[ext_resource type="StyleBox" uid="uid://bdshyk1db1kl0" path="res://ressources/menu_transparent_bg.tres" id="1_oyx11"]
 [ext_resource type="Script" uid="uid://dmbnpi07xga3g" path="res://scenes/ui/general_country_info.gd" id="1_tor4b"]
 [ext_resource type="PackedScene" uid="uid://bhaw00rwnrbhn" path="res://scenes/ui/popup_top_bar.tscn" id="2_c2wrg"]
+[ext_resource type="FontFile" uid="uid://b01mrm5rtsv5" path="res://assets/fonts/SpaceGrotesk-Bold.ttf" id="4_2a1uf"]
 
 [node name="GeneralCountryInfo" type="PanelContainer"]
 anchors_preset = 15
@@ -11,22 +13,32 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("1_oyx11")
 script = ExtResource("1_tor4b")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(1000, 500)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="TopBar" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_c2wrg")]
+[node name="TopBar" parent="PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_c2wrg")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="CountryData" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+[node name="CountryData" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("4_2a1uf")
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/bold_font_size = 32
 bbcode_enabled = true
 
-[connection signal="close_menu" from="MarginContainer/VBoxContainer/TopBar" to="." method="_on_top_bar_close_menu"]
+[connection signal="close_menu" from="PanelContainer/MarginContainer/VBoxContainer/TopBar" to="." method="_on_top_bar_close_menu"]

@@ -1,37 +1,52 @@
-[gd_scene load_steps=2 format=3 uid="uid://dwy3m3mupj6op"]
+[gd_scene load_steps=3 format=3 uid="uid://dwy3m3mupj6op"]
 
 [ext_resource type="Script" uid="uid://dy8biahnse4hf" path="res://scenes/ui/character_menu_box.gd" id="1_enh5y"]
+[ext_resource type="Texture2D" uid="uid://dvmxq28qdvpwe" path="res://assets/characters/joker.png" id="2_qla70"]
 
 [node name="CharacterMenuBox" type="VBoxContainer"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -4.0
-offset_top = -62.0
-offset_right = 4.0
+custom_minimum_size = Vector2(0, 128)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 62.0
 grow_horizontal = 2
-grow_vertical = 0
 size_flags_vertical = 2
 script = ExtResource("1_enh5y")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CharacterIcon" type="TextureRect" parent="HBoxContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+texture = ExtResource("2_qla70")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="HeaderLabel" type="Label" parent="HBoxContainer"]
+[node name="HeaderLabel" type="Label" parent="HBoxContainer2/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="CharacterCountLabel" type="Label" parent="HBoxContainer"]
+[node name="CharacterCountLabel" type="Label" parent="HBoxContainer2/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 
-[node name="AddButton" type="Button" parent="."]
+[node name="AddButton" type="Button" parent="HBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="HSeparator" type="HSeparator" parent="."]
 layout_mode = 2
 
-[connection signal="pressed" from="AddButton" to="." method="_on_add_button_pressed"]
+[connection signal="pressed" from="HBoxContainer2/VBoxContainer/AddButton" to="." method="_on_add_button_pressed"]

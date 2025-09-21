@@ -10,4 +10,10 @@ func _ready() -> void:
 
 func load_run() -> void:
 	await Transition.fade_out()
+	Dialogic.end_timeline(true)
 	get_tree().change_scene_to_packed(WORLD_MAP)
+
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("skip_dialogue"):
+		load_run()

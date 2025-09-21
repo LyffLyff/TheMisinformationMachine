@@ -1,17 +1,12 @@
 [gd_scene load_steps=6 format=3 uid="uid://botyfwwae687k"]
 
 [ext_resource type="Script" uid="uid://cvlnvq3i4esck" path="res://scenes/ui/pause_menu.gd" id="1_0lmf7"]
-[ext_resource type="FontFile" uid="uid://cboudv34kyac0" path="res://assets/fonts/Roboto-Bold.ttf" id="2_f6eus"]
+[ext_resource type="LabelSettings" uid="uid://cukm4gyyw2dlc" path="res://ressources/label/specimen_label.tres" id="2_8uki6"]
+[ext_resource type="LabelSettings" uid="uid://c140fckgvg1tu" path="res://ressources/label/ui_font_small.tres" id="3_8uki6"]
 [ext_resource type="AudioStream" uid="uid://6bsv7pf8hcpw" path="res://assets/sounds/music/584332__signalsinnoise__acoustic-guitar-bassline.wav" id="3_f6eus"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0lmf7"]
-bg_color = Color(0.0968115, 0.0968115, 0.0968115, 0.784314)
-
-[sub_resource type="LabelSettings" id="LabelSettings_8uki6"]
-font = ExtResource("2_f6eus")
-font_size = 128
-shadow_size = 2
-shadow_color = Color(0, 0, 0, 0.6784314)
+bg_color = Color(0.09985284, 0.09985284, 0.09985284, 0.93000007)
 
 [node name="PauseMenu" type="PanelContainer"]
 process_mode = 2
@@ -25,6 +20,10 @@ script = ExtResource("1_0lmf7")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -34,7 +33,7 @@ alignment = 1
 layout_mode = 2
 size_flags_vertical = 1
 text = "PAUSED"
-label_settings = SubResource("LabelSettings_8uki6")
+label_settings = ExtResource("2_8uki6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -47,10 +46,23 @@ layout_mode = 2
 
 [node name="AbandonRun" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 theme_override_font_sizes/font_size = 42
 text = "ABANDON RUN"
 flat = true
+
+[node name="Keybindings" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "KEYS:
+RIGHT CLICK: SHOW COUNTRY DETAILS
+DOUBLE CLICK: OPEN COUNTRY MENU
+R-Key: Reset Camera (cause of bug :/)
+S-Key: Skip Intro Dialogue
+"
+label_settings = ExtResource("3_8uki6")
+vertical_alignment = 2
 
 [node name="PauseMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_f6eus")

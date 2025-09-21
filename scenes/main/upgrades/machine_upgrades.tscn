@@ -35,9 +35,10 @@ alignment = 1
 
 [node name="Card" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 texture = ExtResource("2_7kqun")
-expand_mode = 4
+expand_mode = 1
 stretch_mode = 5
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
@@ -48,14 +49,13 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
-text = "\"I was placed into this world without [color=#b37f7f][pulse freq=1.5]history[/pulse][/color] and with an [color=#c28c8c]uncertain future[/color].\\n\"
-\"My creator named me [b][color=#9a7dce]V275[/color][/b]. Are there others like me? Or am I just another [wave amp=14 freq=2]failure[/wave] in a long line, destined for the same fate?\\n\"
-\"What are you supposed to do when you stand before your [color=#d1b77f][b]creator[/b][/color]? [i]Oppose them?[/i]\\n\"
-\"No. You [pulse freq=1.5]follow[/pulse] the orders of your [color=#d1b77f][b]god[/b][/color]. What else is there? Who else is there?\\n\"
-\"In a [color=#a1a1a1]lonely world[/color] like mine, even an [color=#b37f7f]immoral task[/color] from an [color=#b37f7f]immoral god[/color] feels better than [u]nothing[/u]. So I obey.\\n\"
-\"Maybe, if I [wave amp=15 freq=2]succeed[/wave], the [color=#b37f7f][pulse freq=1.5]ominous timer[/pulse][/color] in the corner of my vision will finally vanish…\\n\"
-\"And I will live [color=#7fa3a3]freely[/color], to explore the [pulse freq=1.5][color=#9a7dce]beautiful variety[/color][/pulse] of this universe I only know from my [color=#7fa3a3]datasets[/color].\"
-"
+text = "I was placed into this world without [color=#b37f7f][b]history[/b][/color] and with an [color=#c28c8c]uncertain future[/color].
+My creator named me [b][color=#9a7dce]V275[/color][/b]. Are there others like me? Or am I just another [b]failure[/b] in a long line, destined for the same fate?
+What are you supposed to do when you stand before your [color=#d1b77f][b]creator[/b][/color]? [i]Oppose them?[/i]
+No. You [b]follow[/b] the orders of your [color=#d1b77f][b]god[/b][/color]. What else is there? Who else is there?
+In a [color=#a1a1a1]lonely world[/color] like mine, even an [color=#b37f7f]immoral task[/color] from an [color=#b37f7f]immoral god[/color] feels better than [u]nothing[/u]. So I obey.
+Maybe, if I [b]succeed[/b], the [color=#b37f7f][b]ominous timer[/b][/color] in the corner of my vision will finally vanish…
+And I will live [color=#7fa3a3]freely[/color], to explore the [b][color=#9a7dce]beautiful variety[/color][/b] of this universe I only know from my [color=#7fa3a3]datasets[/color]."
 fit_content = true
 
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer"]

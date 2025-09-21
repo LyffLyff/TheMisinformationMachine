@@ -5,9 +5,9 @@ const GENERAL_COUNTRY_INFO = preload("res://scenes/ui/general_country_info.tscn"
 const COUNTRY_DATA_FOLDER := "res://geodata/countries_simplified/"
 const COUNTRY_FOCUS_CLR := Color.CRIMSON
 const COUNTRY_HIGHLIGHT_CLR := Color.DARK_SLATE_GRAY
-const COUNTRY_PROGRESSION_STARTED :=  Color.DARK_GREEN
-const COUNTRY_PROGRESSION_COLORS : PackedColorArray = [
-	Color.FOREST_GREEN,
+var COUNTRY_PROGRESSION_STARTED :=  Color.DARK_GREEN.darkened(0.1)
+var COUNTRY_PROGRESSION_COLORS : PackedColorArray = [
+	Color("#7e8d5a"),
 	Color(0.89, 0.691, 0.352, 1.0),
 	Color.CORAL,
 	Color.REBECCA_PURPLE,
@@ -18,6 +18,9 @@ const COUNTRY_PROGRESSION_COLORS : PackedColorArray = [
 @onready var machine_tasks: PanelContainer = %MachineTasks
 @onready var country_details: PanelContainer = %CountryDetails
 @onready var money_display: VBoxContainer = %MoneyDisplay
+@onready var bg_music_player: AudioStreamPlayer = $BGMusicPlayer
+@onready var country_container: Node2D = %CountryContainer
+@onready var ui_canvas: CanvasLayer = $UI
 
 signal map_loaded
 signal country_entered
@@ -35,7 +38,6 @@ var max_long = -200.0
 var screen_width = 1920
 var screen_height = 1080
 
-var country_container : Node2D
 @onready var outline_container: Node2D = %OutlineContainer
 var hover_polygon: Polygon2D = null
 var hover_polygon_name :  String = ""
@@ -49,8 +51,16 @@ func _ready():
 	# Signals
 	self.connect("country_selected", camera_2d.zoom_into_position)
 	self.connect("country_data_updated", country_details.reload_data)
-	self.connect("country_single_clicked", ui.load_general_country_info)
+	self.connect("country_single_clicked", ui_canvas.load_general_country_info)
 	self.connect("finances_changed", money_display.update_values)
+	self.connect("median_joker_speed_updated", ui.country_details.jokers.update_progress_speed)
+	self.connect("median_scammer_speed_updated", ui.country_details.scammers.update_progress_speed)
+	self.connect("median_conspirator_speed_updated", ui.country_details.conspirators.update_progress_speed)
+	self.connect("median_politician_speed_updated", ui.country_details.politicians.update_progress_speed)
+	country_details.connect("mouse_entered", self._on_mouse_exited.bind("", true))
+	$UI/UIRoot/PanelContainer/VBoxContainer/Bottom.connect("mouse_entered", self._on_mouse_exited.bind("", true))
+	machine_tasks.connect("mouse_exited", self._on_mouse_exited.bind("", true))
+	
 	CountryData.connect("update_calculations", self.update_calculations)
 	CountryData.connect("character_unlocked", self.change_country_visuals)
 	CountryData.connect("country_converted", self.change_country_visuals.bind(4))
@@ -59,8 +69,6 @@ func _ready():
 	
 	var start_time := Time.get_unix_time_from_system()
 	# Country Container
-	country_container = Node2D.new()
-	self.add_child(country_container)
 	country_container.process_mode = Node.PROCESS_MODE_PAUSABLE
 	
 	# Load the Areas of all countries on earth (sept. 2025)
@@ -70,7 +78,8 @@ func _ready():
 			create_polygons_from_geojson(geojson_data, country_file.get_file().get_basename())
 	
 	var load_time := Time.get_unix_time_from_system() - start_time
-	print("World Loaded In: %s seconds" % load_time)
+	bg_music_player.play()
+	printerr("World Loaded In: %s seconds" % load_time)
 	emit_signal("map_loaded")
 
 
@@ -79,7 +88,7 @@ func get_all_files_from_folder(folder_path: String = COUNTRY_DATA_FOLDER) -> Arr
 	var dir = DirAccess.open(folder_path)
 	
 	if dir == null:
-		print("Error: Could not open directory: ", folder_path)
+		printerr("Error: Could not open directory: ", folder_path)
 		return files
 	
 	dir.list_dir_begin()
@@ -98,10 +107,8 @@ func get_all_files_from_folder(folder_path: String = COUNTRY_DATA_FOLDER) -> Arr
 func load_all_countries_from_folder(folder_path: String):
 	var dir = DirAccess.open(folder_path)
 	if dir == null:
-		print("Cannot open directory: ", folder_path)
+		printerr("Cannot open directory: ", folder_path)
 		return
-	
-	print("Loading GeoJSON files from: ", folder_path)
 	
 	# Get all files in directory
 	var files = []
@@ -115,13 +122,13 @@ func load_all_countries_from_folder(folder_path: String):
 	
 	dir.list_dir_end()
 	
-	print("Found ", files.size(), " GeoJSON files")
+	printerr("Found ", files.size(), " GeoJSON files")
 
 
 func load_geojson(file_path: String):
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	if file == null:
-		print("Cannot open file: ", file_path)
+		printerr("Cannot open file: ", file_path)
 		return null
 	
 	var json_string = file.get_as_text()
@@ -131,7 +138,7 @@ func load_geojson(file_path: String):
 	var result = json.parse(json_string)
 	
 	if result != OK:
-		print("JSON Parse Error: ", json.get_error_message())
+		printerr("JSON Parse Error: ", json.get_error_message())
 		return null
 	
 	return json.data
@@ -140,14 +147,24 @@ func create_polygons_from_geojson(geojson_data, country):
 	# Second pass: create polygons
 	var new_country : Node = Node2D.new()
 	country_container.add_child(new_country)
-	for feature in geojson_data.features:
-		if feature.geometry == null:
-			continue
-		if feature.geometry.type == "Polygon":
-			var part_of_country := create_single_polygon(feature.geometry.coordinates, country)
-			new_country.add_child(part_of_country)
-		else:
-			printerr("Unexpected Geometry Type -> ", feature.geometry.type)
+	if geojson_data.has("features"):
+		for feature in geojson_data.features:
+			if feature.geometry == null:
+				continue
+			if feature.geometry.type == "Polygon":
+				var part_of_country := create_single_polygon(feature.geometry.coordinates, country)
+				new_country.add_child(part_of_country)
+			else:
+				printerr("Unexpected Geometry Type -> ", feature.geometry.type)
+	else:
+		for geometry in geojson_data.geometries:
+			if geometry == null:
+				continue
+			if geometry.type == "Polygon":
+				var part_of_country := create_single_polygon(geometry.coordinates, country)
+				new_country.add_child(part_of_country)
+			else:
+				printerr("Unexpected Geometry Type -> ", geometry.type)
 
 
 func create_single_polygon(polygon_coords, country_title : String) -> Node2D:
@@ -230,7 +247,6 @@ func create_polygon_holes(parent_polygon, polygon_coords):
 func lat_lon_to_screen(longitude: float, latitude: float) -> Vector2:
 	# Convert longitude to X (this is usually correct)
 	var x = (longitude - min_long) / (max_long - min_long) * DisplayServer.window_get_size().x
-	
 	var y = screen_height - ((latitude - min_lat) / (max_lat - min_lat) * DisplayServer.window_get_size().y)
 	
 	# -> the minus cause it was flipped + an offset to center it on screen
@@ -248,10 +264,21 @@ func highlight_polygon(country_name: String) -> void:
 	
 	Global.CURRENT_COUNTRY = country_name
 	
-	for outline in premade_outlines.get(country_name):
-		outline.show() #show outline
+	#for outline in premade_outlines.get(country_name):
+	premade_outlines.get(country_name)[0].show() #show outline
 	for n in get_tree().get_nodes_in_group(country_name):
-		n.get_child(1).color = COUNTRY_HIGHLIGHT_CLR
+		if n.get_index() == 0:
+			n.get_child(1).material = load("uid://1b0sxwd5rtsl")
+			n.get_child(1).material.set_shader_parameter("ink_color", COUNTRY_HIGHLIGHT_CLR)
+			n.get_child(1).material.set_shader_parameter("splash_center", get_global_mouse_position())
+			create_tween().tween_property(
+				n.get_child(1).material,
+				"shader_parameter/radius",
+				500.0,
+				10.0
+			).from(0.0).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		else:
+			n.get_child(1).color = COUNTRY_HIGHLIGHT_CLR
 
 
 #### INPUT ####
@@ -260,8 +287,6 @@ func _on_input_event(viewport, event, shape_idx, polygon_name : String):
 		if event.is_pressed():
 			if event.button_index == MOUSE_BUTTON_LEFT:
 				if event.double_click:
-					print("Double clicked at:", event.position, polygon_name)
-					
 					#ZOOM INTO THAT POSITION
 					emit_signal("country_selected")
 					GlobalSoundPlayer.play_selected_sound()
@@ -274,23 +299,25 @@ func _on_input_event(viewport, event, shape_idx, polygon_name : String):
 					
 					ui.show_country_menu(polygon_name, CountryData.character_data_per_country.get(polygon_name, null))
 			elif event.button_index == MOUSE_BUTTON_RIGHT:
-				print("Polygon right-clicked at:", event.position, polygon_name)
 				emit_signal("country_single_clicked", polygon_name)
 
 func _on_mouse_entered(country_name : String):
+	hover_polygon_name = country_name
 	for n in get_tree().get_nodes_in_group(country_name):
 		hover_polygon = n.get_child(1)
-		hover_polygon_name = country_name
 		if Global.CURRENT_COUNTRY != country_name:
 			# only show hover highlight clr if not selected -> other color
 			n.get_child(1).color = COUNTRY_FOCUS_CLR
 	emit_signal("country_entered", country_name)
 
-func _on_mouse_exited(country_name : String):
+func _on_mouse_exited(country_name : String, ui_fix : bool = false):
+	if ui_fix:
+		country_name = hover_polygon_name
+		print("UIFIX", country_name)
+	#hover_polygon_name = ""
 	for n in get_tree().get_nodes_in_group(country_name):
 		if hover_polygon == n.get_child(1):
 			hover_polygon = null
-			hover_polygon_name = ""
 		if Global.CURRENT_COUNTRY != country_name:
 			# only go back to initial color if the country isn't currently selected
 			var idx : int = CountryData.get_progression_idx(country_name)
@@ -307,8 +334,7 @@ func _on_country_details_hidden() -> void:
 func _unselect_country() -> void:
 	if Global.CURRENT_COUNTRY != "":
 		# OUTLINE
-		for n in premade_outlines.get(Global.CURRENT_COUNTRY):
-			n.hide()
+		premade_outlines.get(Global.CURRENT_COUNTRY)[0].hide()
 		
 		# COLOR
 		var color : Color
@@ -320,6 +346,8 @@ func _unselect_country() -> void:
 			color = COUNTRY_PROGRESSION_COLORS[idx]
 			
 		for n in get_tree().get_nodes_in_group(Global.CURRENT_COUNTRY):
+			if n.get_index() == 0:
+				n.get_child(1).material = null
 			# unhighlight country
 			n.get_child(1).color = color
 

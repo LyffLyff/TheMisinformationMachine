@@ -3,7 +3,7 @@
 [ext_resource type="FontFile" uid="uid://b01mrm5rtsv5" path="res://assets/fonts/SpaceGrotesk-Bold.ttf" id="1_211cs"]
 [ext_resource type="Script" uid="uid://c2qq6l705eypt" path="res://scenes/ui/upgrade_menu.gd" id="1_b03nv"]
 [ext_resource type="StyleBox" uid="uid://bdshyk1db1kl0" path="res://ressources/menu_transparent_bg.tres" id="1_cqxas"]
-[ext_resource type="Texture2D" uid="uid://qnuq3cxgiubc" path="res://assets/icons/Cross.png" id="2_b03nv"]
+[ext_resource type="Texture2D" uid="uid://bpvvossyo4s1d" path="res://assets/icons/return.png" id="3_cqxas"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_211cs"]
 
@@ -16,39 +16,32 @@ grow_vertical = 2
 theme_override_styles/panel = ExtResource("1_cqxas")
 script = ExtResource("1_b03nv")
 
-[node name="UpgradeMenu" type="AspectRatioContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(1600, 800)
 layout_mode = 2
-ratio = 2.1
-stretch_mode = 0
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="UpgradeMenu"]
-layout_mode = 2
-ratio = 1.6
-
-[node name="UpgradeMenu" type="PanelContainer" parent="UpgradeMenu/AspectRatioContainer"]
-layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_force_pass_scroll_events = false
-script = ExtResource("1_b03nv")
 
-[node name="MarginContainer" type="MarginContainer" parent="UpgradeMenu/AspectRatioContainer/UpgradeMenu"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UpgradeMenu/AspectRatioContainer/UpgradeMenu/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="UpgradeTypeSelector" type="HBoxContainer" parent="UpgradeMenu/AspectRatioContainer/UpgradeMenu/MarginContainer/VBoxContainer"]
+[node name="UpgradeTypeSelector" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 
-[node name="CloseMenuButton" type="TextureButton" parent="UpgradeMenu/AspectRatioContainer/UpgradeMenu/MarginContainer/VBoxContainer/UpgradeTypeSelector" groups=["close"]]
+[node name="CloseMenuButton" type="TextureButton" parent="PanelContainer/MarginContainer/VBoxContainer/UpgradeTypeSelector" groups=["close"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-texture_normal = ExtResource("2_b03nv")
+texture_normal = ExtResource("3_cqxas")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="SelfButton" type="Button" parent="UpgradeMenu/AspectRatioContainer/UpgradeMenu/MarginContainer/VBoxContainer/UpgradeTypeSelector"]
+[node name="SelfButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/UpgradeTypeSelector"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -56,46 +49,26 @@ theme_override_fonts/font = ExtResource("1_211cs")
 theme_override_font_sizes/font_size = 32
 text = "Self"
 
-[node name="JokerButton" type="Button" parent="UpgradeMenu/AspectRatioContainer/UpgradeMenu/MarginContainer/VBoxContainer/UpgradeTypeSelector"]
+[node name="SkillPathButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/UpgradeTypeSelector"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("1_211cs")
 theme_override_font_sizes/font_size = 32
-text = "Joker"
+text = "Skill Points"
 
-[node name="ScammerButton" type="Button" parent="UpgradeMenu/AspectRatioContainer/UpgradeMenu/MarginContainer/VBoxContainer/UpgradeTypeSelector"]
+[node name="CountryProgression" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/UpgradeTypeSelector"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("1_211cs")
 theme_override_font_sizes/font_size = 32
-text = "Scammer"
+text = "Country Progression"
 
-[node name="PoliticianButton" type="Button" parent="UpgradeMenu/AspectRatioContainer/UpgradeMenu/MarginContainer/VBoxContainer/UpgradeTypeSelector"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_fonts/font = ExtResource("1_211cs")
-theme_override_font_sizes/font_size = 32
-text = "Politician"
-
-[node name="ConspiracyTheoristButton" type="Button" parent="UpgradeMenu/AspectRatioContainer/UpgradeMenu/MarginContainer/VBoxContainer/UpgradeTypeSelector"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_fonts/font = ExtResource("1_211cs")
-theme_override_font_sizes/font_size = 32
-text = "Conspirator"
-
-[node name="HSeparator" type="HSeparator" parent="UpgradeMenu/AspectRatioContainer/UpgradeMenu/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="UpgradeContainer" type="PanelContainer" parent="UpgradeMenu/AspectRatioContainer/UpgradeMenu/MarginContainer/VBoxContainer"]
+[node name="UpgradeContainer" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3

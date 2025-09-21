@@ -5,9 +5,15 @@ signal character_unlocked
 signal country_converted
 signal update_calculations
 
+
+var TOTAL_POPULATION : int = 0
+
 var character_data_per_country : Dictionary[String, Dictionary] =  {
 	# COUNTRY TITLE (AS IDENTIFIER) : {
 	#	JOKER : [ARRAY OF JOKER CLASSES]
+	# 	GENERAL : {
+			
+	#}
 	#}
 }
 
@@ -18,27 +24,29 @@ func _get_empty_country_data_value() -> Dictionary[String, Variant]:
 		"SCAMMER" : [],
 		"CONSPIRATOR" : [],
 		"POLITICIAN" : [],
+		"GENERAL" : {
+			"JOKER" : 0.0,	# MEDIAN ACTION SPEED PER COUNTRY
+			"SCAMMER" : 0.0,
+			"CONSPIRATOR" : 0.0,
+			"POLITICIAN" : 0.0,
+			
+		}
 	}
 
 func _ready() -> void:
-	# updating progression of country every second * Engine.time_scale
-	var timer :=  Timer.new()
-	timer.wait_time = 1.0
-	timer.autostart = true
-	self.add_child(timer)
-	timer.connect("timeout", update_country_calculations)
-	
+	calc_total_population()
 	# Countries extra init
 	for n in COUNTRY_DETAILS.keys():
 		COUNTRY_DETAILS[n]["unlocks"] = 0	# only joker unlocked -> 1, 2, 3
 		COUNTRY_DETAILS[n]["progression_idx"] = 0
-		COUNTRY_DETAILS[n]["progression"] = 0.0
+		COUNTRY_DETAILS[n]["dynamic_progression"] = 0.0
+		COUNTRY_DETAILS[n]["total_progression"] = 0.0
 		COUNTRY_DETAILS[n]["progression_started"] = false
 		COUNTRY_DETAILS[n]["lost_specimen"] = 0
 		COUNTRY_DETAILS[n]["dynamic_lost_specimen"] = 0.0
 		COUNTRY_DETAILS[n]["lost_specimen_per_second"] = 0.0
 		COUNTRY_DETAILS[n]["static_lost_specimen"] = 0.0
-
+		COUNTRY_DETAILS[n]["is_completed"] = false
 
 func init_country(country : String) -> void:
 	if !character_data_per_country.has(country):
@@ -46,30 +54,36 @@ func init_country(country : String) -> void:
 		character_data_per_country[country] = _get_empty_country_data_value()
 
 
-func update_country_calculations() -> void:
+func update_country_calculations(delta) -> void:
 	# UPDATE COUNTRY VALUES
 	for country in COUNTRY_DETAILS.keys():
-		COUNTRY_DETAILS[country]["progression"] = get_progression(country) + (get_lost_specimen_ps(country) / get_population(country))
-		if country == Global.CURRENT_COUNTRY:
-			emit_signal("progression_updated", COUNTRY_DETAILS[Global.CURRENT_COUNTRY]["progression"])
-		_check_character_unlock(country)
+		if !CountryData.is_country_completed(country):
+			COUNTRY_DETAILS[country]["dynamic_progression"] = (get_dynamic_progression(country) + (get_lost_specimen_ps(country) * delta / get_population(country)))
+			COUNTRY_DETAILS[country]["total_progression"] = COUNTRY_DETAILS[country]["dynamic_progression"] + (get_static_lost_specimen(country) / get_population(country))
+			if COUNTRY_DETAILS[country]["total_progression"] > 0.1:
+				print(COUNTRY_DETAILS[country]["total_progression"])
+			if country == Global.CURRENT_COUNTRY:
+				emit_signal("progression_updated", get_total_progression_per_country())
+			_check_character_unlock(country)
 
-func get_country_defence_value(country : String) -> float:
-	var country_data : Dictionary = COUNTRY_DETAILS.get(country, {})
-	if country_data.is_empty():
-		printerr("NO COUNTRY DATA TO CALCULATE DEFENSE: %s" % country)
-		return 0
-	else:
-		return ((country_data["population"] / country_data["size"]) * country_data["corruption"] ) / 10000
 
+func update_median_character_action_speed(country : String, character : String, median_action_speed : float):
+	# Saving the median action speed for each character after calculating in base
+	character_data_per_country[country]["GENERAL"][character] = median_action_speed
+
+func get_median_character_action_speed(country : String, character : String) -> float:
+	return character_data_per_country[country]["GENERAL"][character]
 
 func get_country_lost_specimen(country : String = Global.CURRENT_COUNTRY) -> int:
 	return COUNTRY_DETAILS[country]["lost_specimen"]
 
+func is_country_completed(country : String) -> bool:
+	return CountryData.COUNTRY_DETAILS[country]["is_completed"]
 
 func update_lost_specimen(delta : float) -> void:
 	for country in COUNTRY_DETAILS.keys():
 		COUNTRY_DETAILS[country]["dynamic_lost_specimen"] += (get_lost_specimen_ps(country) * delta)
+	_check_for_skill_point()
 
 func get_country_total_lost_specimen(country : String = Global.CURRENT_COUNTRY) -> int:
 	return COUNTRY_DETAILS[country]["dynamic_lost_specimen"] + COUNTRY_DETAILS[country]["static_lost_specimen"]
@@ -77,6 +91,14 @@ func get_country_total_lost_specimen(country : String = Global.CURRENT_COUNTRY) 
 func get_static_lost_specimen(country : String = Global.CURRENT_COUNTRY) -> int:
 	return COUNTRY_DETAILS[country]["static_lost_specimen"]
 
+func calc_total_population() -> void:
+	var sum : int = 0
+	for n in COUNTRY_DETAILS:
+		sum += COUNTRY_DETAILS[n]["population"]
+	TOTAL_POPULATION = sum
+
+func get_global_population() -> float:
+	return TOTAL_POPULATION
 
 func get_total_static_lost_specimen() -> int:
 	var sum : int = 0
@@ -84,13 +106,11 @@ func get_total_static_lost_specimen() -> int:
 		sum += COUNTRY_DETAILS.values()[n]["static_lost_specimen"]
 	return sum
 
-
 func increment_static_lost_specimen(country : String = Global.CURRENT_COUNTRY, check : bool = true):
 	COUNTRY_DETAILS[country]["static_lost_specimen"] += (1 * Global.POISONING_MULTIPLIER)
 	if check:
 		_check_for_skill_point()
 	emit_signal("update_calculations")
-
 
 func increment_static_specimen_for_all_countries() -> void:
 	for n in COUNTRY_DETAILS.keys():
@@ -98,8 +118,12 @@ func increment_static_specimen_for_all_countries() -> void:
 	_check_for_skill_point()
 
 
+func get_dynamic_lost_specimen(country : String = Global.CURRENT_COUNTRY) -> float:
+	return CountryData.COUNTRY_DETAILS[country]["dynamic_lost_specimen"]
+
+
 const SKILL_POINT_UNLOCKS := [
-	10,
+	100,
 	1000,
 	2000,
 	5000,
@@ -124,30 +148,33 @@ func _check_for_skill_point():
 
 
 func _check_character_unlock(country  : String) -> void:
-	if COUNTRY_DETAILS[country]["progression"] > 0.9:
-		# when 90% is lost all is lost
-		COUNTRY_DETAILS[country]["progression"] = 1.0
+	if is_country_completed(country):
+		return
+		
+	if COUNTRY_DETAILS[country]["total_progression"] >= 1.0:
+		COUNTRY_DETAILS[country]["is_completed"] = true
+		emit_signal("update_calculations")
+	elif COUNTRY_DETAILS[country]["total_progression"] > 0.9:
 		Global.add_skill_point()
 		GlobalSoundPlayer.play_country_unlock_jingle()
-		emit_signal("country_converted", country)
-	elif COUNTRY_DETAILS[country]["progression"] > 0.4 and COUNTRY_DETAILS[country]["unlocks"] < 3:
+	elif COUNTRY_DETAILS[country]["total_progression"] > 0.4 and COUNTRY_DETAILS[country]["unlocks"] < 3:
 		# UNLOCK POLITICIAN ON 40% Progress
 		COUNTRY_DETAILS[country]["unlocks"] = 3
 		Global.add_skill_point()
 		GlobalSoundPlayer.play_country_progression_jingle()
 		emit_signal("character_unlocked", country, 3)
-	elif COUNTRY_DETAILS[country]["progression"] > 0.25 and COUNTRY_DETAILS[country]["unlocks"] <  2:
+	elif COUNTRY_DETAILS[country]["total_progression"] > 0.25 and COUNTRY_DETAILS[country]["unlocks"] <  2:
 		# UNLOCK CONPIRATOR ON 25% Progress
 		COUNTRY_DETAILS[country]["unlocks"] = 2
 		Global.add_skill_point()
 		GlobalSoundPlayer.play_country_progression_jingle()
-		emit_signal("character_unlocked", country, country, 2)
-	elif  COUNTRY_DETAILS[country]["progression"] > 0.10 and COUNTRY_DETAILS[country]["unlocks"] == 0:
+		emit_signal("character_unlocked", country, 2)
+	elif  COUNTRY_DETAILS[country]["total_progression"] > 0.10 and COUNTRY_DETAILS[country]["unlocks"] == 0:
 		# UNLOCK SCAMMER ON 10% Progress
 		COUNTRY_DETAILS[country]["unlocks"] = 1
 		Global.add_skill_point()
 		GlobalSoundPlayer.play_country_progression_jingle()
-		emit_signal("character_unlocked", country, country, 1)
+		emit_signal("character_unlocked", country, 1)
 
 
 func set_lost_specimen_per_country(country_name : String, lost_specimen_per_second : int) -> void:
@@ -180,8 +207,8 @@ func get_lost_specimen_ps(country : String):
 func get_gdp(country : String) -> float:
 	return float(COUNTRY_DETAILS[country]["gdp_billions_usd"]) * 1000000000
 
-func get_progression(country : String = Global.CURRENT_COUNTRY) -> float:
-	return COUNTRY_DETAILS[country]["progression"]
+func get_dynamic_progression(country : String = Global.CURRENT_COUNTRY) -> float:
+	return COUNTRY_DETAILS[country]["dynamic_progression"]
 
 func get_population(country : String) -> float:
 	return float(COUNTRY_DETAILS[country]["population"])
@@ -210,12 +237,11 @@ func get_politician_idx(country : String = Global.CURRENT_COUNTRY) -> int:
 	return character_data_per_country[country]["POLITICIAN"].size()
 
 
-func get_total_progression() -> float:
-	return get_progression() + get_static_lost_specimen()
+func get_total_progression_per_country(country : String = Global.CURRENT_COUNTRY) -> float:
+	return (get_dynamic_lost_specimen(country) + get_static_lost_specimen(country)) / get_population(country) * 100.0
 
 
 func set_country_progression_idx(country, char_idx):
-	print(country)
 	COUNTRY_DETAILS[country]["progression_idx"] = char_idx
 
 
@@ -240,6 +266,10 @@ func get_current_base_money_for_all_countries(sorted : bool = false) -> Dictiona
 	return bribes
 
 
+func get_character_amount_in_country(country : String, character_name : String):
+	return character_data_per_country[country][character_name].size()
+
+
 var COUNTRY_DETAILS: Dictionary = {
 	"denmark": {
 	"population": 5831404,
@@ -248,6 +278,13 @@ var COUNTRY_DETAILS: Dictionary = {
 	"corruption": 0.90,
 	"gdp_billions_usd": 395.7
   },
+"sao_tome_and_principe": {
+	"population": 235536,
+	"median_age": 19.0,
+	"size": 960.0,
+	"corruption": 0.45,
+	"gdp_billions_usd": 0.75
+},
   "somalia": {
 	"population": 17635975,
 	"median_age": 17.8,
@@ -584,7 +621,7 @@ var COUNTRY_DETAILS: Dictionary = {
 	"corruption": 0.77,
 	"gdp_billions_usd": 3131.0
   },
-  "vatican_city": {
+  "vatican": {
 	"population": 825,
 	"median_age": 47.0,
 	"size": 0.44,
@@ -829,6 +866,13 @@ var COUNTRY_DETAILS: Dictionary = {
 	"corruption": 0.38,
 	"gdp_billions_usd": 5.1
   },
+"east_timor": {
+	"population": 1418517,
+	"median_age": 21.7,
+	"size": 14870.0,
+	"corruption": 0.44,
+	"gdp_billions_usd": 2.12
+},
  "algeria": {"population": 46400000, "median_age": 30.0, "size": 2381741.0, "corruption": 0.36, "gdp_billions_usd": 266.8},
   "angola": {"population": 32866272, "median_age": 16.0, "size": 1246700.0, "corruption": 0.20, "gdp_billions_usd": 124.2},
   "benin": {"population": 12123200, "median_age": 19.0, "size": 112622.0, "corruption": 0.416, "gdp_billions_usd": 18.7},

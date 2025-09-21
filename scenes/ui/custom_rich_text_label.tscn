@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://s58r5tsoai7r"]
+
+[ext_resource type="RichTextEffect" uid="uid://cd5rrm85eh8lv" path="res://ressources/pulsing_unscaled.tres" id="1_7w77k"]
+[ext_resource type="Script" uid="uid://ejecc2em6677" path="res://scenes/ui/custom_rich_text_label.gd" id="2_sb3f3"]
+
+[node name="CustomRichTextLabel" type="RichTextLabel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_effects = [ExtResource("1_7w77k")]
+script = ExtResource("2_sb3f3")

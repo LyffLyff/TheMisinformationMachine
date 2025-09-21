@@ -7,10 +7,9 @@ const IDLE_CORE = preload("res://scenes/main/MachineTask/idle_core.tscn")
 @onready var idle_core_container: VBoxContainer = %IdleCores
 @onready var cores_amount: Label = %CoresAmount
 
-const STARTING_CORES : int = 3
+const STARTING_CORES : int = 1
 
 signal character_created
-signal politician_bribe_valid
 
 var total_cores : int = STARTING_CORES
 var busy_cores  : int = 0
@@ -21,11 +20,18 @@ func _ready() -> void:
 	_init_idle_cores()
 	
 	# Connect to Skill Unlock
+	Global.connect("add_core", self.add_extra_core)
 	Global.connect("start_skill_task", self.start_skill_task)
 
 func _update_cores_amount(new_amount : int) -> void:
 	# Called when updating the total amount of Cores -> Upgrade
 	cores_amount.text = str(new_amount)
+
+
+func add_extra_core() -> void:
+	total_cores += 1
+	new_core()
+
 
 func _init_idle_cores() -> void:
 	for n in _get_available_cores():
@@ -34,10 +40,14 @@ func _init_idle_cores() -> void:
 func _start_idling_core() -> void:
 	# called when a core task finishes
 	busy_cores -= 1
+	new_core()
+
+
+func new_core():
 	var idle_core := IDLE_CORE.instantiate()
+	idle_core_container.add_child(idle_core)
 	# counts as static since it varies in amount each time
 	idle_core.connect("money_mined", Global.get_game_base().add_static_money)
-	idle_core_container.add_child(idle_core)
 
 func _remove_idle_core() -> void:
 	# removes the last idle core
@@ -49,7 +59,7 @@ func core_upgrade(extra_cores : int) -> void:
 func _get_available_cores() -> int:
 	return total_cores - busy_cores
 
-func start_new_task(task_title : String, type : Global.TASK_TYPES, money_cost : int, time_cost : int, extra_values : Array = []) -> void:
+func start_new_task(task_title : String, type : Global.TASK_TYPES, _money_cost : int, time_cost : int, extra_values : Array = []) -> void:
 	if _get_available_cores() > 0:
 		busy_cores += 1
 		var new_task := CORE_TASK.instantiate()
@@ -61,6 +71,7 @@ func start_new_task(task_title : String, type : Global.TASK_TYPES, money_cost : 
 		new_task.connect("task_finished", self._start_idling_core)
 		_remove_idle_core()
 	else:
+		GlobalSoundPlayer.play_insufficient_skill_points()
 		printerr("NO MORE CORES AVAILABLE")
 
 
@@ -74,6 +85,7 @@ func start_skill_task(new_skill : Skill) -> void:
 		new_task.connect("task_finished", self._start_idling_core)
 		_remove_idle_core()
 	else:
+		GlobalSoundPlayer.play_insufficient_skill_points()
 		printerr("NO MORE CORES AVAILABLE")
 
 
@@ -108,7 +120,7 @@ func _on_scammers_button_pressed() -> void:
 	)
 
 
-func _on_conspiracy_theorists_button_pressed() -> void:
+func _on_conspirators_button_pressed() -> void:
 	const CLASS_TITLE : String = "CONSPIRATOR"
 	start_new_task(
 		"Generate & Distribute\nConspiracy Theory",

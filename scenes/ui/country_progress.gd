@@ -23,14 +23,13 @@ func _on_visibility_changed() -> void:
 
 
 func update_progress(val : float) -> void:
-	print("PROGRESS" + str(val))
 	progress_bar.value = val
 
 func set_next_unlock(idx : int):
 	next_unlock_label.text = "Next Milestone: %s" % UNLOCKS[idx]
 
 func init_progress():
-	progress_bar.value = CountryData.get_total_progression()
+	progress_bar.value = CountryData.get_total_progression_per_country()
 
 
 func _process(_delta: float) -> void:

@@ -4,6 +4,7 @@ class_name UISoundManager
 var playback:AudioStreamPlaybackPolyphonic
 
 const CLOSE_SOUND = preload("uid://m5y5dt38h6n7")
+const HOVER = preload("uid://cmui2ge67jad2")
 
 
 func _enter_tree() -> void:
@@ -31,11 +32,12 @@ func _on_node_added(node:Node) -> void:
 	elif node is Button or node is TextureButton:
 		# If the added node is a button we connect to its mouse_entered and pressed signals
 		# and play a sound
-		node.mouse_entered.connect(_play_hover)
+		if !node.is_connected("mouse_entered", _play_hover):
+			node.mouse_entered.connect(_play_hover)
 
 
 func _play_hover() -> void:
-	playback.play_stream(preload("res://assets/sounds/ui_effects/SFX_User_Interface_Alert_Notification_Mobile_App_General_04_SND76973.wav"), 0, 0, randf_range(0.9, 1.1))
+	playback.play_stream(HOVER, 0, -10.0, randf_range(0.9, 1.1))
 
 func _play_close_sound():
 	playback.play_stream(CLOSE_SOUND)

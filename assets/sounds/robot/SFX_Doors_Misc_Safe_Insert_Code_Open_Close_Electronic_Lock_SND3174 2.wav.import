@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ceea6vtpsxq4m"
+path="res://.godot/imported/SFX_Doors_Misc_Safe_Insert_Code_Open_Close_Electronic_Lock_SND3174 2.wav-21b999b52da9de7ce476ff76e3a45925.sample"
+
+[deps]
+
+source_file="res://assets/sounds/robot/SFX_Doors_Misc_Safe_Insert_Code_Open_Close_Electronic_Lock_SND3174 2.wav"
+dest_files=["res://.godot/imported/SFX_Doors_Misc_Safe_Insert_Code_Open_Close_Electronic_Lock_SND3174 2.wav-21b999b52da9de7ce476ff76e3a45925.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=1
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

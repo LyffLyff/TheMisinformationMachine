@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://cc7nig7l6cc6l"]
+
+[ext_resource type="Script" uid="uid://cw64tkv8r8rhy" path="res://scenes/ui/skill_points_menu.gd" id="1_ntiww"]
+[ext_resource type="Texture2D" uid="uid://dvqsk8bpv2puk" path="res://assets/icons/unlocked.png" id="2_jfl7f"]
+[ext_resource type="LabelSettings" uid="uid://dwnyj25h5arxv" path="res://ressources/label/roboto_large.tres" id="3_rh1e1"]
+
+[node name="SkillPointsMenu" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_ntiww")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_jfl7f")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="NextUnlock" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Next Skill Point Unlock at:"
+label_settings = ExtResource("3_rh1e1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NextUnlockLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+modulate = Color(1, 0.7529412, 0.09019608, 1)
+layout_mode = 2
+text = "X"
+label_settings = ExtResource("3_rh1e1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3

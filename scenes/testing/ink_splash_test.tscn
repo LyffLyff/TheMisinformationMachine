@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://mxygvti1unvv"]
+
+[ext_resource type="Material" uid="uid://1b0sxwd5rtsl" path="res://ressources/shaders/country_ink_splash_select.tres" id="1_wkngc"]
+
+[node name="Polygon2D" type="Polygon2D"]
+material = ExtResource("1_wkngc")
+color = Color(0.47079715, 1, 0.5137611, 1)
+polygon = PackedVector2Array(216, 37, 157, 121, 324, 238, 651, 205, 559, 61, 217, 60)

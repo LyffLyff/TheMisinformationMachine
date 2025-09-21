@@ -51,7 +51,7 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="PopupTopBar" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_ydlfh")]
+[node name="HeaderBar" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_ydlfh")]
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer"]
@@ -85,18 +85,28 @@ texture = ExtResource("5_fipbl")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Description" type="RichTextLabel" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+alignment = 1
+
+[node name="Description" type="RichTextLabel" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
 bbcode_enabled = true
-text = "[b][color=#9a7dce]The Scammer[/color][/b] is a type of person who [color=#c28c8c][b]exploits[/b][/color] the current [i]capitalistic system[/i] to his full advantage, excusing it as [u][color=#a1a1a1]“just being a cog in the system.”[/color][/u]  
+text = "Quick Tips:
+- Way more effective in richer countries
+- Will earn you significantly more money than the Joker or Conspiracy Theorist
 
-They have lost any [color=#8c8c8c]sense of community[/color], living an [i]ego-driven[/i] and ultimately [color=#b37f7f]unfulfilling[/color] life by [pulse freq=1.8][b]scamming[/b][/pulse] others out of their belongings — primarily [color=#d1b77f][b]money[/b][/color].  
+Description:
+[b][color=#9a7dce]The Scammer[/color][/b] is a type of person who [color=#c28c8c][b]exploits[/b][/color] the current [i]capitalistic system[/i] to his full advantage, excusing it as [u][color=#a1a1a1]“just being a cog in the system.”[/color][/u]
 
-This character is especially [b][pulse freq=1.5]effective[/pulse][/b] in countries with a [color=#7fa3a3]higher median age[/color] and a [color=#7fa3a3]higher standard of living[/color].  
+They have lost any [color=#8c8c8c]sense of community[/color], living an [i]ego-driven[/i] and ultimately [color=#b37f7f]unfulfilling[/color] life by [b]scamming[/b] others out of their belongings — primarily [color=#d1b77f][b]money[/b][/color].
 
-[b][color=#d1b77f]TIP:[/color][/b] Use your [color=#d1b77f]resources[/color] and [color=#d1b77f]money[/color] to [wave amp=18 freq=2]educate people with big egos and small pockets[/wave] into becoming [b][pulse freq=2]scammers[/b][/pulse], helping you [color=#b37f7f][wave amp=25 freq=2]destabilize this planet[/wave][/color].
-"
+This character is especially [b]effective[/b] in countries with a [color=#7fa3a3]higher median age[/color] and a [color=#7fa3a3]higher standard of living[/color].
+
+[b][color=#d1b77f]TIP:[/color][/b] Use your [color=#d1b77f]resources[/color] and [color=#d1b77f]money[/color] to [b]educate people with big egos and small pockets[/b] into becoming [b]scammers[/b], helping you [color=#b37f7f][b]destabilize this planet[/b][/color]."
+fit_content = true
 
 [node name="PanelContainer" type="PanelContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 visible = false
@@ -108,4 +118,4 @@ size_flags_stretch_ratio = 2.0
 unique_name_in_owner = true
 layout_mode = 2
 
-[connection signal="close_menu" from="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/PopupTopBar" to="." method="_on_popup_top_bar_close_menu"]
+[connection signal="close_menu" from="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HeaderBar" to="." method="_on_popup_top_bar_close_menu"]

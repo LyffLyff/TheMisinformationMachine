@@ -1,0 +1,31 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://1b0sxwd5rtsl"]
+
+[ext_resource type="Shader" uid="uid://cecp4v65si4to" path="res://ressources/shaders/inksplash_01.gdshader" id="1_uehit"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_g1xor"]
+noise_type = 0
+frequency = 0.0378
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cw56t"]
+width = 200
+height = 200
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_g1xor")
+seamless = true
+seamless_blend_skirt = 1.0
+
+[resource]
+shader = ExtResource("1_uehit")
+shader_parameter/ink_color = Color(0.06, 0.06, 0.06, 1)
+shader_parameter/ink_texture = SubResource("NoiseTexture2D_cw56t")
+shader_parameter/splash_center = Vector2(300, 200)
+shader_parameter/radius = 0.0
+shader_parameter/edge_softness = 5.0000002375
+shader_parameter/jitter = 50.000002375
+shader_parameter/bleed = 0.0
+shader_parameter/time = 0.0
+shader_parameter/splat_count = 3
+shader_parameter/splat_strength = 0.7090000336775
+shader_parameter/use_polygon_texture = true
+shader_parameter/seed = 500.00002375

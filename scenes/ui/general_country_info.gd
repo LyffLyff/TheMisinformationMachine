@@ -29,8 +29,6 @@ func init_country_info(country_title : String, country_data : Dictionary) -> voi
 	var corruption_color: String = get_value_color(corruption, [0.0, 1.0], ["#ff6666", "#66ff66"])
 	country_data_label.append_text("[b]Corruption:[/b] [color=%s]%.2f[/color]\n" % [corruption_color, corruption])
 
-	country_data_label.pop()
-
 
 func _on_top_bar_close_menu() -> void:
 	self.queue_free()

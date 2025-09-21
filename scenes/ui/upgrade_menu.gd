@@ -2,20 +2,16 @@ extends Control
 
 const UPGRADE_MENUS : Array[PackedScene] = [
 	preload("uid://bv453ybl43dp3"),			# MACHINE/SELF
+	preload("uid://cc7nig7l6cc6l"),			# SKILL POINTS
+	preload("uid://dhdmdnaydc7lm")
 ]
 
 @onready var close_menu_button: TextureButton = %CloseMenuButton
 @onready var self_button: Button = %SelfButton
-@onready var joker_button: Button = %JokerButton
-@onready var scammer_button: Button = %ScammerButton
-@onready var politician_button: Button = %PoliticianButton
-@onready var conspiracy_theorist_button: Button = %ConspiracyTheoristButton
 @onready var upgrade_menu_buttons : Array[Control] = [
 	self_button,
-	joker_button,
-	scammer_button,
-	politician_button,
-	conspiracy_theorist_button,
+	%SkillPathButton,
+	%CountryProgression
 ]
 
 @onready var upgrade_container: PanelContainer = %UpgradeContainer

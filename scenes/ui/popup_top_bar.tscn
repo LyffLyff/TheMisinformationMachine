@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bhaw00rwnrbhn"]
 
 [ext_resource type="Script" uid="uid://bv65kowh17mob" path="res://scenes/ui/popup_top_bar.gd" id="1_k8hkt"]
-[ext_resource type="Texture2D" uid="uid://qnuq3cxgiubc" path="res://assets/icons/Cross.png" id="2_k8hkt"]
+[ext_resource type="Texture2D" uid="uid://bpvvossyo4s1d" path="res://assets/icons/return.png" id="2_eb76x"]
 [ext_resource type="LabelSettings" uid="uid://c140fckgvg1tu" path="res://ressources/label/ui_font_small.tres" id="3_eb76x"]
 
 [node name="PopupTopBar" type="VBoxContainer"]
@@ -20,7 +20,7 @@ size_flags_vertical = 3
 [node name="Return" type="TextureButton" parent="HBoxContainer" groups=["close"]]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-texture_normal = ExtResource("2_k8hkt")
+texture_normal = ExtResource("2_eb76x")
 ignore_texture_size = true
 stretch_mode = 5
 

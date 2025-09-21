@@ -3,6 +3,7 @@ extends GameEnd
 const MAIN_MENU = preload("uid://bvyvobfrdrd7i")
 
 func _ready() -> void:
+	Global.game_data["completed_runs"] += 1
 	Dialogic.start("run_completed")
 	Dialogic.connect("timeline_ended", self.on_timeline_finished)
 

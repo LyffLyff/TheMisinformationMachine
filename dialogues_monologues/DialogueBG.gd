@@ -11,5 +11,5 @@ func _on_dialogic_signal(arg : String):
 			get_child(0),
 			"modulate:a",
 			0.0,
-			2.5
+			2.0
 		).from(1.0).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)

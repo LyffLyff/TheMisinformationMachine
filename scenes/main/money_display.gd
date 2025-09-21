@@ -1,36 +1,24 @@
 extends VBoxContainer
 
 @onready var money_jingle_player: AudioStreamPlayer = $MoneyJinglePlayer
-@onready var static_money_label: Label = $HBoxContainer/StaticMoneyLabel
-@onready var diff_money_per_second_button: Button = $DiffMoneyPerSecondButton
+@onready var money_label: Label = %MoneyLabel
+@onready var diff_money_per_second_label : Label = %DiffMoneyPerSecondLabel
 
+signal death_by_debt
 
-const COINS_JINGLE_01 = preload("uid://bfe5b2uxv5i5")
-const COINS_JINGLE_02 = preload("uid://bmulusx68djmc")
-const COINS_JINGLE_03 = preload("uid://kctaw1v0chx8")
-const COINS_JINGLE_04 = preload("uid://cafsw61bj7bmm")
-var COIN_JINGLES := [COINS_JINGLE_01,COINS_JINGLE_02,COINS_JINGLE_03,COINS_JINGLE_04]
-
-var static_money : float = 0.0
 var diff_money_per_second : float = 0.0
 
 func _ready() -> void:
 	update_values(0.0, 0.0, 0.0)
-	diff_money_per_second_button.connect("pressed", open_incoming_outgoing_money_menu)
 
 
-func update_values(s_money, incoming, outgoing):
+func update_values(s_money : float, incoming, outgoing):
 	diff_money_per_second = incoming - outgoing
-	Global.tween_label_counter(static_money_label, s_money, 1.0, true)
+	money_label.text = "%0.2f$" % s_money
+	diff_money_per_second_label.text = "%0.2f/per second" % (incoming - outgoing)
 	if diff_money_per_second > 0.0:
-		play_random_jingle()
-
-
-func open_incoming_outgoing_money_menu() -> void:
-	print("INCOMING/outgoing MONEY MENU")
-
-
-func play_random_jingle():
-	var random_index = randi() % COIN_JINGLES.size()
-	money_jingle_player.stream = COIN_JINGLES[random_index]
-	money_jingle_player.play()
+		diff_money_per_second_label.modulate = Color.SEA_GREEN
+	elif diff_money_per_second == 0.0:
+		diff_money_per_second_label.modulate = Color.WHITE
+	else:
+		diff_money_per_second_label.modulate = Color.RED

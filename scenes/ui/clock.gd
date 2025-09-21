@@ -9,7 +9,7 @@ const START_SECONDS := 10 * 24 * 60 * 60
 
 var remaining_seconds: int = START_SECONDS
 var timer: Timer
-var time_multiplier: float = 10.0
+var time_multiplier: int = 100
 var display_seconds: float = START_SECONDS
 
 func _ready():
@@ -20,6 +20,8 @@ func _ready():
 	timer.autostart = true
 	add_child(timer)
 	#Global.connect("time_modifier_changed",  _update_global_timer_speed)
+	
+	clock_sound.play()
 
 	timer.timeout.connect(Callable(self, "_on_timer_timeout"))
 
@@ -27,7 +29,7 @@ func _ready():
 
 func _on_timer_timeout():
 	# Subtract time with multiplier
-	remaining_seconds -= int(1 * time_multiplier)
+	remaining_seconds -= time_multiplier
 	if remaining_seconds < 0:
 		remaining_seconds = 0
 		emit_signal("time_run_out")
@@ -42,7 +44,7 @@ func _on_timer_timeout():
 		).set_trans(Tween.TRANS_LINEAR)
 
 
-func _process(delta: float):
+func _process(_delta: float):
 	_update_label()
 	clock_sound.pitch_scale = 1.0 if Engine.time_scale == 1.0 else 2.0
 

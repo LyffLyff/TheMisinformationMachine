@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://buyu42ltal2u7"]
+[gd_scene load_steps=8 format=3 uid="uid://buyu42ltal2u7"]
 
 [ext_resource type="StyleBox" uid="uid://bdshyk1db1kl0" path="res://ressources/menu_transparent_bg.tres" id="1_80beb"]
 [ext_resource type="PackedScene" uid="uid://bhaw00rwnrbhn" path="res://scenes/ui/popup_top_bar.tscn" id="1_j7qxk"]
 [ext_resource type="Script" uid="uid://dkp83e84w3g7a" path="res://scenes/ui/joker_menu.gd" id="1_qyofx"]
 [ext_resource type="LabelSettings" uid="uid://bk2vqu4v7foy2" path="res://ressources/label/header_small.tres" id="2_oed10"]
 [ext_resource type="Texture2D" uid="uid://dvmxq28qdvpwe" path="res://assets/characters/joker.png" id="5_qyofx"]
+[ext_resource type="RichTextEffect" uid="uid://cd5rrm85eh8lv" path="res://ressources/pulsing_unscaled.tres" id="6_o3svl"]
+[ext_resource type="Script" uid="uid://ejecc2em6677" path="res://scenes/ui/custom_rich_text_label.gd" id="7_er438"]
 
 [node name="JokerMenu" type="Control"]
 layout_mode = 3
@@ -86,66 +88,28 @@ texture = ExtResource("5_qyofx")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
 bbcode_enabled = true
-text = "[b][color=#9a7dce]The Joker[/color][/b] — also known as the [b][wave amp=18 freq=2]Troll[/wave][/b] or the [b][pulse freq=2]Memer[/pulse][/b] — is a specific type of person [color=#c28c8c][b]causing the downfall[/b][/color] of those around him by masking his own [i]problems[/i] and [i]toxic thoughts[/i] behind [u][color=#a98d75]distasteful[/color][/u], [u][color=#a1a1a1]uninformed[/color][/u], and [u][color=#8ca98c]fabricated jokes[/color][/u].
+text = "Quick Tip:
+- Way more effective on countries with bigger population
 
-Their [b][pulse freq=1.5]effectiveness[/pulse][/b], especially at the beginning, depends on the [color=#7fa3a3]median age[/color] and [color=#7fa3a3]education levels[/color] of a country,  
-since [b][wave amp=15 freq=2]younger, less educated people[/wave][/b] are more [color=#b37f7f]susceptible[/color] to the [pulse freq=1.8]misinformation in general.[/pulse]
+Description:
+[b][color=#9a7dce]The Joker[/color][/b] — also known as the [b]Troll[/b] or the [b]Memer[/b] — is a specific type of person [color=#c28c8c][b]causing the downfall[/b][/color] of those around him by masking his own [i]problems[/i] and [i]toxic thoughts[/i] behind [u][color=#a98d75]distasteful[/color][/u], [u][color=#a1a1a1]uninformed[/color][/u], and [u][color=#8ca98c]fabricated jokes[/color][/u].
 
-Their actions aren’t always done out of [b][color=#b37f7f]bad faith[/color][/b].  
-Oftentimes, they’re simply a [i]symptom[/i] of a [u][color=#8c8c8c]lack of social life[/color][/u] or [u][color=#8c8c8c]untreated childhood trauma[/color][/u].
+Their [b]effectiveness[/b], especially at the beginning, depends on the [color=#7fa3a3]median age[/color] and [color=#7fa3a3]education levels[/color] of a country, since [b]younger, less educated people[/b] are more [color=#b37f7f]susceptible[/color] to the [b]misinformation in general.[/b]
 
-[b][color=#d1b77f]TIP:[/color][/b] Use this class at the [wave amp=20 freq=3]start of conquering a country[/wave].  
-All it takes is [pulse freq=2][b]tweaking a few variables[/b][/pulse] in an algorithm for a few seconds  
-to [color=#b37f7f][wave amp=25 freq=2]radicalize them[/wave][/color] to your needs.
-"
+Their actions aren’t always done out of [b][color=#b37f7f]bad faith[/color][/b]. Oftentimes, they’re simply a [i]symptom[/i] of a [u][color=#8c8c8c]lack of social life[/color][/u] or [u][color=#8c8c8c]untreated childhood trauma[/color][/u].
 
-[node name="PanelContainer" type="PanelContainer" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="MarginContainer" type="MarginContainer" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="CountryLabel" type="Label" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "COUNTRY:"
-label_settings = ExtResource("2_oed10")
-
-[node name="HSeparator2" type="HSeparator" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Taken Over:"
-
-[node name="ProgressBar" type="ProgressBar" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="HSeparator" type="HSeparator" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="DataContainer" type="VBoxContainer" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Upgrade" type="Button" parent="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Upgrade Jokers"
+[b][color=#d1b77f]TIP:[/color][/b] Use this class at the [b]start of conquering a country[/b]. All it takes is [b]tweaking a few variables[/b] in an algorithm for a few seconds to [color=#b37f7f][b]radicalize them[/b][/color] to your needs."
+fit_content = true
+custom_effects = [ExtResource("6_o3svl")]
+script = ExtResource("7_er438")
+metadata/_custom_type_script = "uid://ejecc2em6677"
 
 [connection signal="close_menu" from="JokerMenu/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HeaderBar" to="." method="_on_popup_top_bar_close_menu"]

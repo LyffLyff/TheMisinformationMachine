@@ -1,6 +1,5 @@
 extends UISoundManager
 
-const GENERAL_COUNTRY_INFO = preload("res://scenes/ui/general_country_info.tscn")
 const TIME_MODIFIER = preload("uid://bcykwg0e386nb")
 
 @onready var country_title_label: Label = %CountryTitle
@@ -29,13 +28,6 @@ func _on_world_map_country_exited(country_polygon) -> void:
 func show_country_menu(country_title : String, details) -> void:
 	Global.CURRENT_COUNTRY = country_title
 	country_details.show_details(country_title, details)
-
-func load_general_country_info(country_title : String) -> void:
-	if !general_info_menu:
-		general_info_menu = GENERAL_COUNTRY_INFO.instantiate()
-		left_column_menu_container.add_child(general_info_menu)
-		#general_info_menu.connect("tree_exited", self)
-	general_info_menu.init_country_info(country_title, CountryData.get_country_data_dict(country_title))
 
 
 func show_time_modifier() -> void:

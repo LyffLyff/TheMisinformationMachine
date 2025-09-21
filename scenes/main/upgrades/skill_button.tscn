@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjobm83r0ww7n"]
+[gd_scene load_steps=5 format=3 uid="uid://cjobm83r0ww7n"]
 
 [ext_resource type="Script" uid="uid://bovbmnguyse6u" path="res://scenes/main/upgrades/skill_button.gd" id="1_lvcwb"]
+[ext_resource type="Script" uid="uid://ejecc2em6677" path="res://scenes/ui/custom_rich_text_label.gd" id="3_84lm8"]
 [ext_resource type="Texture2D" uid="uid://dtbjdalxu13t6" path="res://assets/characters/you.png" id="3_l2uw3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4fkh4"]
@@ -12,10 +13,13 @@ border_width_bottom = 1
 
 [node name="SkillContainer" type="PanelContainer"]
 custom_minimum_size = Vector2(400, 0)
-anchors_preset = 9
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 6.0
+grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_4fkh4")
 script = ExtResource("1_lvcwb")
 
@@ -35,11 +39,12 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 texture = ExtResource("3_l2uw3")
+expand_mode = 1
 stretch_mode = 5
 
 [node name="SkillTitleLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 128)
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_font_sizes/normal_font_size = 32
@@ -47,6 +52,8 @@ fit_content = true
 autowrap_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("3_84lm8")
+metadata/_custom_type_script = "uid://ejecc2em6677"
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -69,13 +76,14 @@ layout_mode = 2
 [node name="DescriptionLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 2
+size_flags_vertical = 3
 bbcode_enabled = true
 text = "DESCRIPTION"
-fit_content = true
+script = ExtResource("3_84lm8")
+metadata/_custom_type_script = "uid://ejecc2em6677"
 
 [node name="Unlock" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 text = "UNLOCK FOR:"

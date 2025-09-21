@@ -29,7 +29,7 @@ func load_geojson(file_path: String):
 	var result = json.parse(json_string)
 	
 	if result != OK:
-		print("JSON Parse Error: ", json.get_error_message())
+		printerr("JSON Parse Error: ", json.get_error_message())
 		return null
 	
 	return json.data

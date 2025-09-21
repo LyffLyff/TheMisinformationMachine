@@ -1,0 +1,24 @@
+[gd_resource type="RichTextEffect" script_class="PulseUnscaledEffect" load_steps=2 format=3 uid="uid://cd5rrm85eh8lv"]
+
+[sub_resource type="GDScript" id="GDScript_xg5nx"]
+script/source = "extends RichTextEffect
+class_name PulseUnscaledEffect
+
+# Name used in BBCode: [pulse_unscaled][/pulse_unscaled]
+var bbcode = \"pulse_unscaled\"
+
+func _process_custom_fx(char_fx: CharFXTransform) -> bool:
+	# Get real-world time (in seconds, independent of time_scale)
+	var t = Engine.time_scale * 1000.0
+	
+	# Sine wave between 0.5 and 1.0
+	var strength = 0.0 #0.75 + 0.25 * sin(t * 4.0)
+	
+	# Apply to character scale or color
+	char_fx.color.a *= strength
+	return true
+"
+
+[resource]
+resource_name = "pulse_unscaled"
+script = SubResource("GDScript_xg5nx")

@@ -4,14 +4,15 @@ extends PanelContainer
 @onready var jokers: VBoxContainer = %Jokers
 @onready var scammers: VBoxContainer = %Scammers
 @onready var politicians: VBoxContainer = %Politicians
-@onready var conspiracy_theorists: VBoxContainer = %ConspiracyTheorists
+@onready var conspirators: VBoxContainer = %Conspirators
 @onready var popup_top_bar: BoxContainer = %CountryTopBar
 @onready var country_progress: VBoxContainer = %CountryProgress
 @onready var poison_individual: Button = %PoisonIndividual
 
 @onready var char_menus := [
+	jokers,
 	scammers,
-	conspiracy_theorists,
+	conspirators,
 	politicians,
 ]
 
@@ -25,20 +26,18 @@ func show_details(title : String, country_data) -> void:
 	country_progress.init_progress()
 	
 	# Poisoned Individuals
-	poison_individual.text = "POISON %s SPECIMEN"  % Global.POISONING_MULTIPLIER
+	poison_individual.text = "POISON SPECIMEN"
 	
-	# Country Details can be null -> no characters addded to that region
-	jokers.update_count(
-		country_data["JOKER"].size() if country_data else 0
-	)
 	
 	# Hide/Show Characters deepending on unlock state/progreession
 	for n in char_menus.size():
-		var active : bool = CountryData.get_character_unlock() >= n
+		char_menus[n].init_character_box(Global.class_costs.keys()[n])
+		var active : bool = true
+		#var active : bool = CountryData.get_character_unlock() >= n
 		char_menus[n].visible = active
 		if active:
 			# Update Character Data if unlocked
-			if n == 2:
+			if n == 3:
 				# POLITICIAN
 				char_menus[n].set_to_politican_mode()
 	

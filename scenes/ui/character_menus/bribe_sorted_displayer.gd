@@ -9,7 +9,6 @@ func init_menu(
 	amount  : float,
 	country_name : String
 	) -> void:
-	print(ratio * 100.0)
 	country_label.text = Global.get_normalized_country_name(country_name) + ":"
 	bribe_ratio_bar.value = ratio * 100.0
 	bribe_amount_label.text = "  " + str(amount).pad_decimals(2)

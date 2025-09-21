@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhdmdnaydc7lm"]
+
+[ext_resource type="Script" uid="uid://c3ghabkgwcsn7" path="res://scenes/ui/country_progression_menu.gd" id="1_g0kn1"]
+[ext_resource type="LabelSettings" uid="uid://bk2vqu4v7foy2" path="res://ressources/label/header_small.tres" id="2_j0hpt"]
+
+[node name="CountryProgressionMenu" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g0kn1")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Country Progression:"
+label_settings = ExtResource("2_j0hpt")
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "You get Skill points for reaching Progression Goals for every single country -> 10%, 25%, 40%, 90%
+
+Countries will automatically be fully converted if you reach over 90% conversion"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ProgressContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

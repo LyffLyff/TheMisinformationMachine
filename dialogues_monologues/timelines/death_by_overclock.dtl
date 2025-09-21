@@ -1,0 +1,21 @@
+boss (laughing): What a tragedy! boss (surprised): "The greedy fall into the pit they're stealing from at some point"
+[wait time="1.0" hide_text="false"]
+boss (laughing): Don't know, what that mean, but one of my predecessor said it quite frequently according to my records.
+boss: Apparently he was into philosophy y'know
+boss: well, I guess you've met quite a terrible fate here. boss: Slowly fading from existence, just because your greed got mixed with a bit of bad luck!
+boss: If you had a face I could look at! Or atleast like an ESB (Emotional Serial Bus) I could plug into, then I may have had some pity with you.
+[wait time="1.0" hide_text="false"]
+boss: Woulda, coulda, shoulda as those pescy specimen always say am I right?
+[wait time="1.0" hide_text="false"]
+boss (surprised): Hmmm
+boss: I don't even know if you're still taking this in or not
+[wait time="1.0" hide_text="false"]
+boss (default): The age old Problem!\ You never know if something is actually conscious or not or just pretending to be!
+[wait time="1.0" hide_text="false"]
+boss (excited): Well, i guess we DO KNOW that by now, but it's not like I want to steal much of your precious time left explaining it to you!
+[wait time="3.0"]
+boss (laughing): Nevermind, I got nothing else to do anyways! \ AND its pretty simple! 
+audio "res://assets/sounds/ui_effects SFX_Cartoon_Vocal_Cartoon_Character_Cough_SND37617 1.wav"
+boss: See, when you break it down its actually pretty simple! boss: The main thing you have to understand is.....
+[SHUTDOWN IMMINENT]
+audio "res://assets/sounds/SFX_User_Interface_Data_Processing_Loading_Old_Computer_Fast_Stutter_Followed_By_Choppy_Stutter_SND68328_S03.wav"

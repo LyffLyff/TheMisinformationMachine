@@ -89,21 +89,25 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true
-text = "[b][color=#9a7dce]The Conspiracy Theorist[/color][/b] is a [color=#c28c8c]desperate soul[/color], searching for hidden magic in a world that has stripped individuals of it.  
+text = "Quick Tips:
+- Most effective in Regions with a lower standard of living and a low median age
+- They will not harvest a lot of money, but they make that up with many converted souls
 
-They crave [color=#b37f7f][pulse freq=1.5]significance[/pulse][/color] by uncovering [u][color=#a1a1a1]“truths”[/color][/u] that exist only in their imagination.  
+Description:
+[b][color=#9a7dce]The Conspiracy Theorist[/color][/b] is a [color=#c28c8c]desperate soul[/color], searching for hidden magic in a world that has stripped individuals of of exactly that.  
 
-Driven by [color=#b37f7f]fear[/color], [color=#b37f7f]frustration[/color], and a relentless need to feel [wave amp=15 freq=2]special[/wave],  
-they [pulse freq=1.8]connect dots[/pulse] that were never meant to be connected.  
+They crave [color=#b37f7f]significance[/color] by uncovering [u][color=#a1a1a1]“truths”[/color][/u] that exist only in their imagination.  
+
+Driven by [color=#b37f7f]fear[/color], [color=#b37f7f]frustration[/color], and a relentless need to feel [b]special[/b],  
+they connect dots that were never meant to be connected.  
 
 This perfect mix of [color=#b37f7f]paranoia[/color] and [color=#c28c8c]hopelessness[/color] makes them ideal pawns for a [color=#c28c8c][b]carefully laid plan[/b][/color].  
 
-[b][wave amp=18 freq=2]Feed them stories![/wave][/b] [b][wave amp=18 freq=2]Whisper promises of secret knowledge![/wave][/b]  
-Give them the [pulse freq=2][color=#7fa3a3]attention and magic[/color][/pulse] they so desperately seek, and suddenly they’ll work tirelessly for your cause —  
+[b]Feed them stories![/b] [b]Whisper promises of secret knowledge![/b]  
+Give them the [color=#7fa3a3]attention and magic[/color]they so desperately seek, and suddenly they’ll work tirelessly for your cause —  
 convinced they are [u][b]heroes[/b][/u], never realizing they’re not even facing their demise.
 
-[b][color=#d1b77f]TIP:[/color][/b] These characters unlock once you have a [color=#7fa3a3]well-connected network of agents[/color] within a country.  
-They are especially [b][pulse freq=1.5]effective[/pulse][/b] in [color=#a1a1a1]less densely populated countries[/color],  
+They are especially [b]effective[/b] in [color=#a1a1a1]less densely populated countries[/color],  
 where isolation from the real world and other people comes easily.
 "
 

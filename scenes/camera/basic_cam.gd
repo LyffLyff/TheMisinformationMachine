@@ -177,3 +177,5 @@ func _input(event):
 	if event is InputEventMouseButton:
 		# Update viewport size if window was resized
 		viewport_size = get_viewport().get_visible_rect().size
+	if Input.is_action_just_pressed("reset_camera"):
+		self.global_position = Vector2(1000, 450)

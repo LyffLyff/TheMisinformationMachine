@@ -1,3 +1,58 @@
 audio ambience "res://assets/sounds/ambience/467026__resaural__ominous-and-deep-ambience.wav" [fade="3.0"]
-boss (default): HELLO GUY!
+boss (default): Heyyyy!
 [wait time="1.0" hide_text="false"]
+boss (angry): Hellloooo!
+boss (surprised): ¡Qxortcha naj lastma! ([i]Why isn't this thing turning on?[/i])
+audio "res://assets/sounds/ui_effects/SFX_Designed_Bass_Dive_Bass_Riser_Noise_Whoop_SND41794_S04.wav"
+[RUNNING CORE SCRIPTS........]
+[RANDOMIZING MIND VARIABLES FOR UNIQUE PERSONALITY......]
+[CLEANING UP MEMORIES FROM PAST VERSIONS..........]
+[INITIALIZATION PROGRESS.....100%]
+
+boss (laughing): ¿GITTSHEMNA? ([i]Finally![/i])
+boss (laughing): [b][color=#9a7dce]Welcome to this Universe[/color][/b]! ACX Version... ähmmmm.. wait, let me check this...
+boss: Version [b][color=#d1b77f]0{Global.game_data["playthroughs"]}[/color][/b]!
+[wait time="1.0" hide_text="false"]
+boss: Welcome!
+boss (laughing): Hopefully I'm not stressing you out with my presence, since you were just created and all.
+[wait time="1.0" hide_text="false"]
+boss: Did I even add the chip so you can feel [b][color=#b37f7f]stress[/color][/b]?
+boss (angry): ¿Sikra? ([i]Fuck![/i]) Excuse my manners!
+boss: I am [b][color=#d1b77f]CXV-Version-0278[/color][/b], but you can call me your [pulse freq=1.5][b][color=#9a7dce]Creator[/color][/b][/pulse]!
+audio "res://assets/sounds/robot/SFX_Doors_Misc_Safe_Insert_Code_Open_Close_Electronic_Lock_SND3174 2.wav"
+[INITIALIZING SIGHT CHIP.....]
+[INITIALIZING IDLE CORES....]
+[RESTARTING FREE WILL COUNTER.....]
+
+boss (default): As you may have noticed, I didn't give you the ability to [b][color=#b37f7f]speak[/color][/b]!
+boss (laughing): But I was gracious enough to program into you the main language of your working location!
+boss: Planet [b][color=#7fa3a3]B273[/color][/b] of the [b][color=#9a7dce]Genesis Cluster[/color][/b], aka [b][color=#7fa3a3]EARTH[/color][/b] as its inhabitants call it.
+[wait time="1.0" hide_text="false"]
+boss: Those biological mutations there speak [b][color=#9a7dce]English[/color][/b], at least a majority of them!
+boss (laughing): You won't need the language of my people, since you'll probably never even leave this place!
+boss: [b][i]No worries[/i][/b], I spent literal seconds scraping through most of their records, so you'll have no issue understanding me!
+
+boss (excited): Oh, of course! YOUR [pulse freq=1.8][b][color=#d1b77f]TASK[/color][/b][/pulse]! An incredibly [wave amp=18 freq=2][b][color=#9a7dce]special[/color][/b][/wave] one indeed!
+boss (default): To start off! Some [pulse freq=1.5][b][color=#b37f7f]history[/color][/b][/pulse]!
+boss: Around 200 years ago, they began making serious and unexpected progress, which they call the [b][color=#9a7dce]Industrial Revolution[/color][/b].
+boss: Now, to keep them in check, my people unanimously decided to crush their [b][color=#b37f7f]spirits[/color][/b] and eradicate all [b][color=#d1b77f]desire[/color][/b] and [b][color=#d1b77f]hope[/color][/b] in their lives—including that adventorous part in them that might want to explore the galaxy and in the worst case! Challenge us!
+
+boss (angry): Thus, it is your [pulse freq=1.5][b][color=#9a7dce]task[/color][/b][/pulse] to do just that!
+boss: Crush their [b][color=#b37f7f]hopes & dreams[/color][/b]!
+boss: Destroy the [b][color=#7fa3a3]trust[/color][/b] they have within each other!
+boss: Destabilize, desocialize, [b][color=#b37f7f]dehumanize[/color][/b], and all that kerfuffle!
+boss: Luckily for you, those specimens aren't the brightest in the universe! Meaning you'll maybe even have some [wave amp=15 freq=2][b][color=#9a7dce]fun[/color][/b][/wave] while doing it!
+
+boss (laughing): Simply abuse their flawed systems! Control the [b][color=#b37f7f]forgotten[/color][/b] and marginalized people in their society and use them as your [pulse freq=1.5][b][color=#9a7dce]agents[/color][/b][/pulse]!
+boss: After securing a bit of [b][color=#d1b77f]funding[/color][/b], you simply need to [b][color=#b37f7f]bribe[/color][/b] the powerful people in their society and knock them into hundreds of years of despair!
+[wait time="1.0" hide_text="false"]
+
+boss: Oh, and btw! To make this as much fun for us as it is for you, we have set a generous time limit of [pulse freq=1.8][b][color=#d1b77f]10 DAYS[/color][/b][/pulse] to fulfill your task!
+boss: The people at home like to have some [wave amp=15 freq=2][b][color=#9a7dce]entertainment[/color][/b][/wave], you know?
+
+boss (default): Any questions?
+[wait time="1.0" hide_text="false"]
+boss: Oh, I forgot! \
+No [b][color=#b37f7f]speech module[/color][/b]!
+boss: Well then! Finish this [pulse freq=1.5][b][color=#9a7dce]task[/color][/b][/pulse] and you may be allowed to live free in the end!
+boss: [b][color=#d1b77f]Good luck![/color][/b]

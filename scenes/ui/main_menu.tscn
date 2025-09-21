@@ -1,40 +1,15 @@
-[gd_scene load_steps=16 format=3 uid="uid://bvyvobfrdrd7i"]
+[gd_scene load_steps=14 format=3 uid="uid://bvyvobfrdrd7i"]
 
 [ext_resource type="Script" uid="uid://3fxb67o4hraq" path="res://scenes/ui/main_menu.gd" id="1_btxxm"]
-[ext_resource type="Shader" uid="uid://brpy426nv2xqf" path="res://ressources/shaders/fog.gdshader" id="1_fe2o3"]
 [ext_resource type="Texture2D" uid="uid://b5l2vlk0tbikc" path="res://project_files/logo.png" id="1_sl1te"]
+[ext_resource type="Material" uid="uid://dq8vm750k2vk0" path="res://ressources/fog_noise.tres" id="2_8g5eo"]
 [ext_resource type="LabelSettings" uid="uid://c140fckgvg1tu" path="res://ressources/label/ui_font_small.tres" id="3_1g8jr"]
+[ext_resource type="LabelSettings" uid="uid://bk2vqu4v7foy2" path="res://ressources/label/header_small.tres" id="4_8g5eo"]
 [ext_resource type="AudioStream" uid="uid://cwx24j6cx24a8" path="res://assets/sounds/music/333640__cabled_mess__retro-scifi-sequenced-sine-fm.mp3" id="4_m1kxf"]
 [ext_resource type="LabelSettings" uid="uid://dwnyj25h5arxv" path="res://ressources/label/roboto_large.tres" id="4_x2yvf"]
 [ext_resource type="Texture2D" uid="uid://c55xi4aqjk8ll" path="res://assets/portraits/boss/laughing.png" id="6_uhagc"]
 [ext_resource type="Shader" uid="uid://c5ud71dw6t1gs" path="res://scenes/ui/moving_sprite.gdshader" id="9_otr3d"]
 [ext_resource type="Texture2D" uid="uid://dvxd15d1030ls" path="res://assets/characters/conspirator.png" id="10_8ekit"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_fe2o3"]
-noise_type = 2
-seed = 50
-frequency = 0.0737
-offset = Vector3(468.09, 0, 0)
-fractal_octaves = 2
-fractal_lacunarity = 3.0
-fractal_gain = 1.475
-fractal_weighted_strength = 1.0
-cellular_distance_function = 3
-cellular_return_type = 3
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1g8jr"]
-width = 192
-height = 108
-noise = SubResource("FastNoiseLite_fe2o3")
-seamless = true
-seamless_blend_skirt = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1g8jr"]
-shader = ExtResource("1_fe2o3")
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_1g8jr")
-shader_parameter/smoke_color = Color(0.22006571, 0.032322165, 0.04410743, 1)
-shader_parameter/distortion_speed = 0.0800000038
-shader_parameter/density = 0.3410000161975
 
 [sub_resource type="Shader" id="Shader_7suek"]
 code = "shader_type canvas_item;
@@ -129,7 +104,7 @@ grow_vertical = 2
 script = ExtResource("1_btxxm")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_1g8jr")
+material = ExtResource("2_8g5eo")
 layout_mode = 2
 metadata/_edit_lock_ = true
 
@@ -156,57 +131,56 @@ metadata/_edit_lock_ = true
 
 [node name="Options" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 6
+size_flags_vertical = 4
 size_flags_stretch_ratio = 2.0
 alignment = 1
 metadata/_edit_lock_ = true
 
 [node name="ButtonContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Options"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 
 [node name="StartGame" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer" groups=["menu_option"]]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_font_sizes/font_size = 72
 text = "NEW RUN"
 flat = true
 
-[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer" groups=["menu_option"]]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 72
-text = "SETTINGS"
-flat = true
-
 [node name="Credits" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer" groups=["menu_option"]]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_font_sizes/font_size = 72
 text = "CREDITS"
 flat = true
 
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/Options/ButtonContainer" groups=["menu_option"]]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_font_sizes/font_size = 72
 text = "QUIT"
 flat = true
 
-[node name="GameInfo" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="CompletedRunsLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 10
+text = "COMPLETED RUNS:"
+label_settings = ExtResource("4_8g5eo")
 
-[node name="LiterallyMe" type="Label" parent="MarginContainer/VBoxContainer/GameInfo"]
+[node name="FailedRunsLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Made By 
-Sebastian Hinterberger 
-/ 
-LyffLyff"
-label_settings = ExtResource("3_1g8jr")
-vertical_alignment = 1
-autowrap_mode = 2
-justification_flags = 162
+size_flags_vertical = 8
+text = "Failed RUNS:"
+label_settings = ExtResource("4_8g5eo")
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
 custom_minimum_size = Vector2(500, 0)
@@ -271,13 +245,14 @@ autoplay = true
 material = SubResource("ShaderMaterial_otr3d")
 position = Vector2(265, 328)
 rotation = -0.51457244
+scale = Vector2(0.55, 0.55)
 texture = ExtResource("6_uhagc")
 metadata/_edit_group_ = true
 
 [node name="Conspirator" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_8ekit")
-position = Vector2(1690.9999, 204.00003)
-rotation = 0.16201173
-scale = Vector2(0.58772266, 0.6286787)
+position = Vector2(1728.9999, 226.00002)
+rotation = 0.20943952
+scale = Vector2(0.7, 0.749)
 texture = ExtResource("10_8ekit")
 metadata/_edit_group_ = true

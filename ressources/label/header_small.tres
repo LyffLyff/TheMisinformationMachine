@@ -1,9 +1,15 @@
-[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bk2vqu4v7foy2"]
+[gd_resource type="LabelSettings" load_steps=3 format=3 uid="uid://bk2vqu4v7foy2"]
 
 [ext_resource type="FontFile" uid="uid://uuo512rxy8j" path="res://assets/fonts/Rintvera-Regular.ttf" id="1_d18ew"]
 
+[sub_resource type="FontVariation" id="FontVariation_d18ew"]
+base_font = ExtResource("1_d18ew")
+variation_embolden = 0.45
+baseline_offset = 0.05
+
 [resource]
-font = ExtResource("1_d18ew")
-font_size = 42
-shadow_size = 2
-shadow_color = Color(0, 0, 0, 0.501961)
+font = SubResource("FontVariation_d18ew")
+font_size = 48
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.50200003)
+shadow_offset = Vector2(2, 1)

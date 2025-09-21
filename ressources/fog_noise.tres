@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://dq8vm750k2vk0"]
+
+[ext_resource type="Shader" uid="uid://brpy426nv2xqf" path="res://ressources/shaders/fog.gdshader" id="1_47tcd"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fe2o3"]
+noise_type = 2
+seed = 50
+frequency = 0.0737
+offset = Vector3(468.09, 0, 0)
+fractal_octaves = 2
+fractal_lacunarity = 3.0
+fractal_gain = 1.475
+fractal_weighted_strength = 1.0
+cellular_distance_function = 3
+cellular_return_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1g8jr"]
+width = 400
+height = 200
+noise = SubResource("FastNoiseLite_fe2o3")
+seamless = true
+
+[resource]
+shader = ExtResource("1_47tcd")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_1g8jr")
+shader_parameter/smoke_color = Color(0.8, 0.8, 0.8, 0.38039216)
+shader_parameter/distortion_speed = 0.2000000095
+shader_parameter/density = 0.6170000293075

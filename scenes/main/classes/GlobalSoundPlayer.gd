@@ -7,6 +7,9 @@ const SFX_GAMES_ARCADE = preload("uid://cgb6xhdmpnmqa")
 const COUNTRY_COMPLETE_JINGLE = preload("uid://bjrkmaqiu4xf1")
 const NEXT_CHARACTER_CLASS_UNLOCK = preload("uid://d4lfbq8n3q25i")
 const SELECT = preload("uid://bg6162d7lkkmj")
+const HOVER = preload("uid://cmui2ge67jad2")
+const DENIED = preload("uid://b3ki8ntx13xwo")
+
 
 
 func _enter_tree() -> void:
@@ -35,6 +38,14 @@ func play_country_unlock_jingle():
 func play_country_progression_jingle():
 	playback.play_stream(NEXT_CHARACTER_CLASS_UNLOCK, 0, 0, randf_range(0.9, 1.1))
 
-
 func play_selected_sound():
 	playback.play_stream(SELECT, 0, 0, randf_range(0.7, 1.3))
+
+func play_hover() -> void:
+	playback.play_stream(HOVER, 0, 0, randf_range(0.9, 1.1))
+
+func play_insufficient_skill_points() -> void:
+	playback.play_stream(DENIED, 0, 0, randf_range(0.5, 1.4))
+
+func bribed_politician() -> void:
+	playback.play_stream(UI_SKILL_UNLOCK, 0, 0, randf_range(0.5, 1.4))

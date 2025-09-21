@@ -1,7 +1,6 @@
 extends PanelContainer
 
 @onready var abandon_run_button: Button = %AbandonRun
-@onready var transition_rect: ColorRect = $TransitionRect
 
 var is_hovered : bool = false
 

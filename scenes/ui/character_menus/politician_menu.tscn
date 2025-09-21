@@ -90,23 +90,28 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true
-text = "[b][color=#9a7dce]The Politician[/color][/b] may have the [color=#c28c8c][b]most important task[/b][/color] in society:  
-serving the people of their country by [i]governing responsibly[/i] and [i]discussing policy[/i]  
-to lead them into a [color=#7fa3a3]brighter future[/color].  
+text = "Quick Tip:
+- The most effective type of character
+- Bribes must be paid daily, so watch your finances
+- Bribe amount if heavily  dependent on country
 
-Well… that [b][pulse freq=1.5]rarely works[/pulse][/b].  
-The [color=#b37f7f]power[/color] promised by these positions often leads to an [color=#c28c8c]unprecedented level of corruption[/color] —  
-if it wasn’t already there to begin with.  
+Description:
+[b][color=#9a7dce]The Politician[/color][/b] may have the [color=#c28c8c][b]most important task[/b][/color] in society:
+serving the people of their country by [i]governing responsibly[/i] and [i]discussing policy[/i]
+to lead them into a [color=#7fa3a3]brighter future[/color].
 
-Every country has its set of politicians, [wave amp=15 freq=2]directing the flow of power[/wave] over their people [i]like gods[/i].  
+Well… that [b]rarely works[/b].
+The [color=#b37f7f]power[/color] promised by these positions often leads to an [color=#c28c8c]unprecedented level of corruption[/color] —
+if it wasn’t already there to begin with.
 
-The good news for us is that this [color=#b37f7f][pulse freq=1.8]flow of power[/pulse][/color] is easily corruptible  
-with a few [color=#d1b77f]bribes[/color] (depending on existing corruption levels)  
-and the lure of [color=#c28c8c]promised power[/color].  
+Every country has its set of politicians, [b]directing the flow of power[/b] over their people [i]like gods[/i].
 
-[b][color=#d1b77f]TIP:[/color][/b] Use your [color=#d1b77f]money[/color] to [pulse freq=2][b]bribe politicians[/b][/pulse] to act as your agents.  
-More powerful politicians are [color=#b37f7f]more expensive[/color], so [wave amp=18 freq=2]start with the small fish[/wave].
-"
+The good news for us is that this [color=#b37f7f][b]flow of power[/b][/color] is easily corruptible
+with a few [color=#d1b77f]bribes[/color] (depending on existing corruption levels)
+and the lure of [color=#c28c8c]promised power[/color].
+
+[b][color=#d1b77f]TIP:[/color][/b] Use your [color=#d1b77f]money[/color] to [b]bribe politicians[/b] to act as your agents.
+More powerful politicians are [color=#b37f7f]more expensive[/color], so [b]start with the small fish[/b]."
 
 [node name="PanelContainer" type="PanelContainer" parent="AspectRatioContainer/AspectRatioContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
