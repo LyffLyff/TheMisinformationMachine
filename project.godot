@@ -24,6 +24,7 @@ CountryData="*res://scenes/main/classes/country_data.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 GlobalSoundPlayer="*res://scenes/main/classes/GlobalSoundPlayer.gd"
 Transition="*res://scenes/ui/transition.tscn"
+Characters="*res://scenes/main/characters.gd"
 
 [dialogic]
 
@@ -107,12 +108,11 @@ text/autoadvance_fixed_delay=0.5
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogic/plugin.cfg", "res://addons/simple_gdscript_formatter/plugin.cfg")
 
 [global_group]
 

@@ -1,4 +1,6 @@
 audio ambience "res://assets/sounds/ambience/467026__resaural__ominous-and-deep-ambience.wav" [fade="3.0"]
+[wait time="2.0"]
+join boss (default) leftmost [animation="Fade In"]
 boss (default): Heyyyy!
 [wait time="1.0" hide_text="false"]
 boss (angry): Hellloooo!

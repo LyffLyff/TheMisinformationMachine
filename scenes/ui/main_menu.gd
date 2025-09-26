@@ -54,7 +54,6 @@ func reset_sigleton_vars() -> void:
 	Global.CHARACTER_MULTIPLIER = 1.0
 	Global.time_modifier = 1.0
 	Global.UNLOCKED_SKILLS = []
-	CountryData.character_data_per_country = {}
 	CountryData.current_skill_lvl = 0
 	CountryData.init_extra_details()
 

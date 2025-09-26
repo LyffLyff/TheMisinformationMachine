@@ -21,7 +21,7 @@ func _ready() -> void:
 	close_menu()
 
 # called when the country is selected -> animation, loading data from the conspirators
-func show_details(title : String, country_data) -> void:
+func show_details(title : String) -> void:
 	title_label.text = title.to_upper()
 	country_progress.init_progress()
 	
@@ -48,7 +48,7 @@ func reload_data(updated_country : String, country_data : Dictionary) -> void:
 	if updated_country == Global.CURRENT_COUNTRY:
 		# when the country data gets updated -> signal calls this function
 		# if the menu shows data of updated country -> RELOAD VALUES
-		show_details(updated_country, country_data)
+		show_details(updated_country)
 
 func close_menu() -> void:
 	self.hide()

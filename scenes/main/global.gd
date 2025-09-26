@@ -118,6 +118,7 @@ func unlock_skill(skill_to_unlock : Skill) -> void:
 		return
 	
 	get_game_base().add_static_money(-skill_to_unlock.money_cost)
+	spend_skill_points(skill_to_unlock.skill_point_cost)
 	
 	# START CORE  IF TIME IS GREATER THAN ZERO
 	emit_signal("start_skill_task", skill_to_unlock)
@@ -159,7 +160,7 @@ func add_skill_point() -> void:
 	emit_signal("skill_points_changed", SKILL_POINTS)
 
 func spend_skill_points(cost : int) -> bool:
-	if cost > SKILL_POINTS:
+	if SKILL_POINTS > cost:
 		SKILL_POINTS -= cost
 		emit_signal("skill_points_changed", SKILL_POINTS)
 		return true

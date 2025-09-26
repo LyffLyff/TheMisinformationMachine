@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://ejecc2em6677" path="res://scenes/ui/custom_rich_text_label.gd" id="7_er438"]
 
 [node name="JokerMenu" type="Control"]
+process_mode = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

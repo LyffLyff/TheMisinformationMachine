@@ -36,7 +36,7 @@ func update_count(new_count : int) -> void:
 	
 
 func init_character_box(character_name : String) -> void:
-	update_count(CountryData.get_character_amount_in_country(Global.CURRENT_COUNTRY, character_name))
+	update_count(CountryData.get_character_amount_per_country(Global.CURRENT_COUNTRY, character_name))
 	update_progress_speed(CountryData.get_median_character_action_speed(Global.CURRENT_COUNTRY, character_name))
 	if politician_mode:
 		# update bribe cost

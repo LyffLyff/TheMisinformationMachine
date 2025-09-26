@@ -25,9 +25,9 @@ func _on_world_map_country_exited(country_polygon) -> void:
 		# only empty label when the mouse actually isn't within any country
 		country_title_label.text = "COUNTRY: /"
 
-func show_country_menu(country_title : String, details) -> void:
+func show_country_menu(country_title : String) -> void:
 	Global.CURRENT_COUNTRY = country_title
-	country_details.show_details(country_title, details)
+	country_details.show_details(country_title)
 
 
 func show_time_modifier() -> void:

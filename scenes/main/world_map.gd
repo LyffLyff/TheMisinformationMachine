@@ -292,12 +292,12 @@ func _on_input_event(viewport, event, shape_idx, polygon_name : String):
 					GlobalSoundPlayer.play_selected_sound()
 					
 					# COUNTRY DATA INITIALLZE COUNTRY
-					CountryData.init_country(polygon_name)
+					#CountryData.init_country(polygon_name)
 					
 					# HIGHLIGHT POLYGON OF COUNTRY
 					highlight_polygon(polygon_name)
 					
-					ui.show_country_menu(polygon_name, CountryData.character_data_per_country.get(polygon_name, null))
+					ui.show_country_menu(polygon_name)
 			elif event.button_index == MOUSE_BUTTON_RIGHT:
 				emit_signal("country_single_clicked", polygon_name)
 

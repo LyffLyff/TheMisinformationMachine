@@ -8,11 +8,11 @@ var description : String = "Description"
 
 var icon : Texture2D
 
-var money_cost : int = 10000
+var money_cost : int = 0
 
-var skill_point_cost : int = 1
+var skill_point_cost : int = 0
 
-var time_cost : float = 10.0
+var time_cost : float = 1.0
 
 var repeatable_unlock : bool = false
 
