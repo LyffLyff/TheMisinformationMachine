@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://f3ae7mhybktn"]
+[gd_scene load_steps=7 format=3 uid="uid://f3ae7mhybktn"]
 
 [ext_resource type="Script" uid="uid://b0ii3xd4bum23" path="res://scenes/ui/intro.gd" id="1_i8df0"]
+[ext_resource type="LabelSettings" uid="uid://c140fckgvg1tu" path="res://ressources/label/ui_font_small.tres" id="2_i2slu"]
 
 [sub_resource type="Shader" id="Shader_i8df0"]
 code = "shader_type canvas_item;
@@ -66,3 +67,19 @@ script = ExtResource("1_i8df0")
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_i5xbi")
 layout_mode = 2
+
+[node name="TriggerWarning" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "!WARNING!
+
+This game contains:
+
+References to depression, trauma, and other sensitive topics (framed in a satirical way).
+Satirical political themes, including bribery, corruption, and exaggerated stereotypes.
+Inaccurate or distorted depictions that are not intended as factual.
+
+Please note: The game’s humor relies on parody and stereotypes, and should not be taken as a pure reflection of reality."
+label_settings = ExtResource("2_i2slu")
+horizontal_alignment = 1
+vertical_alignment = 1

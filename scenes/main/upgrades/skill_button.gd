@@ -7,12 +7,15 @@ extends PanelContainer
 @onready var skill_points_label: Label = %SkillPointsLabel
 @onready var money_label: Label = %MoneyLabel
 @onready var time_label: Label = %TimeLabel
+@onready var bulk_unlock: SpinBox = %BulkUnlock
 
 
 func init_skill(skill_data : Skill) -> void:
 	# UNLOCK BUTTON
-	unlock.connect("pressed", Global.unlock_skill.bind(skill_data))
+	unlock.connect("pressed", Global.unlock_skill.bind(skill_data, bulk_unlock))
 	unlock.text = "UNLOCK  FOR:\n%d POINTS" % skill_data.skill_point_cost
+	if !skill_data.repeatable_unlock:
+		bulk_unlock.hide()
 	
 	# TITLE & DESCRIPTION
 	skill_title_label.text = skill_data.name

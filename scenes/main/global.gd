@@ -104,9 +104,9 @@ var LOST_SPECIMEN :  float
 
 var UNLOCKED_SKILLS : PackedStringArray = [] # LIST OF ALL UNLOCKED SKILL IDs
 
-func unlock_skill(skill_to_unlock : Skill) -> void:
+func unlock_skill(skill_to_unlock : Skill, bulk_unlock  : SpinBox) -> void:
 	# CHECK FOR MONEY & SKILL POINTS
-	if skill_to_unlock.skill_point_cost > SKILL_POINTS:
+	if (skill_to_unlock.skill_point_cost * bulk_unlock.value) > SKILL_POINTS:
 		emit_signal("insufficient_skill_points", skill_to_unlock.identifier)
 		GlobalSoundPlayer.play_insufficient_skill_points()
 		return
@@ -121,17 +121,20 @@ func unlock_skill(skill_to_unlock : Skill) -> void:
 	spend_skill_points(skill_to_unlock.skill_point_cost)
 	
 	# START CORE  IF TIME IS GREATER THAN ZERO
-	emit_signal("start_skill_task", skill_to_unlock)
+	if skill_to_unlock.time_cost > 0:
+		emit_signal("start_skill_task", skill_to_unlock)
+	else:
+		skill_unlocked(skill_to_unlock.identifier, bulk_unlock.value)
 	UNLOCKED_SKILLS.append(skill_to_unlock.identifier)
 
 
-func skill_unlocked(unlocked_skill_id : String):
+func skill_unlocked(unlocked_skill_id : String, bulk_unlock : int):
 	match unlocked_skill_id:
 		"TIME_MULTIPLIER":
 			emit_signal("time_modifier_unlocked")
 			self.connect("time_modifier_changed", self._set_time_modifier)
 		"OVERCLOCK":
-			CORE_MULTIPLIER += 1
+			CORE_MULTIPLIER += (1 * bulk_unlock)
 			emit_signal("overclock_cores")
 		"IDLE_CORE_MINER":
 			IDLE_CORES_ACTIVATED = true
@@ -144,7 +147,7 @@ func skill_unlocked(unlocked_skill_id : String):
 			emit_signal("autoclicker_activated")
 			call_deferred("autoclicker")
 		"GROUP_PROPAGANDA":
-			POISONING_MULTIPLIER += 1
+			POISONING_MULTIPLIER += (1 * bulk_unlock)
 		"BANK_HEISTS":
 			get_game_base().add_static_money(randf_range(0.0, 200_000.0))
 		"INCREASE_CPU_CORES":

@@ -5,11 +5,19 @@ const SINGLE_COUNTRY_PROGRESSION = preload("uid://l2ai2yvi7lq0")
 @onready var progress_container: VBoxContainer = %ProgressContainer
 
 func _ready() -> void:
-	for n in CountryData.COUNTRY_DETAILS.keys():
+	var keys := CountryData.COUNTRY_DETAILS.keys()
+
+	# Sort by progression (ascending)
+	keys.sort_custom(func(a, b):
+		return CountryData.get_total_progression_per_country(a) < CountryData.get_total_progression_per_country(b)
+	)
+
+	for n in keys:
 		var menu := SINGLE_COUNTRY_PROGRESSION.instantiate()
 		menu.get_child(0).text = Global.get_normalized_country_name(n)
 		menu.name = n
 		progress_container.add_child(menu)
+
 
 
 func _on_timer_timeout() -> void:

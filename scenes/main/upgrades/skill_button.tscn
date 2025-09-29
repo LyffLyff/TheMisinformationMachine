@@ -82,8 +82,22 @@ text = "DESCRIPTION"
 script = ExtResource("3_84lm8")
 metadata/_custom_type_script = "uid://ejecc2em6677"
 
-[node name="Unlock" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Unlock" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 8.0
 text = "UNLOCK FOR:"
+
+[node name="BulkUnlock" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/buttons_width = 48
+theme_override_constants/set_min_buttons_width_from_icons = 24
+value = 1.0
+update_on_text_changed = true

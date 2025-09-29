@@ -886,15 +886,15 @@ func update_country_calculations(delta) -> void:
 	for country in COUNTRY_DETAILS.keys():
 		if !CountryData.is_country_completed(country):
 			COUNTRY_DETAILS[country]["dynamic_progression"] = (get_dynamic_progression(country) + (get_lost_specimen_ps(country) * delta / get_population(country)))
-			print("DYN: ", COUNTRY_DETAILS[country]["dynamic_progression"])
+			#print("DYN: ", COUNTRY_DETAILS[country]["dynamic_progression"])
 			COUNTRY_DETAILS[country]["total_progression"] = COUNTRY_DETAILS[country]["dynamic_progression"] + (get_static_lost_specimen(country) / get_population(country))
-			print("STAT: ", COUNTRY_DETAILS[country]["dynamic_progression"])
-			if COUNTRY_DETAILS[country]["total_progression"] > 0.1:
-				print(COUNTRY_DETAILS[country]["total_progression"])
+			#print("STAT: ", COUNTRY_DETAILS[country]["dynamic_progression"])
+			#if COUNTRY_DETAILS[country]["total_progression"] > 0.1:
+			#	print(COUNTRY_DETAILS[country]["total_progression"])
 			if country == Global.CURRENT_COUNTRY:
 				emit_signal("progression_updated", get_total_progression_per_country())
-			print(COUNTRY_DETAILS[country])
-			print("--------------------------------")
+			#print(COUNTRY_DETAILS[country])
+			#print("--------------------------------")
 			_check_character_unlock(country)
 
 

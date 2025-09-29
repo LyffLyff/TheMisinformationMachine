@@ -16,7 +16,7 @@ func _ready() -> void:
 
 func _idle_core() -> void:
 	while !Global.IDLE_CORES_ACTIVATED:
-		var tw := create_tween()
+		var tw := create_tween().set_ignore_time_scale(true)	# ignoring for performances sake
 		tw.tween_property(
 			progress_bar,
 			"value",

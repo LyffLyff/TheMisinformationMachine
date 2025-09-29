@@ -2,6 +2,8 @@ extends UISoundManager
 
 const TIME_MODIFIER = preload("uid://bcykwg0e386nb")
 
+var general_info_menu: Control
+
 @onready var country_title_label: Label = %CountryTitle
 @onready var country_details: PanelContainer = %CountryDetails
 @onready var left_column_menu_container: VBoxContainer = %LeftColumnMenuContainer
@@ -9,23 +11,15 @@ const TIME_MODIFIER = preload("uid://bcykwg0e386nb")
 @onready var bottom_right_container: VBoxContainer = %BottomRightContainer
 @onready var card_menu_button_bar: VBoxContainer = %CardMenuButtonBar
 
-var general_info_menu : Control
 
 func _ready() -> void:
 	# UI Skill SIGNAL Connects
 	Global.connect("time_modifier_unlocked", self.show_time_modifier)
-	
+
 	country_details.hide()
 
-func _on_world_map_country_entered(title : String) -> void:
-	country_title_label.text = "COUNTRY: " + title.to_upper().replace("_", " ")
 
-func _on_world_map_country_exited(country_polygon) -> void:
-	if !country_polygon:
-		# only empty label when the mouse actually isn't within any country
-		country_title_label.text = "COUNTRY: /"
-
-func show_country_menu(country_title : String) -> void:
+func show_country_menu(country_title: String) -> void:
 	Global.CURRENT_COUNTRY = country_title
 	country_details.show_details(country_title)
 
@@ -33,6 +27,16 @@ func show_country_menu(country_title : String) -> void:
 func show_time_modifier() -> void:
 	var modifier := TIME_MODIFIER.instantiate()
 	bottom_right_container.add_child(modifier)
+
+
+func _on_world_map_country_entered(title: String) -> void:
+	country_title_label.text = "COUNTRY: " + title.to_upper().replace("_", " ")
+
+
+func _on_world_map_country_exited(country_polygon) -> void:
+	if !country_polygon:
+		# only empty label when the mouse actually isn't within any country
+		country_title_label.text = "COUNTRY: /"
 
 
 func _on_skill_points_counter_label_pressed() -> void:

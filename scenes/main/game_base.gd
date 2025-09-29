@@ -87,7 +87,7 @@ func new_character_created(character_type: String, country: String) -> void:
 	var new_character_median_action_speed : float
 	match character_type:
 		"JOKER":
-			previous_actions = CountryData[country]["JOKER_ACTIONS"]
+			previous_actions = CountryData.COUNTRY_DETAILS[country]["JOKER_ACTIONS"]
 			new_character_amount = previous_actions[3] + 1
 			new_character_properties = Characters.get_new_joker_properties(country)
 			new_character_median_action_speed = (previous_actions[0] + new_character_properties[0]) / new_character_amount
@@ -98,27 +98,27 @@ func new_character_created(character_type: String, country: String) -> void:
 				new_character_amount
 			]
 		"SCAMMER":
-			previous_actions = CountryData[country]["SCAMMER_ACTIONS"]
+			previous_actions = CountryData.COUNTRY_DETAILS[country]["SCAMMER_ACTIONS"]
 			new_character_amount = previous_actions[3] + 1
 			new_character_properties = Characters.get_new_scammer_properties(country)
-			CountryData[country]["SCAMMER_ACTIONS"] = [
+			CountryData.COUNTRY_DETAILS[country]["SCAMMER_ACTIONS"] = [
 				new_character_median_action_speed,
 				(previous_actions[0] + new_character_properties[0]) / new_character_amount,
 				(previous_actions[0] + new_character_properties[0]) / new_character_amount,
 				new_character_amount
 			]
 		"CONSPIRATOR":
-			previous_actions = CountryData[country]["CONSPIRATOR_ACTIONS"]
+			previous_actions = CountryData.COUNTRY_DETAILS[country]["CONSPIRATOR_ACTIONS"]
 			new_character_amount = previous_actions[3] + 1
 			new_character_properties = Characters.get_new_conspirator_properties(country)
-			CountryData[country]["CONSPIRATOR_ACTIONS"] = [
+			CountryData.COUNTRY_DETAILS[country]["CONSPIRATOR_ACTIONS"] = [
 				new_character_median_action_speed,
 				(previous_actions[0] + new_character_properties[0]) / new_character_amount,
 				(previous_actions[0] + new_character_properties[0]) / new_character_amount,
 				new_character_amount
 			]
 		"POLITICIAN":
-			previous_actions = CountryData[country]["POLITICIAN_ACTIONS"]
+			previous_actions = CountryData.COUNTRY_DETAILS[country]["POLITICIAN_ACTIONS"]
 			new_character_amount = previous_actions[3] + 1
 			new_character_properties = Characters.get_new_politician_properties(
 				country,
@@ -127,7 +127,7 @@ func new_character_created(character_type: String, country: String) -> void:
 					country
 				)
 			)
-			CountryData[country]["POLITICIAN_ACTIONS"] = [
+			CountryData.COUNTRY_DETAILS[country]["POLITICIAN_ACTIONS"] = [
 				new_character_median_action_speed,
 				(previous_actions[0] + new_character_properties[0]) / new_character_amount,
 				(previous_actions[0] + new_character_properties[0]) / new_character_amount,
@@ -158,7 +158,7 @@ func new_character_created(character_type: String, country: String) -> void:
 	emit_signal(CHARACTER_SIGNALS.get(character_type), new_character_median_action_speed)
 
 
-func recalculate_specimen_per_second_single_country(country: String) -> void:
+func recalculate_specimen_per_second_single_country(country: String, character : String) -> void:
 	if CountryData.is_country_completed(country):
 		return
 	# update the lost specimen per country for a single country
@@ -166,12 +166,11 @@ func recalculate_specimen_per_second_single_country(country: String) -> void:
 	var previous_lost_specimen_ps: float = CountryData.get_lost_specimen_ps(country)
 	var new_lost_specimen_ps: float = 0.0
 	# calculate damage per country
-	var country_chars: Dictionary = CountryData.character_data_per_country.get(country)
-	for character_class_idx in country_chars:
-		for n in country_chars.values()[character_class_idx].size():
-			var tmp_character: Character = country_chars[character_class_idx][n]
-			new_lost_specimen_ps += tmp_character.get_converted_people_per_second()
-	lost_specimen_per_second += (-previous_lost_specimen_ps + new_lost_specimen_ps)
+	var country_char: Dictionary = CountryData.COUNTRY_DETAILS.get(country)[character]
+	for n in country_char.size():
+		var tmp_character: Character = country_char[n]
+		new_lost_specimen_ps += tmp_character.get_converted_people_per_second()
+	#lost_specimen_per_second += (previous_lost_specimen_ps - previous_character_sum + new_lost_specimen_ps)
 	update_lost_specimen_per_second(lost_specimen_per_second)
 
 
